@@ -1,0 +1,37 @@
+{
+  "name": "Nom",
+  "age": "age",
+  "hp": "Point de vie",
+  "awesome": "Je suis Génial-e",
+  "problem": "Mais la société a des problèmes avec moi",
+  "because...": "par ce que ...",
+  "characteristics": {
+    "strength": "Force",
+    "dexterity": "Dextérité",
+    "endurance": "Endurance",
+    "intelligence": "Intelligence",
+    "charisma": "Charisme"
+  },
+  "skills": {
+    "craft": "Artisanat, construire",
+    "cac": "Combat rapproché",
+    "dist": "Combat à distance",
+    "nature": "Connaissance de la nature",
+    "secret": "Connaissance des secrets",
+    "run": "Courir, sauter",
+    "stealth": "Discrétion",
+    "law": "Droit",
+    "dodge": "Esquiver",
+    "intimidate": "Intimider",
+    "read": "Lire, écrire",
+    "lie": "Mentire, convaicre",
+    "perception": "Perception",
+    "pilot": "Piloter",
+    "psychology": "Psychologie",
+    "reflexes": "Réflexes",
+    "lock": "Serrures et pièges",
+    "heal": "Soigner",
+    "survive": "Survie",
+    "steal": "Voler"
+  }
+}

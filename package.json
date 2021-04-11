@@ -1,6 +1,6 @@
 {
   "name": "beyond-the-dice",
-  "version": "0.1.0",
+  "version": "ALPHA-0.1.0",
   "private": true,
   "dependencies": {
     "@react-firebase/auth": "^0.2.10",
@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^12.1.10",
     "dotenv": "^8.2.0",
     "firebase": "^8.3.1",
+    "i18next": "^20.2.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",

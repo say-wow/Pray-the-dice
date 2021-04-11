@@ -1,0 +1,188 @@
+{
+  "characteristics": [
+    {
+      "label": "strength",
+      "value": null
+    },
+    {
+      "label": "dexterity",
+      "value": null
+    },
+    {
+      "label": "endurance",
+      "value": null
+    },
+    {
+      "label": "intelligence",
+      "value": null
+    },
+    {
+      "label": "charisma",
+      "value": null
+    }
+  ],
+  "skills": [
+    {
+      "label": "craft",
+      "value": null
+    },
+    {
+      "label": "cac",
+      "value": null
+    },
+    {
+      "label": "dist",
+      "value": null
+    },
+    {
+      "label": "nature",
+      "value": null
+    },
+    {
+      "label": "secret",
+      "value": null
+    },
+    {
+      "label": "run",
+      "value": null
+    },
+    {
+      "label": "stealth",
+      "value": null
+    },
+    {
+      "label": "law",
+      "value": null
+    },
+    {
+      "label": "dodge",
+      "value": null
+    },
+    {
+      "label": "intimidate",
+      "value": null
+    },
+    {
+      "label": "read",
+      "value": null
+    },
+    {
+      "label": "lie",
+      "value": null
+    },
+    {
+      "label": "perception",
+      "value": null
+    },
+    {
+      "label": "pilot",
+      "value": null
+    },
+    {
+      "label": "psychology",
+      "value": null
+    },
+    {
+      "label": "reflexes",
+      "value": null
+    },
+    {
+      "label": "lock",
+      "value": null
+    },
+    {
+      "label": "heal",
+      "value": null
+    },
+    {
+      "label": "survive",
+      "value": null
+    },
+    {
+      "label": "steal",
+      "value": null
+    }
+  ],
+  "skillsBonus": [
+    {
+      "label": "craft",
+      "value": null
+    },
+    {
+      "label": "cac",
+      "value": null
+    },
+    {
+      "label": "dist",
+      "value": null
+    },
+    {
+      "label": "nature",
+      "value": null
+    },
+    {
+      "label": "secret",
+      "value": null
+    },
+    {
+      "label": "run",
+      "value": null
+    },
+    {
+      "label": "stealth",
+      "value": null
+    },
+    {
+      "label": "law",
+      "value": null
+    },
+    {
+      "label": "dodge",
+      "value": null
+    },
+    {
+      "label": "intimidate",
+      "value": null
+    },
+    {
+      "label": "read",
+      "value": null
+    },
+    {
+      "label": "lie",
+      "value": null
+    },
+    {
+      "label": "perception",
+      "value": null
+    },
+    {
+      "label": "pilot",
+      "value": null
+    },
+    {
+      "label": "psychology",
+      "value": null
+    },
+    {
+      "label": "reflexes",
+      "value": null
+    },
+    {
+      "label": "lock",
+      "value": null
+    },
+    {
+      "label": "heal",
+      "value": null
+    },
+    {
+      "label": "survive",
+      "value": null
+    },
+    {
+      "label": "steal",
+      "value": null
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+@font-face {
+ font-family: "Charlemagne";
+ src: url("../assets/font/CharlemagneStd-Bold.otf") format("otf"),
+}
+@font-face {
+ font-family: "Blackletter";
+ src: url("../assets/font/Berkahi\ Blackletter.otf") format("otf"),
+}
