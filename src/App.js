@@ -12,13 +12,20 @@ import "firebase/auth";
 import "firebase/firestore";
 import i18next from 'i18next';
 import Campaigns from './containers/Campaigns';
-import styles from './styles/index.css'
+import HeaderBar from './components/HeaderBar';
 import enTranslation from './assets/translation/en.json';
 import frTranslation from './assets/translation/fr.json';
-import {init} from './utils/initFirebase'
+import {init} from './utils/initFirebase';
+import UserContext from "./context/UserContext";
+
 init();
 
 const App = () => {
+
+  const [user, setUser] = useState({
+    uid: null,
+    displayName: null,
+  })
 
   i18next.init({
     lng: 'fr',
@@ -32,80 +39,56 @@ const App = () => {
       }
     }
   }, function(err, t) {
-    // console.log(i18next.t('characteristics.strength'));
   });
-
-  const [userId, setUserId] = useState(null)
   
     useEffect( () => {
       getUserId();
     },[]);
 
+  const contextValue = {
+    user: user,
+    updateUser: setUser
+  }
+
     const getUserId = () => {
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
-          setUserId(user.uid);
+          setUser(user);
         } else {
-          setUserId(null);
+          setUser({
+            uid: null,
+            displayName: null,
+          });
         }
       });
     }
 
-
-  const getLoginLogoutButton = () => {
-    if(userId === null) {
-      return (
-        <button
-            onClick={() => {
-              const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
-              firebase.auth().signInWithPopup(googleAuthProvider)
-              .then(data => {
-                setUserId(data.user.uid);
-              })
-              .catch(error => {
-                  console.log(error);
-              });
-            }}
-          >
-            Sign In with Google
-          </button>
-      )
-    } else {
-      return (
-        <button
-          onClick={() => {
-            setUserId(null);
-            firebase.auth().signOut();
-          }}
-        >
-          Sign Out
-        </button>
-      )
-    }
-  }
-
+// todo Bug user si déconnecté
+  console.log(user)
   return (
     <Router>
-      <div>
-      {getLoginLogoutButton()}
-        <ul>
-          <li>
-            <Link to="/campaigns">Home</Link>
-          </li>
-        </ul>
+      <UserContext.Provider value={contextValue}>
+        <div>
+        <HeaderBar />
+          <ul>
+            {user && (
+              <li>
+                <Link to="/campaigns">Home</Link>
+              </li>
+            )}
+          </ul>
 
-        <Switch>
+          <Switch>
+            <Route path="/campaigns">
+              <Campaigns />
 
-          <Route path="/campaigns">
-            <Campaigns 
-              userId={userId}
-            />
-          </Route>
-          <Route exact path="/">
+            </Route>
+            <Route exact path="/">
               <Redirect to="/campaigns" />
-          </Route>
-        </Switch>
-      </div>
+            </Route>
+          </Switch>
+        </div>
+      </UserContext.Provider>
     </Router>
   );
 }

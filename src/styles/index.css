@@ -1,8 +1,12 @@
-@font-face {
- font-family: "Charlemagne";
- src: url("../assets/font/CharlemagneStd-Bold.otf") format("otf"),
+.headerBar {
+  color: "white";
+  background-color: "#14213D";
+  padding: "15px";
 }
-@font-face {
- font-family: "Blackletter";
- src: url("../assets/font/Berkahi\ Blackletter.otf") format("otf"),
+.button {
+  padding: 5;
+  background-color: 'transparent';
+  border-width: 1,;
+  border-color: '#fff';
+  color: '#fff';
 }

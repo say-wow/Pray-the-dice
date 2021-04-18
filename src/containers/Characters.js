@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import firebase from "firebase/app";
 import "firebase/analytics";
 import "firebase/auth";
@@ -13,32 +13,36 @@ import {
 import { uid } from 'uid';
 import Character from './Character';
 import NewCharacterForm from '../components/NewCharacterForm';
+import UserContext from '../context/UserContext';
 import {init} from '../utils/initFirebase'
 init();
 const db = firebase.firestore();
 
-
 const Characters = (props) => {
   let match = useRouteMatch();
-  const {userId, campaignId} = props;
+  const {campaignId} = props;
+  const {user} = useContext(UserContext)
+
   let { campaignIdUrl } = useParams();
   const [characters, setCharacters] = useState([])
   const [character, setCharacter] = useState([])
-  const [campaign, setCampaign] = useState(userId)
+  const [campaign, setCampaign] = useState(user.uid)
   const campaignIdUsed = campaignId || campaignIdUrl;
 
+
+
   useEffect( () => {
-    if(campaignIdUrl && userId) {
+    if(campaignIdUrl && user.uid) {
       getCampaign();
     }
-  }, [campaignIdUrl, userId]);
+  }, [campaignIdUrl, user.uid]);
 
 
   const getCharactersVisibleForUser = async (currentCampaign) => {
     try {
       const listCharacters = [];
-      if (currentCampaign.idUserDm !== userId) {
-        db.collection('characters').where('idUser', '==', userId).where('alive', '==', true).where('idCampaign', '==', campaignIdUsed).get()
+      if (currentCampaign.idUserDm !== user.uid) {
+        db.collection('characters').where('idUser', '==', user.uid).where('alive', '==', true).where('idCampaign', '==', campaignIdUsed).get()
           .then(querySnapshot => {
             querySnapshot.forEach(doc => {
               listCharacters.push(doc.data())
@@ -82,15 +86,12 @@ const Characters = (props) => {
       name: characterData.name,
       uid: characterUid,
       idCampaign: campaignIdUsed,
-      idUser: userId,
+      idUser: user.uid,
       age: characterData.age,
       currentHp: characterData.hp,
       maxHp: characterData.hp,
       iAmAwesome: characterData.iAmAwesome,
       problemWithSociety: characterData.problemWithSociety,
-      // characteristics: characterData.characteristics,
-      // skills: characterData.skills
-
     };
     await db.collection('characters').doc(characterUid).set(data).then(res => {
       createCharacteristics(characterData.characteristics, characterUid)
@@ -141,11 +142,11 @@ const Characters = (props) => {
     <div>
       <Switch>
         <Route path={`${match.url}/:characterIdUrl`}>
-          <Character userId={userId} campaign={campaign} character={character}/>
+          <Character campaign={campaign} character={character}/>
         </Route>
         <Route path={match.path}>
           <h3>Character</h3>
-          <p>Render my characters for this campagne {campaign && campaign.idUserDm === userId ? 'DM version' : 'Player version'}</p>
+          <p>Render my characters for this campagne {campaign && campaign.idUserDm === user.uid ? 'DM version' : 'Player version'}</p>
           {characters.map(character => (
             <Link key={character.uid} onClick={() => setCharacter(character)} to={`${match.url}/${character.uid}`}>
               <li>{character.name}</li>

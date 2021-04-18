@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import firebase from "firebase/app";
 import "firebase/analytics";
 import "firebase/auth";
@@ -12,6 +12,7 @@ import {
 import { uid } from 'uid';
 import { FirebaseDatabaseProvider } from "@react-firebase/database";
 import i18next from 'i18next';
+import UserContext from '../context/UserContext';
 
 import Characters from './Characters';
 import NewCampaignForm from '../components/NewCampaignForm';
@@ -21,13 +22,15 @@ const db = firebase.firestore();
 
 
 const Campaigns = (props) => {
-  const {userId} = props;
   const [campaigns, setCampaigns] = useState([]);
-  const [campaign, setCampaign] = useState(null);
-  const [invitationJoinCode, setInvitationJoinCode] = useState(null);
-  const [campaignToJoin, setCampaignToJoin] = useState(null);
+  const [campaign, setCampaign] = useState(undefined);
+  const [invitationJoinCode, setInvitationJoinCode] = useState(undefined);
+  const [campaignToJoin, setCampaignToJoin] = useState(undefined);
   const [campaignListToSearch, setCampaignListToSearch] = useState([]);
   let match = useRouteMatch();
+
+  const {user} = useContext(UserContext)
+
 
   useEffect( () => {
     getCampaigns();
@@ -55,7 +58,7 @@ const Campaigns = (props) => {
     const invitationCode = getInvitationCodeGame();
     const gameUid = uid();
     const data = {
-      idUserDm: userId,
+      idUserDm: user.uid,
       invitationCode: invitationCode,
       name: name,
       uid: gameUid
@@ -84,11 +87,11 @@ const Campaigns = (props) => {
 
   const getCampaigns = () => {
     const listCampaigns = [];
-    db.collection('campaigns').where('idUserDm', '==', userId).get()
+    setCampaigns(listCampaigns);
+    db.collection('campaigns').where('idUserDm', '==', user.uid).get()
       .then(querySnapshot => {
         querySnapshot.forEach( doc => {
           listCampaigns.push(doc.data())
-          console.log('dm campaign',listCampaigns);
           setCampaigns(listCampaigns);
         });
         getCharacterForUser()
@@ -100,7 +103,7 @@ const Campaigns = (props) => {
 
   const getCharacterForUser = () => {
     const listUidToSearch = [];
-    db.collection('characters').where('idUser', '==', userId).get()
+    db.collection('characters').where('idUser', '==', user.uid).get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
           listUidToSearch.push(doc.data().idCampaign)
@@ -132,43 +135,45 @@ const Campaigns = (props) => {
     <div>
       <Switch>
         <Route path={`${match.url}/:campaignIdUrl`}>
-          <Characters userId={userId} campaignId={campaign}/>
+          <Characters userId={user.uid} campaignId={campaign}/>
         </Route>
         <Route path={match.path}>
-          <h3>My campagnes list</h3>
-          <NewCampaignForm createCampaign={(campaignName) => {
-            sendGame(campaignName);
-          }}/>
+          <div style={{}}>
+            <h3>My campagnes list</h3>
+            <NewCampaignForm createCampaign={(campaignName) => {
+              sendGame(campaignName);
+            }}/>
 
 
-          <form onSubmit={(e) => {
-            joinCampaignByInvitationCode();
-            e.preventDefault();
-          }}>
-            <input
-              name="campaignName"
-              type="text"
-              value={invitationJoinCode}
-              onChange={(e) => setInvitationJoinCode(e.target.value)}
-            />
-            <input type="submit" value="Rejoindre" />
-          </form>
+            <form onSubmit={(e) => {
+              joinCampaignByInvitationCode();
+              e.preventDefault();
+            }}>
+              <input
+                name="campaignName"
+                type="text"
+                value={invitationJoinCode}
+                onChange={(e) => setInvitationJoinCode(e.target.value)}
+              />
+              <input type="submit" value="Rejoindre" />
+            </form>
 
 
-          {campaignToJoin && (
-            <Link onClick={() => setCampaign(campaignToJoin.uid)} to={`${match.url}/${campaignToJoin.uid}`}>
-              {`JOIN ${campaignToJoin.name}`}
-            </Link>
-          )}
-      
-
-          {campaigns.map(campaign => (
-            <li key={campaign.uid}>
-              <Link onClick={() => setCampaign(campaign.uid)} to={`${match.url}/${campaign.uid}`}>
-                {campaign.name}
+            {campaignToJoin && (
+              <Link onClick={() => setCampaign(campaignToJoin.uid)} to={`${match.url}/${campaignToJoin.uid}`}>
+                {`JOIN ${campaignToJoin.name}`}
               </Link>
-            </li>
-          ))}
+            )}
+        
+
+            {campaigns.map(campaign => (
+              <li key={campaign.uid}>
+                <Link onClick={() => setCampaign(campaign.uid)} to={`${match.url}/${campaign.uid}`}>
+                  {campaign.name}
+                </Link>
+              </li>
+            ))}
+          </div>
         </Route>
       </Switch>
       

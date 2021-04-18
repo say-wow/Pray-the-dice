@@ -10,8 +10,8 @@ const NewCharacterForm = (props) => {
   const [listSkills, setListSkills] = useState([...dataCharacter.skills]);
   const [additionalSkillPoint, setAdditionalSkillPoint] = useState(50);
   const [listBonusSkills, setListBonusSkills] = useState([...dataCharacter.skillsBonus]);
-  const [iAmAwesome, setIAmAwesome] = useState([]);
-  const [problemWithSociety, setProblemWithSociety] = useState([]);
+  const [iAmAwesome, setIAmAwesome] = useState('');
+  const [problemWithSociety, setProblemWithSociety] = useState('');
   const [hp, setHp] = useState([]);
   const {createCharacter} = props;
 

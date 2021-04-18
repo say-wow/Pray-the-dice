@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import firebase from "firebase/app";
 import "firebase/analytics";
 import "firebase/auth";
@@ -9,13 +9,16 @@ import {
 import { uid } from 'uid';
 import i18next from 'i18next';
 import {init} from '../utils/initFirebase'
+import DiceHistorical from '../components/DiceHistorical';
+import DiceRoll from '../components/DiceRoll';
+import UserContext from '../context/UserContext';
 
 init();
 const db = firebase.firestore();
 
 
 const Character = (props) => {
-  const {userId} = props;
+  const {user} = useContext(UserContext)
   let { campaignIdUrl, characterIdUrl } = useParams();
   const [currentCharacter, setCurrentCharacter] = useState()
   const [characteristics, setCharacteristics] = useState([])
@@ -28,7 +31,7 @@ const Character = (props) => {
 
   useEffect( () => {
     getCharacter();
-  }, [campaignIdUrl, userId]);
+  }, [campaignIdUrl, user.uid]);
 
   const getCharacter = async () => {
     db.collection('characters').doc(characterIdUrl).get()
@@ -75,7 +78,7 @@ const Character = (props) => {
 
   const getInventory = async (idCharacter) => {
     const listItems = [];
-    db.collection('Items').where('characterId', '==', idCharacter).get()
+    db.collection('items').where('characterId', '==', idCharacter).get()
       .then(doc => {
         doc.forEach( doc => {      
           listItems.push(doc.data())
@@ -135,7 +138,9 @@ const Character = (props) => {
   if(currentCharacter && characteristics.length > 0 && skills.length > 0) {
     return (
       <div>
-        {(currentCharacter.idUser === userId || currentCharacter.idUserDm === userId) && (
+        <DiceHistorical character={currentCharacter}/>
+        <DiceRoll character={currentCharacter} userId={user.uid}/>
+        {(currentCharacter.idUser === user.uid || currentCharacter.idUserDm === user.uid) && (
           <div>
             <p>{`${i18next.t('name')} : ${currentCharacter.name}`}</p>
             <p>{`${i18next.t('age')} : ${currentCharacter.age}`}</p>
