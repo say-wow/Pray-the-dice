@@ -1,13 +1,19 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import firebase from "firebase/app";
 import "firebase/analytics";
 import "firebase/auth";
 import "firebase/firestore";
-import {init} from '../utils/initFirebase'
+import {init} from '../utils/initFirebase';
+import CharacterContext from '../context/CharacterContext';
+import CampaignContext from '../context/CampaignContext';
+import UserContext from '../context/UserContext';
 init();
 
-const DiceHistory = (props) => {
-  const {character} = props;
+const DiceHistorical = (props) => {
+  // const {character} = props;
+  const {character} = useContext(CharacterContext);
+  const {user} = useContext(UserContext);
+  const {campaign} = useContext(CampaignContext);
   const [diceHistorical, setDiceHistorical] = useState([]);
   const db = firebase.firestore();
   const query = db.collection('dice').orderBy('createdAt', 'desc').limit(10);
@@ -23,7 +29,7 @@ const DiceHistory = (props) => {
     return unsubscribe;
   }, []);
 
-
+  
   return (
     <ul>
       {diceHistorical.map(histo => {
@@ -32,11 +38,12 @@ const DiceHistory = (props) => {
         //     <li key={histo.uid}>{histo.value}</li>
         //   )
         // }
+        if (!histo.isDmRoll || (histo.isDmRoll && campaign.idUserDm === user.uid))
         return (
-            <li key={histo.uid}>{histo.value}</li>
+            <li key={histo.uid}>{`${histo.userName} : ${histo.value}`}</li>
           )
       })}
     </ul>
   );
 }
-export default DiceHistory
+export default DiceHistorical

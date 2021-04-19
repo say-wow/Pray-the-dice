@@ -64,7 +64,6 @@ const App = () => {
     }
 
 // todo Bug user si déconnecté
-  console.log(user)
   return (
     <Router>
       <UserContext.Provider value={contextValue}>

@@ -13,7 +13,7 @@ import { uid } from 'uid';
 import { FirebaseDatabaseProvider } from "@react-firebase/database";
 import i18next from 'i18next';
 import UserContext from '../context/UserContext';
-
+import CampaignContext from '../context/CampaignContext';
 import Characters from './Characters';
 import NewCampaignForm from '../components/NewCampaignForm';
 import {init} from '../utils/initFirebase'
@@ -23,18 +23,26 @@ const db = firebase.firestore();
 
 const Campaigns = (props) => {
   const [campaigns, setCampaigns] = useState([]);
-  const [campaign, setCampaign] = useState(undefined);
+  const [campaign, setCampaign] = useState({
+    uid: null,
+    idUserDm: null,
+    name: null,
+    invitationCode: null,
+  });
   const [invitationJoinCode, setInvitationJoinCode] = useState(undefined);
   const [campaignToJoin, setCampaignToJoin] = useState(undefined);
   const [campaignListToSearch, setCampaignListToSearch] = useState([]);
   let match = useRouteMatch();
 
   const {user} = useContext(UserContext)
-
+  const contextValue = {
+    campaign,
+    updateCampaign: setCampaign
+  }
 
   useEffect( () => {
     getCampaigns();
-  }, [props]);
+  }, [user]);
 
   useEffect( () => {
     const listCleanUidToSearch = campaignListToSearch.filter((data,index)=>{
@@ -107,8 +115,6 @@ const Campaigns = (props) => {
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
           listUidToSearch.push(doc.data().idCampaign)
-          // if(!listCampaigns.includes((camp) => (camp.uid === doc.data().idCampaign))) {
-          // }
       });
       setCampaignListToSearch(listUidToSearch)
     })
@@ -133,50 +139,51 @@ const Campaigns = (props) => {
 
   return (
     <div>
-      <Switch>
-        <Route path={`${match.url}/:campaignIdUrl`}>
-          <Characters userId={user.uid} campaignId={campaign}/>
-        </Route>
-        <Route path={match.path}>
-          <div style={{}}>
-            <h3>My campagnes list</h3>
-            <NewCampaignForm createCampaign={(campaignName) => {
-              sendGame(campaignName);
-            }}/>
+      <CampaignContext.Provider value={contextValue}>
+        <Switch>
+          <Route path={`${match.url}/:campaignIdUrl`}>
+            <Characters/>
+          </Route>
+          <Route path={match.path}>
+            <div style={{}}>
+              <h3>My campagnes list</h3>
+              <NewCampaignForm createCampaign={(campaignName) => {
+                sendGame(campaignName);
+              }}/>
 
 
-            <form onSubmit={(e) => {
-              joinCampaignByInvitationCode();
-              e.preventDefault();
-            }}>
-              <input
-                name="campaignName"
-                type="text"
-                value={invitationJoinCode}
-                onChange={(e) => setInvitationJoinCode(e.target.value)}
-              />
-              <input type="submit" value="Rejoindre" />
-            </form>
+              <form onSubmit={(e) => {
+                joinCampaignByInvitationCode();
+                e.preventDefault();
+              }}>
+                <input
+                  name="campaignName"
+                  type="text"
+                  value={invitationJoinCode}
+                  onChange={(e) => setInvitationJoinCode(e.target.value)}
+                />
+                <input type="submit" value="Rejoindre" />
+              </form>
 
 
-            {campaignToJoin && (
-              <Link onClick={() => setCampaign(campaignToJoin.uid)} to={`${match.url}/${campaignToJoin.uid}`}>
-                {`JOIN ${campaignToJoin.name}`}
-              </Link>
-            )}
-        
-
-            {campaigns.map(campaign => (
-              <li key={campaign.uid}>
-                <Link onClick={() => setCampaign(campaign.uid)} to={`${match.url}/${campaign.uid}`}>
-                  {campaign.name}
+              {campaignToJoin && (
+                <Link onClick={() => setCampaign(campaignToJoin)} to={`${match.url}/${campaignToJoin.uid}`}>
+                  {`JOIN ${campaignToJoin.name}`}
                 </Link>
-              </li>
-            ))}
-          </div>
-        </Route>
-      </Switch>
-      
+              )}
+          
+
+              {campaigns.map(campaign => (
+                <li key={campaign.uid}>
+                  <Link onClick={() => setCampaign(campaign)} to={`${match.url}/${campaign.uid}`}>
+                    {campaign.name}
+                  </Link>
+                </li>
+              ))}
+            </div>
+          </Route>
+        </Switch>
+      </CampaignContext.Provider>
     </div>
   );
 }

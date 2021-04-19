@@ -14,35 +14,52 @@ import { uid } from 'uid';
 import Character from './Character';
 import NewCharacterForm from '../components/NewCharacterForm';
 import UserContext from '../context/UserContext';
+import CampaignContext from '../context/CampaignContext';
+import CharacterContext from '../context/CharacterContext';
 import {init} from '../utils/initFirebase'
 init();
 const db = firebase.firestore();
 
 const Characters = (props) => {
   let match = useRouteMatch();
-  const {campaignId} = props;
-  const {user} = useContext(UserContext)
-
   let { campaignIdUrl } = useParams();
   const [characters, setCharacters] = useState([])
-  const [character, setCharacter] = useState([])
-  const [campaign, setCampaign] = useState(user.uid)
-  const campaignIdUsed = campaignId || campaignIdUrl;
+  const [character, setCharacter] = useState({
+      name: '',
+      uid: undefined,
+      idCampaign: undefined,
+      idUser: undefined,
+      age: '',
+      currentHp: undefined,
+      maxHp: undefined,
+      iAmAwesome: '',
+      problemWithSociety: '',
+  })
+  const {user} = useContext(UserContext)
+  const {campaign, updateCampaign} = useContext(CampaignContext)
+  const campaignIdUsed = campaign.uid || campaignIdUrl;
+  
+  const contextValue = {
+    character,
+    updateCharacter: setCharacter
+  }
 
-
-
+  // console.log(user)
   useEffect( () => {
-    if(campaignIdUrl && user.uid) {
+    if(!campaign.uid) {
       getCampaign();
     }
-  }, [campaignIdUrl, user.uid]);
+    else if(campaignIdUrl && user) {
+      getCharactersVisibleForUser(campaign);
+    }
+  }, [user]);
 
 
   const getCharactersVisibleForUser = async (currentCampaign) => {
     try {
       const listCharacters = [];
       if (currentCampaign.idUserDm !== user.uid) {
-        db.collection('characters').where('idUser', '==', user.uid).where('alive', '==', true).where('idCampaign', '==', campaignIdUsed).get()
+        db.collection('characters').where('idUser', '==', user.uid).where('idCampaign', '==', campaignIdUsed).get()
           .then(querySnapshot => {
             querySnapshot.forEach(doc => {
               listCharacters.push(doc.data())
@@ -72,7 +89,7 @@ const Characters = (props) => {
   const getCampaign = async () => {
     db.collection('campaigns').doc(campaignIdUsed).get()
       .then(doc => {
-        setCampaign(doc.data());
+        updateCampaign(doc.data());
         getCharactersVisibleForUser(doc.data());
     })
     .catch(err => {
@@ -140,21 +157,26 @@ const Characters = (props) => {
 
   return (
     <div>
-      <Switch>
-        <Route path={`${match.url}/:characterIdUrl`}>
-          <Character campaign={campaign} character={character}/>
-        </Route>
-        <Route path={match.path}>
-          <h3>Character</h3>
-          <p>Render my characters for this campagne {campaign && campaign.idUserDm === user.uid ? 'DM version' : 'Player version'}</p>
-          {characters.map(character => (
-            <Link key={character.uid} onClick={() => setCharacter(character)} to={`${match.url}/${character.uid}`}>
-              <li>{character.name}</li>
-            </Link>
-          ))}
-          <NewCharacterForm createCharacter={(character) => {createCharacter(character)}}/>
-        </Route>
-      </Switch>
+      <CharacterContext.Provider value={contextValue}>
+        <Switch>
+          <Route path={`${match.url}/:characterIdUrl`}>
+            <Character character={character}/>
+          </Route>
+          <Route path={match.path}>
+            <h3>Character</h3>
+            {/* <p>Render my characters for this campagne {campaign && campaign.idUserDm === user.uid ? 'DM version' : 'Player version'}</p> */}
+            {characters.map(character => (
+              <Link key={character.uid} onClick={() => {
+                setCharacter(character)
+                console.log(character);
+                }} to={`${match.url}/${character.uid}`}>
+                <li>{character.name}</li>
+              </Link>
+            ))}
+            <NewCharacterForm createCharacter={(character) => {createCharacter(character)}}/>
+          </Route>
+        </Switch>
+      </CharacterContext.Provider>
     </div>
   );
 }
