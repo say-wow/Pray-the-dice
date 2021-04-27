@@ -3,7 +3,6 @@ import firebase from "firebase/app";
 import "firebase/analytics";
 import "firebase/auth";
 import "firebase/firestore";
-import styles from "../styles/index.css"
 import UserContext from "../context/UserContext";
 
 
@@ -11,13 +10,15 @@ const HeaderBar = (props) => {
   const {user, updateUser} = useContext(UserContext)
 
   return (
-    <div style={styles.headerBar}>
-      {user && (
+    <div>
+      {user && user.uid && (
         <div>
           <button
-            style={styles.button}
             onClick={() => {
-              updateUser(null);
+              updateUser({
+                uid: null,
+                displayName: null,
+              });
               firebase.auth().signOut();
             }}
           >
@@ -25,9 +26,8 @@ const HeaderBar = (props) => {
           </button>
         </div>
       )}
-      {!user && (
+      {!user.uid && (
         <button
-          style={styles.button}
           onClick={() => {
             const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
             firebase.auth().signInWithPopup(googleAuthProvider)

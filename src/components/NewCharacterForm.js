@@ -12,7 +12,7 @@ const NewCharacterForm = (props) => {
   const [listBonusSkills, setListBonusSkills] = useState([...dataCharacter.skillsBonus]);
   const [iAmAwesome, setIAmAwesome] = useState('');
   const [problemWithSociety, setProblemWithSociety] = useState('');
-  const [hp, setHp] = useState([]);
+  const [hp, setHp] = useState(null);
   const {createCharacter} = props;
 
   useEffect( () => {
@@ -94,6 +94,16 @@ const NewCharacterForm = (props) => {
           characteristics: listCharac,
           skills: skillsCalculated
         });
+        // setName('')
+        // setAge(null);
+        // setListCharac({...dataCharacter.characteristics});
+        // setCharacComplete(false);
+        // setListSkills([...dataCharacter.skills]);
+        // setAdditionalSkillPoint(50);
+        // setListBonusSkills([...dataCharacter.skillsBonus]);
+        // setIAmAwesome('');
+        // setProblemWithSociety('');
+        // setHp(null);
       }
       e.preventDefault();
     }}>

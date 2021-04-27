@@ -1,9 +1,148 @@
-body {
-  background-image: 'https://www.dndbeyond.com/content/1-0-1501-0/skins/waterdeep/images/background_texture.png';
+/* #0A0A0A
+#0E79B2
+#DB5461
+#09BC8A
+#F3F7F0 */
+
+html {
   margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    background-image: url('./assets/Images/ariaWallpaper2.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50% 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* background-color: #202122; */
+  /* color: #d8dce0; */
 }
+#root { 
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+input[type=text], input[type=number] {
+  background-color: transparent;
+  border-width: 0;
+  border-bottom: 1px solid black;
+  margin: 5px
+}
+input:focus {
+  outline: none;
+}
+
+input[type=submit], button {
+  background-color: #0E79B2;
+  box-shadow: rgb(50 50 93 / 11%) 0px 4px 6px, rgb(0 0 0 / 8%) 0px 1px 3px;
+  padding: 7px 14px;
+  color: #F3F7F0;
+  border-radius: 25px;
+  font-size: 16px;
+  border: none;
+  font-size: 0.875rem;
+  min-width: 64px;
+  box-sizing: border-box;
+  font-weight: 500;
+  line-height: 1.75;
+  border-radius: 4px;
+  letter-spacing: 0.02857em;
+  text-transform: uppercase;
+}
+input[type=submit].black, button.black {
+    background-color: #0A0A0A;
+}
+
+/* .wrapper {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-areas:
+    "header"
+    "nav"
+    "content"
+    "sidebar"
+    "ad"
+    "footer";
+}
+@media (min-width: 500px) {
+  .wrapper {
+    grid-template-columns: 1fr 3fr;
+    grid-template-areas:
+      "header  header"
+      "nav     nav"
+      "sidebar content"
+      "ad      footer";
+  }
+  nav ul {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+@media (min-width: 700px) {
+  .wrapper {
+    grid-template-columns: 1fr 4fr 1fr;
+    grid-template-areas:
+      "header header  header"
+      "nav    content sidebar"
+      "nav    content ad"
+      "footer footer  footer"
+   }
+   nav ul {
+     flex-direction: column;
+   }
+} */
+/* .main-head {
+  grid-area: header;
+}
+.content {
+  grid-area: content;
+}
+.main-nav {
+  grid-area: nav;
+}
+.side {
+  grid-area: sidebar;
+}
+.ad {
+  grid-area: ad;
+}
+.main-footer {
+  grid-area: footer;
+} */
+/* <div class="wrapperLogin">
+      <header class="main-head">L'en-tête</header>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="">Nav 1</a></li>
+          <li><a href="">Nav 2</a></li>
+          <li><a href="">Nav 3</a></li>
+        </ul>
+      </nav>
+      <div class='loginBtn'>
+        <p>Toto</p>
+      </div>
+      <article class="content">
+        <h1>L'article principal</h1>
+        <p>
+          Dans cette disposition, on affiche les zones dans le même
+          ordre que dans le document pour les écrans dont la largeur
+          est inférieure à 500 pixels. On passe à une disposition sur
+          deux colonnes ou trois colonnes en redéfinissant la grille
+          et le placement des objets sur la grille.
+        </p>
+      </article>
+      <aside class="side">Barre latérale</aside>
+      <div class="ad">Publicité</div>
+      <footer class="main-footer">Le pied de page</footer>
+    </div> */

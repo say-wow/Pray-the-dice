@@ -13,10 +13,13 @@ import "firebase/firestore";
 import i18next from 'i18next';
 import Campaigns from './containers/Campaigns';
 import HeaderBar from './components/HeaderBar';
+import Login from './containers/Login';
 import enTranslation from './assets/translation/en.json';
 import frTranslation from './assets/translation/fr.json';
 import {init} from './utils/initFirebase';
 import UserContext from "./context/UserContext";
+import './index.css';
+import './styles/login.css';
 
 init();
 
@@ -63,24 +66,32 @@ const App = () => {
       });
     }
 
-// todo Bug user si déconnecté
-  return (
+    return (
     <Router>
       <UserContext.Provider value={contextValue}>
-        <div>
-        <HeaderBar />
-          <ul>
-            {user && (
-              <li>
-                <Link to="/campaigns">Home</Link>
-              </li>
-            )}
-          </ul>
+        <div style={{width: '100%', height: '100%'}}>
+        {user && user.uid && (
+          <div>  
+            <HeaderBar />
+            <ul>
+              {user && (
+                <li>
+                  <Link to="/campaigns">Home</Link>
+                </li>
+              )}
+            </ul>
+          </div>  
+        )}
+        
 
           <Switch>
-            <Route path="/campaigns">
-              <Campaigns />
-
+            <Route path="/campaigns" >
+              {!user.uid && (
+                <Login />
+              )}
+              {user && user.uid && (
+                <Campaigns />
+              )}
             </Route>
             <Route exact path="/">
               <Redirect to="/campaigns" />

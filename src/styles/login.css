@@ -1,0 +1,91 @@
+.characterPanel {
+  grid-area: chara;
+}
+.loginBtn {
+  display: flex;
+  justify-content: center ;
+  align-items: center;
+  grid-area: login;
+}
+.loginBtn button {
+  animation-duration: 1.5s;
+  animation-name: slideinButton;
+  animation-timing-function: ease-in-out;
+}
+.wrapperLogin {
+  display: grid;
+  height: 100%;
+  width: 100%;
+  grid-gap: 20px;
+  grid-template-areas:"login";
+  overflow: hidden;
+}
+.characterPanel {
+  display: none;
+  position: relative;
+  overflow: hidden;
+}
+.characterPanel img {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  max-width: 700px;
+  animation-duration: 1.5s;
+  animation-name: slideinCharacter;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes slideinCharacter {
+  from {
+    left: 150px;
+    opacity: 0;
+  }
+
+  to {
+    left: 0px;
+    opacity: 1;
+  }
+}
+
+@keyframes slideinButton {
+  from {
+    justify-content: center ;
+    opacity: 0;
+  }
+
+  to {
+    justify-content: flex-end ;
+    opacity: 1;
+  }
+}
+
+@media (min-width: 700px) {
+  .loginBtn {
+    justify-content: flex-end ;
+  }
+  .characterPanel {
+    display: block;
+  }
+  .wrapperLogin {
+    grid-template-columns: 1fr 2fr;
+    grid-template-areas:
+      "login  chara";
+  }
+  nav ul {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+@media (min-width: 900px) {
+  .characterPanel {
+    display: block;
+  }
+  .wrapperLogin {
+    grid-template-columns: 1fr 2fr;
+    grid-template-areas:
+      "login  chara";
+   }
+   nav ul {
+     flex-direction: column;
+   }
+}

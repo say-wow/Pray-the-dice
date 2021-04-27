@@ -113,7 +113,6 @@ const Characters = (props) => {
     await db.collection('characters').doc(characterUid).set(data).then(res => {
       createCharacteristics(characterData.characteristics, characterUid)
       createSkills(characterData.skills, characterUid)
-
       getCharactersVisibleForUser(campaignIdUsed);
     }).catch(e => {
       console.log(e)
