@@ -13,6 +13,7 @@ const {
   REACT_APP_STORAGEBUCKET_DEV,
   REACT_APP_MESSAGING_SENDER_ID_DEV,
   REACT_APP_APP_ID_DEV,
+  REACT_APP_MEASUREMENT_ID_DEV,
 } = process.env;
 
 const firebaseConfig = {
@@ -32,12 +33,15 @@ const firebaseConfig = {
     storageBucket: REACT_APP_STORAGEBUCKET_DEV,
     messagingSenderId: REACT_APP_MESSAGING_SENDER_ID_DEV,
     appId: REACT_APP_APP_ID_DEV,
+    measurementId: REACT_APP_MEASUREMENT_ID_DEV,
   }
 };
 
 export const init = () => {
   if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig.prod);
+    firebase.initializeApp(firebaseConfig.dev);
+    console.log(process.env)
+    console.log(firebaseConfig.dev, firebaseConfig.prod)
   }else {
     firebase.app();
   }

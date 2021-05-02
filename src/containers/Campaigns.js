@@ -42,6 +42,7 @@ const Campaigns = (props) => {
 
   useEffect( () => {
     getCampaigns();
+    console.log(firebase.auth().currentUser)
   }, [user]);
 
   useEffect( () => {
@@ -94,14 +95,15 @@ const Campaigns = (props) => {
   }
 
   const getCampaigns = () => {
+    setCampaigns([])
     const listCampaigns = [];
     setCampaigns(listCampaigns);
     db.collection('campaigns').where('idUserDm', '==', user.uid).get()
       .then(querySnapshot => {
         querySnapshot.forEach( doc => {
           listCampaigns.push(doc.data())
-          setCampaigns(listCampaigns);
         });
+        setCampaigns(listCampaigns);
         getCharacterForUser()
       })
     .catch(err => {

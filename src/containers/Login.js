@@ -17,9 +17,19 @@ export default function Login() {
         <button
           onClick={() => {
             const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+            console.log(googleAuthProvider)
             firebase.auth().signInWithPopup(googleAuthProvider)
             .then(data => {
+              console.log(data)
               updateUser(data.user);
+              // firebase.analytics().setUserId(data.user.uid);
+              // firebase.analytics().setUserProperties({
+              //   store_code: null,
+              //   store_country: null,
+              //   optician_id: null,
+              //   optician_name: null,
+              //   optician_code: null,
+              // });
             })
             .catch(error => {
                 console.log(error);
