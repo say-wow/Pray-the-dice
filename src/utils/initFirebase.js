@@ -40,8 +40,6 @@ const firebaseConfig = {
 export const init = () => {
   if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig.dev);
-    console.log(process.env)
-    console.log(firebaseConfig.dev, firebaseConfig.prod)
   }else {
     firebase.app();
   }

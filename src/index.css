@@ -1,14 +1,9 @@
-/* #0A0A0A
-#0E79B2
-#DB5461
-#09BC8A
-#F3F7F0 */
-
 html {
   margin: 0;
   padding: 0;
   height: 100%;
   width: 100%;
+  scroll-behavior: smooth;
 }
 body {
   margin: 0;
@@ -25,7 +20,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     /* background-color: #202122; */
-  /* color: #d8dce0; */
+  /* color: #D9D9D9; */
 }
 #root { 
   margin: 0;
@@ -33,7 +28,7 @@ body {
   height: 100%;
   width: 100%;
 }
-input[type=text], input[type=number] {
+input[type=text], input[type=number], textarea {
   background-color: transparent;
   border-width: 0;
   border-bottom: 1px solid black;
@@ -44,26 +39,38 @@ input:focus {
 }
 
 input[type=submit], button {
-  background-color: #0E79B2;
+  background-color: #284B63;
   box-shadow: rgb(50 50 93 / 11%) 0px 4px 6px, rgb(0 0 0 / 8%) 0px 1px 3px;
   padding: 7px 14px;
-  color: #F3F7F0;
+  color: #D9D9D9;
   border-radius: 25px;
-  font-size: 16px;
+  font-size: 14px;
   border: none;
   font-size: 0.875rem;
   min-width: 64px;
   box-sizing: border-box;
-  font-weight: 500;
-  line-height: 1.75;
+  font-weight: 400;
+  line-height: 1.5;
   border-radius: 4px;
   letter-spacing: 0.02857em;
-  text-transform: uppercase;
+  font-weight: bold;
+  /* text-transform: uppercase; */
 }
 input[type=submit].black, button.black {
     background-color: #0A0A0A;
 }
-
+.link {
+  color :#284B63;
+  text-decoration: none;
+}
+.link:hover {
+  color :#284B63;
+  text-decoration: underline;
+}
+ul {
+  padding-inline-start: 0;
+  list-style-type: none;
+}
 /* .wrapper {
   display: grid;
   grid-gap: 20px;

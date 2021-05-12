@@ -1,6 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import i18next from 'i18next';
 import dataCharacter from '../assets/dataCharacter.json'
+import '../styles/characters.css';
 
 const NewCharacterForm = (props) => {
   const [name, setName] = useState('');
@@ -10,10 +11,10 @@ const NewCharacterForm = (props) => {
   const [listSkills, setListSkills] = useState([...dataCharacter.skills]);
   const [additionalSkillPoint, setAdditionalSkillPoint] = useState(50);
   const [listBonusSkills, setListBonusSkills] = useState([...dataCharacter.skillsBonus]);
-  const [iAmAwesome, setIAmAwesome] = useState('');
-  const [problemWithSociety, setProblemWithSociety] = useState('');
+  const [description, setDescription] = useState('');
   const [hp, setHp] = useState(null);
   const {createCharacter} = props;
+  const skillsRef = useRef(null)
 
   useEffect( () => {
     const skills = [...listSkills];
@@ -25,6 +26,9 @@ const NewCharacterForm = (props) => {
 
     if(dexterity && intelligence && strength && charisma && endurance) {
       setCharacComplete(true);
+      setTimeout(() => {
+        skillsRef.current.scrollIntoView();  
+      }, 100);      
     }
     if(dexterity && intelligence) {
       const dexInt = (dexterity + intelligence) * 2
@@ -76,38 +80,39 @@ const NewCharacterForm = (props) => {
   }, [listBonusSkills]);
 
   return (
-    <form onSubmit={(e) => {
-      if(additionalSkillPoint >= 0) {
-        let skillsCalculated = [...listSkills];
-        for(let i=0; i < skillsCalculated.length; i+=1) {
-          if(listBonusSkills[i].value) {
-            skillsCalculated[i].value += listBonusSkills[i].value;
+    <form
+      className='formNewCharacter'
+      onSubmit={(e) => {
+        if(additionalSkillPoint >= 0) {
+          let skillsCalculated = [...listSkills];
+          for(let i=0; i < skillsCalculated.length; i+=1) {
+            if(listBonusSkills[i].value) {
+              skillsCalculated[i].value += listBonusSkills[i].value;
+            }
           }
+          createCharacter({
+            name,
+            age,
+            hp,
+            description,
+            alive: true,
+            characteristics: listCharac,
+            skills: skillsCalculated
+          });
+          // setName('')
+          // setAge(null);
+          // setListCharac({...dataCharacter.characteristics});
+          // setCharacComplete(false);
+          // setListSkills([...dataCharacter.skills]);
+          // setAdditionalSkillPoint(50);
+          // setListBonusSkills([...dataCharacter.skillsBonus]);
+          // setHp(null);
         }
-        createCharacter({
-          name,
-          age,
-          hp,
-          iAmAwesome,
-          problemWithSociety,
-          alive: true,
-          characteristics: listCharac,
-          skills: skillsCalculated
-        });
-        // setName('')
-        // setAge(null);
-        // setListCharac({...dataCharacter.characteristics});
-        // setCharacComplete(false);
-        // setListSkills([...dataCharacter.skills]);
-        // setAdditionalSkillPoint(50);
-        // setListBonusSkills([...dataCharacter.skillsBonus]);
-        // setIAmAwesome('');
-        // setProblemWithSociety('');
-        // setHp(null);
-      }
-      e.preventDefault();
-    }}>
-      <div>
+        e.preventDefault();
+      }}
+    >
+      <div className='defaultInformation'>
+          <h3>New character</h3>
         <p>
           <label>
             {i18next.t('name')} :
@@ -143,30 +148,19 @@ const NewCharacterForm = (props) => {
         </p>
         <p>
           <label>
-            {i18next.t('awesome')} :
-            <input
-              name="awesome"
-              type="text"
-              value={iAmAwesome}
-              onChange={(e) => {setIAmAwesome(e.target.value)}}
+            {i18next.t('description')} :
+            <textarea
+              name="description"
+              value={description}
+              onChange={(e) => {setDescription(e.target.value)}}
             />
           </label>
         </p>
-        <p>
-          <label>
-            {i18next.t('problem')} :
-            <input
-              name="problemWithSociety"
-              type="text"
-              value={problemWithSociety}
-              onChange={(e) => {setProblemWithSociety(e.target.value)}}
-            />
-          </label>
-        </p>
-      <p>
-        <b>characteristic</b>
-      </p>
       </div>
+      <div className='characteristics'>
+        <p>
+          <b>characteristic</b>
+        </p>
         {listCharac.map((chara) => (
           <p>
             <label>
@@ -185,55 +179,42 @@ const NewCharacterForm = (props) => {
             </label>
           </p>
         ))}
+      </div>
       {characComplete && (
-        <div>
-          <div>
-            <div style={{display: "inline-block"}}>
-              <p>
-                <b>Skills</b> 
-              </p>
-              {listSkills.map((skill) => (
-                <p>
-                  <label>
+        <div className='skillsContainer'>
+          <div ref={skillsRef} className='skills'>
+            <p>
+              <b>Skills ({additionalSkillPoint})</b>
+            </p>
+            {listSkills.map((skill, i) => (
+              <p className='skillRow'>
+                <span>
                   {i18next.t(`skills.${skill.label}`)}
+                </span>
+                <div>
+                  <span>
+                    {skill.value}
+                  </span>
                   <input
                     name={skill.label}
                     type="number"
-                    min={skill.value}
-                    max={99}
-                    value={skill.value}
-                    disabled
-                  />
-                </label>
-                </p>
-              ))}
-            </div>
-            <div style={{display: "inline-block"}}>
-              <p>
-                <b>{additionalSkillPoint}</b> 
-              </p>
-              {listBonusSkills.map((skillBonus) => (
-                <p>
-                  <input
-                    name={skillBonus.label}
-                    type="number"
-                    value={skillBonus.value}
+                    value={listBonusSkills[i].value}
                     onChange={(e) => {
                       const newListBonus = [...listBonusSkills]
-                      newListBonus[newListBonus.findIndex((charac) => charac.label === skillBonus.label)].value = JSON.parse(e.target.value);
+                      newListBonus[newListBonus.findIndex((charac) => charac.label === listBonusSkills[i].label)].value = JSON.parse(e.target.value);
                       setListBonusSkills(newListBonus);
                     }}
                   />
-                </p>
-              ))}
-            </div>
-            <div>
-              {additionalSkillPoint === 0 && (
-                <div>
-                  <input type="submit" value="Envoyer" />
                 </div>
-              )}
-            </div>
+              </p>
+            ))}
+          </div>
+          <div>
+            {additionalSkillPoint === 0 && (
+              <div>
+                <input type="submit" value="Envoyer" />
+              </div>
+            )}
           </div>
         </div>
       )}

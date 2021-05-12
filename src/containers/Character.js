@@ -14,6 +14,7 @@ import DiceRoll from '../components/DiceRoll';
 import UserContext from '../context/UserContext';
 import CharacterContext from '../context/CharacterContext';
 import CampaignContext from '../context/CampaignContext';
+import '../styles/character.css';
 
 init();
 const db = firebase.firestore();
@@ -141,15 +142,16 @@ const Character = (props) => {
 
   if(character && characteristics.length > 0 && skills.length > 0) {
     return (
-      <div>
-        <DiceHistorical/>
-        <DiceRoll/>
+      <div className='containerCharacterView'>
         {(character.idUser === user.uid || campaign.idUserDm === user.uid) && (
-          <div>
-            <p>{`${i18next.t('name')} : ${character.name}`}</p>
-            <p>{`${i18next.t('age')} : ${character.age}`}</p>
-            <p style={{display: "inline-block"}}>{`${i18next.t('hp')} : ${character.currentHp} / ${character.maxHp}`}</p>
-            <p style={{display: "inline-block"}}>
+          <div className='characterContainer'>
+            <div className='characterDetails'>
+              <p>{`${i18next.t('name')} : ${character.name}`}</p>
+              <p>{`${i18next.t('age')} : ${character.age}`}</p>
+              <p>{`${i18next.t('hp')} : ${character.currentHp} / ${character.maxHp}`}</p>
+              <p>{`${i18next.t('description')} : ${character.description}`}</p>
+            </div>
+            {/* <p style={{display: "inline-block"}}>
               <input
                 name="problemWithSociety"
                 type="text"
@@ -174,70 +176,93 @@ const Character = (props) => {
             >
               Add
             </button>
-            </p>
-            <p>{`${i18next.t('awesome')} ${i18next.t('because...')} : ${character.iAmAwesome}`}</p>
-            <p>{`${i18next.t('problem')} ${i18next.t('because...')} : ${character.problemWithSociety}`}</p>
+            </p> */}
           
-            <p>Characteristics</p>
-            <ul>
-              {
-                characteristics.map((charac) => (
-                  <li key={charac.uid}>{i18next.t(`characteristics.${charac.name}`)} : {charac.value}</li>
-                ))
-              }
-            </ul>
+            <div className='characteristicsDetail'>
+              <p className='titleSection'><b>Characteristics</b></p>
+              <ul>
+                {
+                  characteristics.map((charac) => (
+                    <li key={charac.uid}>
+                      <span className='title'>
+                        {i18next.t(`characteristics.${charac.name}`)}
+                      </span>
+                      <span className='value'>
+                        {charac.value}
+                      </span>
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
             
-            <p>Skills</p>
-            <ul>
-              {
-              skills.map((skill) => (
-                <li key={skill.uid}>{i18next.t(`skills.${skill.name}`)} : {skill.value}</li>
-              ))
-            }
-            </ul>
-            <p>Inventaire</p>
-            <ul>
-              {
-                inventory.map((item) => (
-                  <li>
-                    {`${item.name} x${item.number}`}
-                    <button
-                      onClick={() => {
-                        removeItem(item.uid);
-                      }}
-                    >
-                      X
-                    </button>
+            <div className='skillsDetail'>
+              <p className='titleSection'><b>Skills</b></p>
+              <ul>
+                {
+                skills.map((skill) => (
+                  <li key={skill.uid}>
+                    <span>
+                      {i18next.t(`skills.${skill.name}`)}
+                    </span>
+                    <span>
+                      {skill.value}
+                    </span>
                   </li>
                 ))
               }
-            </ul>
-            <form  style={{display: "inline-block"}} onSubmit={(e) => {
-              createItem();
-              setItemName('');
-              setNumberOfnewItem('');
-              e.preventDefault();
-            }}>
-              <input
-                name="newItemInventory"
-                type="text"
-                value={itemName}
-                onChange={(e) => {
-                  setItemName(e.target.value);
-                }}
-              />
-              <input
-                name="numberOfNewItem"
-                type="number"
-                value={numberOfnewItem}
-                onChange={(e) => {
-                  setNumberOfnewItem(e.target.value ? JSON.parse(e.target.value) : '');
-                }}
-              />
-              <input type="submit" value="Ajouter" />
-            </form>
+              </ul>
+            </div>
           </div>
+          
         )}
+        <div className='inventory'>
+              <p>Inventaire</p>
+              <ul>
+                {
+                  inventory.map((item) => (
+                    <li>
+                      {`${item.name} x${item.number}`}
+                      <button
+                        onClick={() => {
+                          removeItem(item.uid);
+                        }}
+                      >
+                        X
+                      </button>
+                    </li>
+                  ))
+                }
+              </ul>
+              <form  style={{display: "inline-block"}} onSubmit={(e) => {
+                createItem();
+                setItemName('');
+                setNumberOfnewItem('');
+                e.preventDefault();
+              }}>
+                <input
+                  name="newItemInventory"
+                  type="text"
+                  value={itemName}
+                  onChange={(e) => {
+                    setItemName(e.target.value);
+                  }}
+                />
+                <input
+                  name="numberOfNewItem"
+                  type="number"
+                  value={numberOfnewItem}
+                  onChange={(e) => {
+                    setNumberOfnewItem(e.target.value ? JSON.parse(e.target.value) : '');
+                  }}
+                />
+                <input type="submit" value="Ajouter" />
+              </form>
+            </div>
+        <div className='diceHistorical'>
+          <DiceHistorical/>
+          <DiceRoll/>
+        </div>
       </div>
     );
   } else {

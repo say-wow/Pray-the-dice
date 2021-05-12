@@ -1,0 +1,89 @@
+.containerCharacters {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-areas:
+    "listCharacters"
+    "newCharacterForm";
+}
+.listCharacters {
+  grid-area: listCharacters;
+}
+.newCharacterForm {
+  grid-area: newCharacterForm;
+}
+.defaultInformation {
+  grid-area: defaultInformation;
+}
+.skillsContainer {
+  grid-area: skillsContainer;
+  display: flex;
+  flex-direction: row;
+}
+.characteristics {
+  grid-area: characteristics;
+}
+.list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.list li {
+  margin: 10px;
+}
+.skillRow {
+  display: flex;
+  justify-content: space-between;
+}
+.skillRow div {
+  margin-left: 20px;
+}
+.skillRow label input {
+  min-width: 25px;
+}
+.newCharacterForm {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-areas:
+    "listCharacters"
+    "newCharacterForm";
+}
+.formNewCharacter {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-areas:
+    "defaultInformation"
+    "characteristics"
+    "skillsContainer";
+}
+
+@media (min-width: 500px) {
+  .containerCharacters {
+  grid-template-areas:
+    "listCharacters"
+    "newCharacterForm";
+  }
+  .formNewCharacter {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+    grid-template-areas:
+      "defaultInformation characteristics"
+      "skillsContainer             skillsContainer";
+  }
+}
+@media (min-width: 700px) {
+  .containerCharacters {
+    grid-gap: 20px;
+    grid-template-areas:
+      "listCharacters"
+      "newCharacterForm";
+   }
+   .formNewCharacter {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+    grid-template-areas:
+      "defaultInformation characteristics"
+      "skillsContainer             skillsContainer";
+  }
+}

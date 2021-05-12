@@ -3,7 +3,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
   Redirect
 } from "react-router-dom";
 import firebase from "firebase/app";
@@ -71,19 +70,8 @@ const App = () => {
       <UserContext.Provider value={contextValue}>
         <div style={{width: '100%', height: '100%'}}>
         {user && user.uid && (
-          <div>  
-            <HeaderBar />
-            <ul>
-              {user && (
-                <li>
-                  <Link to="/campaigns">Home</Link>
-                </li>
-              )}
-            </ul>
-          </div>  
+          <HeaderBar />
         )}
-        
-
           <Switch>
             <Route path="/campaigns" >
               {!user.uid && (

@@ -1,0 +1,42 @@
+header {
+  background-color: #284B63;
+  height: 50px;
+  color: #D9D9D9;
+  display: grid;
+  align-items: space-between;
+  grid-template-areas: "logo name log";
+}
+
+.name {
+  display: flex;
+  align-self: center;
+  justify-self: center;
+}
+.log {
+  display: flex;
+  justify-self: flex-end;
+}
+.logo {
+  display: flex;
+  align-self: center;
+}
+@media (min-width: 500px) {
+  header {
+
+  }
+}
+@media (min-width: 700px) {
+  header {
+
+   }
+}
+
+.logo {
+  grid-area: logo
+}
+.userName {
+  grid-area: name;
+}
+.log {
+  grid-area: log;
+}

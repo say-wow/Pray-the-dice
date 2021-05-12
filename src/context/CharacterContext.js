@@ -9,8 +9,7 @@ export default React.createContext({
       age: '',
       currentHp: undefined,
       maxHp: undefined,
-      iAmAwesome: '',
-      problemWithSociety: '',
+      description: ''
   },
   updateCharacter: newCharacter => {}
 });

@@ -17,6 +17,7 @@ import UserContext from '../context/UserContext';
 import CampaignContext from '../context/CampaignContext';
 import CharacterContext from '../context/CharacterContext';
 import {init} from '../utils/initFirebase'
+import '../styles/characters.css';
 init();
 const db = firebase.firestore();
 
@@ -32,8 +33,7 @@ const Characters = (props) => {
       age: '',
       currentHp: undefined,
       maxHp: undefined,
-      iAmAwesome: '',
-      problemWithSociety: '',
+      description: ''
   })
   const {user} = useContext(UserContext)
   const {campaign, updateCampaign} = useContext(CampaignContext)
@@ -107,8 +107,7 @@ const Characters = (props) => {
       age: characterData.age,
       currentHp: characterData.hp,
       maxHp: characterData.hp,
-      iAmAwesome: characterData.iAmAwesome,
-      problemWithSociety: characterData.problemWithSociety,
+      description: characterData.description,
     };
     await db.collection('characters').doc(characterUid).set(data).then(res => {
       createCharacteristics(characterData.characteristics, characterUid)
@@ -155,24 +154,36 @@ const Characters = (props) => {
 
 
   return (
-    <div>
+    <div className='containerCharacters'>
       <CharacterContext.Provider value={contextValue}>
         <Switch>
           <Route path={`${match.url}/:characterIdUrl`}>
             <Character character={character}/>
           </Route>
           <Route path={match.path}>
-            <h3>Character</h3>
-            {/* <p>Render my characters for this campagne {campaign && campaign.idUserDm === user.uid ? 'DM version' : 'Player version'}</p> */}
-            {characters.map(character => (
-              <Link key={character.uid} onClick={() => {
-                setCharacter(character)
-                console.log(character);
-                }} to={`${match.url}/${character.uid}`}>
-                <li>{character.name}</li>
-              </Link>
-            ))}
-            <NewCharacterForm createCharacter={(character) => {createCharacter(character)}}/>
+            <div className='listCharacters'>
+              <h3>Character</h3>
+              <ul className='list'>
+                {characters.map(character => (
+                  <li>
+                    <Link
+                      className='link'
+                      key={character.uid}
+                      onClick={() => {
+                        setCharacter(character)
+                      }}
+                      to={`${match.url}/${character.uid}`}
+                    >
+                      {character.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <NewCharacterForm
+              className='newCharacterForm'
+              createCharacter={(character) => {createCharacter(character)}}
+            />
           </Route>
         </Switch>
       </CharacterContext.Provider>

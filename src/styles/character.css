@@ -1,0 +1,102 @@
+.containerCharacterView {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-areas:
+    "characterContainer"
+    "diceHistorical";
+}
+.diceHistorical {
+  grid-area: diceHistorical;
+}
+.characterContainer {
+  grid-area: characterContainer;
+}
+.characterDetails {
+  grid-area: characterDetails;
+}
+.characteristicsDetail {
+  grid-area: characteristicsDetail;
+}
+.characteristicsDetail ul {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.characteristicsDetail ul li {
+  background-color: #353535;
+  margin: 10px 5px;
+  color: white;
+  border-radius: 5px 5px 50px 50px;
+  width: 80px;
+  height: 100px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.characteristicsDetail ul li span.title {
+  font-size: 12px;
+}
+.characteristicsDetail ul li span.value {
+  font-size: 40px;
+  margin-top: -20px;
+}
+
+.skillsDetail {
+  grid-area: 'skillsDetail';
+}
+.skillsDetail ul {
+    border-radius: 5px;
+    /* width: 100%; */
+    font-weight: 400;
+    text-transform: uppercase;
+    font-size: 12px;
+    padding: 8px;
+    margin: 0 0 20px 0;
+}
+.skillsDetail ul li {
+  border-bottom: 1px solid #353535;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+.skillsDetail ul li:last-child {
+  border-bottom: 0px solid #353535;
+}
+.skillsDetail ul li span {
+  font-size: 14px;
+}
+.inventory {
+  grid-area: 'inventory';
+}
+.characterContainer {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "characterDetails"
+    "characteristicsDetail"
+    "skillsDetail";
+}
+
+@media (min-width: 1000px) {
+  .characterContainer {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas:
+      "characterDetails characteristicsDetail skillsDetail";
+  }
+  .containerCharacterView {
+    grid-template-columns: 3fr 1fr;
+    grid-template-areas:
+      "characterContainer diceHistorical";
+  }
+  .characteristicsDetail ul {
+    flex-direction: column;
+    align-items: center;
+  }
+  .titleSection{
+    display: none;
+  }
+}

@@ -1,0 +1,46 @@
+.containerCampaigns {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-areas:
+    "campaignList"
+    "formNewCampaign"
+    "formJoin"
+}
+@media (min-width: 500px) {
+  .containerCampaigns {
+    grid-template-columns: 5fr 4fr;
+    grid-template-areas:
+      "campaignList    formNewCampaign"
+      "campaignList    formJoin";
+  }
+  nav ul {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+@media (min-width: 700px) {
+  .containerCampaigns {
+    grid-gap: 20px;
+    grid-template-columns: 5fr 4fr;
+    grid-template-areas:
+      "campaignList    formNewCampaign"
+      "campaignList    formJoin";
+   }
+   nav ul {
+     flex-direction: column;
+   }
+}
+
+.campaignList {
+  grid-area: campaignList;
+}
+
+.formNewCampaign {
+  grid-area: formNewCampaign;
+}
+.formJoin {
+  grid-area: formJoin;
+}
+.mainContainer {
+  padding: 20px;
+}
