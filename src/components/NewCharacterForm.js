@@ -26,9 +26,9 @@ const NewCharacterForm = (props) => {
 
     if(dexterity && intelligence && strength && charisma && endurance) {
       setCharacComplete(true);
-      setTimeout(() => {
-        skillsRef.current.scrollIntoView();  
-      }, 100);      
+      // setTimeout(() => {
+      //   skillsRef.current.scrollIntoView();  
+      // }, 100);      
     }
     if(dexterity && intelligence) {
       const dexInt = (dexterity + intelligence) * 2
@@ -78,6 +78,14 @@ const NewCharacterForm = (props) => {
     };
     setAdditionalSkillPoint(50 - bonusUsed);
   }, [listBonusSkills]);
+
+  const diceRollForNewStat = () => {
+    let result = 0;
+    for(let i = 0; i < 3; i+=1) {
+      result += JSON.parse(Math.floor(Math.random() * 6) + 1);
+    }
+    return result;
+  }
 
   return (
     <form
@@ -157,29 +165,42 @@ const NewCharacterForm = (props) => {
           </label>
         </p>
       </div>
-      <div className='characteristics'>
-        <p>
-          <b>characteristic</b>
-        </p>
-        {listCharac.map((chara) => (
+        <div className='characteristics'>
           <p>
-            <label>
-              {i18next.t(`characteristics.${chara.label}`)}
-              <input
-                name={chara.label}
-                type="number"
-                max={18}
-                value={chara.value}
-                onChange={(e) => {
-                  const newList = [...listCharac]
-                  newList[newList.findIndex((charac) => charac.label === chara.label)].value = JSON.parse(e.target.value);
-                  setListCharac(newList);
-                }}
-              />
-            </label>
+            <b>characteristic</b>
           </p>
-        ))}
-      </div>
+          {listCharac.map((chara) => (
+            <p>
+              <label>
+                {i18next.t(`characteristics.${chara.label}`)}
+                <input
+                  name={chara.label}
+                  type="number"
+                  max={18}
+                  value={chara.value}
+                  onChange={(e) => {
+                    const newList = [...listCharac]
+                    newList[newList.findIndex((charac) => charac.label === chara.label)].value = JSON.parse(e.target.value);
+                    setListCharac(newList);
+                  }}
+                />
+              </label>
+            </p>
+          ))}
+          <button
+            className='autoGeneration'
+            onClick={(e) => {
+              listCharac.map((chara) => {
+                e.preventDefault();
+                const newList = [...listCharac]
+                newList[newList.findIndex((charac) => charac.label === chara.label)].value = diceRollForNewStat();
+                setListCharac(newList);
+              });
+            }}
+          >
+            Generate auto
+          </button>
+        </div>
       {characComplete && (
         <div className='skillsContainer'>
           <div ref={skillsRef} className='skills'>
