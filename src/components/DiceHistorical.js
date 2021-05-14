@@ -16,8 +16,7 @@ const DiceHistorical = (props) => {
   const {campaign} = useContext(CampaignContext);
   const [diceHistorical, setDiceHistorical] = useState([]);
   const db = firebase.firestore();
-  const query = db.collection('dice').orderBy('createdAt', 'desc').limit(10);
-  // const query = db.collection('dice').where("campaignId", "==", "fe7d36c4698").orderBy('createdAt', 'desc').limit(10);
+  const query = db.collection('dice').where("campaignId", "==", campaign.uid).orderBy('createdAt', 'desc').limit(10);
 
   useEffect(() => {
     const unsubscribe = query.onSnapshot(querySnapshot => {
