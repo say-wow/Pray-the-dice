@@ -1,0 +1,21 @@
+.open {
+  display: block;
+}
+.close {
+  display: none;
+}
+.containerRollButton {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+}
+.subChoice {
+  display: flex;
+  flex-direction: column;
+}
+.subRoll {
+  margin: 0 0 10px 0;
+}
+.subRoll .mainRoll {
+  border-radius: 50 !important;
+}

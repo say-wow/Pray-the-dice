@@ -23,12 +23,12 @@
     grid-gap: 20px;
     grid-template-columns: 5fr 4fr;
     grid-template-areas:
-      "campaignList    formNewCampaign"
-      "campaignList    formJoin";
-   }
-   nav ul {
-     flex-direction: column;
-   }
+    "campaignList    formNewCampaign"
+    "campaignList    formJoin";
+  }
+  nav ul {
+    flex-direction: column;
+  }
 }
 
 .campaignList {
@@ -42,5 +42,5 @@
   grid-area: formJoin;
 }
 .mainContainer {
-  padding: 20px;
+  padding: 0px 20px;
 }

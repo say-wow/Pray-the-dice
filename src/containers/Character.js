@@ -85,7 +85,7 @@ const Character = (props) => {
     const listItems = [];
     db.collection('items').where('characterId', '==', idCharacter).get()
       .then(doc => {
-        doc.forEach( doc => {      
+        doc.forEach( doc => {
           listItems.push(doc.data())
         });
         // listItems.sort(dynamicSortWithTraduction("name"));
@@ -149,7 +149,8 @@ const Character = (props) => {
               <p>{`${i18next.t('name')} : ${character.name}`}</p>
               <p>{`${i18next.t('age')} : ${character.age}`}</p>
               <p>{`${i18next.t('hp')} : ${character.currentHp} / ${character.maxHp}`}</p>
-              <p>{`${i18next.t('description')} : ${character.description}`}</p>
+              <p>{`${i18next.t('description')} :`}</p>
+              <p>{character.description}</p>
             </div>
             {/* <p style={{display: "inline-block"}}>
               <input
@@ -213,55 +214,56 @@ const Character = (props) => {
               }
               </ul>
             </div>
+            <div className='diceHistorical'>
+              <DiceHistorical/>
+              <DiceRoll/>
+            </div>
           </div>
           
         )}
+        
         <div className='inventory'>
-              <p>Inventaire</p>
-              <ul>
-                {
-                  inventory.map((item) => (
-                    <li>
-                      {`${item.name} x${item.number}`}
-                      <button
-                        onClick={() => {
-                          removeItem(item.uid);
-                        }}
-                      >
-                        X
-                      </button>
-                    </li>
-                  ))
-                }
-              </ul>
-              <form  style={{display: "inline-block"}} onSubmit={(e) => {
-                createItem();
-                setItemName('');
-                setNumberOfnewItem('');
-                e.preventDefault();
-              }}>
-                <input
-                  name="newItemInventory"
-                  type="text"
-                  value={itemName}
-                  onChange={(e) => {
-                    setItemName(e.target.value);
-                  }}
-                />
-                <input
-                  name="numberOfNewItem"
-                  type="number"
-                  value={numberOfnewItem}
-                  onChange={(e) => {
-                    setNumberOfnewItem(e.target.value ? JSON.parse(e.target.value) : '');
-                  }}
-                />
-                <input type="submit" value="Ajouter" />
-              </form>
-            </div>
-        <div className='diceHistorical'>
-          <DiceHistorical/>
-          <DiceRoll/>
+          <p>Inventaire</p>
+          <ul>
+            {
+              inventory.map((item) => (
+                <li>
+                  {`${item.name} x${item.number}`}
+                  <button
+                    onClick={() => {
+                      removeItem(item.uid);
+                    }}
+                  >
+                    X
+                  </button>
+                </li>
+              ))
+            }
+          </ul>
+          <form  style={{display: "inline-block"}} onSubmit={(e) => {
+            createItem();
+            setItemName('');
+            setNumberOfnewItem('');
+            e.preventDefault();
+          }}>
+            <input
+              name="newItemInventory"
+              type="text"
+              value={itemName}
+              onChange={(e) => {
+                setItemName(e.target.value);
+              }}
+            />
+            <input
+              name="numberOfNewItem"
+              type="number"
+              value={numberOfnewItem}
+              onChange={(e) => {
+                setNumberOfnewItem(e.target.value ? JSON.parse(e.target.value) : '');
+              }}
+            />
+            <input type="submit" value="Ajouter" />
+          </form>
         </div>
       </div>
     );

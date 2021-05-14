@@ -1,9 +1,9 @@
 .containerCharacterView {
-  display: grid;
+  /* display: grid;
   grid-gap: 20px;
   grid-template-areas:
     "characterContainer"
-    "diceHistorical";
+    "diceHistorical"; */
 }
 .diceHistorical {
   grid-area: diceHistorical;
@@ -49,7 +49,6 @@
 }
 .skillsDetail ul {
     border-radius: 5px;
-    /* width: 100%; */
     font-weight: 400;
     text-transform: uppercase;
     font-size: 12px;
@@ -71,6 +70,7 @@
 }
 .inventory {
   grid-area: 'inventory';
+  display: none;
 }
 .characterContainer {
   display: grid;
@@ -78,19 +78,20 @@
   grid-template-areas:
     "characterDetails"
     "characteristicsDetail"
-    "skillsDetail";
+    "skillsDetail"
+    "diceHistorical";
 }
 
 @media (min-width: 1000px) {
   .characterContainer {
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 2fr 1fr 2fr 2fr;
     grid-template-areas:
-      "characterDetails characteristicsDetail skillsDetail";
+      "characterDetails characteristicsDetail skillsDetail diceHistorical";
   }
   .containerCharacterView {
-    grid-template-columns: 3fr 1fr;
+    /* grid-template-columns: 3fr 1fr;
     grid-template-areas:
-      "characterContainer diceHistorical";
+      "characterContainer diceHistorical"; */
   }
   .characteristicsDetail ul {
     flex-direction: column;

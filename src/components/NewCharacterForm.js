@@ -99,14 +99,14 @@ const NewCharacterForm = (props) => {
             characteristics: listCharac,
             skills: skillsCalculated
           });
-          // setName('')
-          // setAge(null);
-          // setListCharac({...dataCharacter.characteristics});
-          // setCharacComplete(false);
-          // setListSkills([...dataCharacter.skills]);
-          // setAdditionalSkillPoint(50);
-          // setListBonusSkills([...dataCharacter.skillsBonus]);
-          // setHp(null);
+          setName('')
+          setAge(null);
+          setListCharac([...dataCharacter.characteristics]);
+          setCharacComplete(false);
+          setListSkills([...dataCharacter.skills]);
+          setAdditionalSkillPoint(50);
+          setListBonusSkills([...dataCharacter.skillsBonus]);
+          setHp(null);
         }
         e.preventDefault();
       }}
@@ -186,6 +186,7 @@ const NewCharacterForm = (props) => {
             <p>
               <b>Skills ({additionalSkillPoint})</b>
             </p>
+            {console.log(listBonusSkills)}
             {listSkills.map((skill, i) => (
               <p className='skillRow'>
                 <span>

@@ -29,20 +29,22 @@ const DiceHistorical = (props) => {
     return unsubscribe;
   }, []);
 
-  
+  const isMyRoll = (roll) => {
+    if(character.uid === roll.characterId) {
+      return true;
+    } else if (campaign.idUserDm === user.uid && roll.isDmRoll) {
+      return true;
+    }
+    return false;
+  }
+
   return (
     <ul className="listHisto">
       {diceHistorical.map(histo => {
-        // if(histo.characterId) {
-        //   return (
-        //     <li key={histo.uid}>{histo.value}</li>
-        //   )
-        // }
         if (!histo.isDmRoll || (histo.isDmRoll && campaign.idUserDm === user.uid)) {
-          console.log(character.uid, histo.characterId)
           return (
             <li
-              className={`${character.uid === histo.characterId ? "myhistoRow" : "histoRow"} bubbleHisto`}
+              className={`${isMyRoll(histo) ? "myhistoRow" : "histoRow"} bubbleHisto`}
               key={histo.uid}
             >
               <span>

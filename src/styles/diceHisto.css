@@ -11,6 +11,8 @@
   width: 150px;
   margin: 2px;
   padding: 0 8px;
+  display: flex;
+  justify-content: space-between;
 }
 .histoRow {
   background-color: #D9D9D9;
@@ -26,6 +28,12 @@
 }
 
 .bubbleHisto span:first-child {
-  /* width: 70%;
-  text-overflow: ellipsis; */
+  max-width: 100px;
+  text-overflow: clip;
+  text-overflow: ellipsis;
+  text-overflow: "…";
+  text-overflow: fade;
+  text-overflow: fade(10px);
+  text-overflow: fade(5%);
+  overflow: hidden;
 }
