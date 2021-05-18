@@ -170,7 +170,7 @@ const NewCharacterForm = (props) => {
             <b>characteristic</b>
           </p>
           {listCharac.map((chara) => (
-            <p>
+            <div>
               <label>
                 {i18next.t(`characteristics.${chara.label}`)}
                 <input
@@ -179,13 +179,14 @@ const NewCharacterForm = (props) => {
                   max={18}
                   value={chara.value}
                   onChange={(e) => {
+                    const newValue = e.target.value !== '' ? JSON.parse(e.target.value) : null;
                     const newList = [...listCharac]
-                    newList[newList.findIndex((charac) => charac.label === chara.label)].value = JSON.parse(e.target.value);
+                    newList[newList.findIndex((charac) => charac.label === chara.label)].value = newValue
                     setListCharac(newList);
                   }}
                 />
               </label>
-            </p>
+            </div>
           ))}
           <button
             className='autoGeneration'
@@ -209,7 +210,7 @@ const NewCharacterForm = (props) => {
             </p>
             {console.log(listBonusSkills)}
             {listSkills.map((skill, i) => (
-              <p className='skillRow'>
+              <div className='skillRow'>
                 <span>
                   {i18next.t(`skills.${skill.label}`)}
                 </span>
@@ -222,13 +223,14 @@ const NewCharacterForm = (props) => {
                     type="number"
                     value={listBonusSkills[i].value}
                     onChange={(e) => {
+                      const newValue = e.target.value !== '' ? JSON.parse(e.target.value) : null;
                       const newListBonus = [...listBonusSkills]
-                      newListBonus[newListBonus.findIndex((charac) => charac.label === listBonusSkills[i].label)].value = JSON.parse(e.target.value);
+                      newListBonus[newListBonus.findIndex((charac) => charac.label === listBonusSkills[i].label)].value = newValue;
                       setListBonusSkills(newListBonus);
                     }}
                   />
                 </div>
-              </p>
+              </div>
             ))}
           </div>
           <div>

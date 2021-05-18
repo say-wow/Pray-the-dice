@@ -1,0 +1,8 @@
+.headerModal {
+  height: 40px;
+  background-color: #fff;
+  box-shadow: rgb(50 50 93 / 11%) 0px 4px 6px, rgb(0 0 0 / 8%) 0px 1px 3px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

@@ -15,9 +15,29 @@ import UserContext from '../context/UserContext';
 import CharacterContext from '../context/CharacterContext';
 import CampaignContext from '../context/CampaignContext';
 import '../styles/character.css';
+import '../styles/modal.css';
+import Modal from 'react-modal';
+
+import {
+  BrowserView,
+  MobileView,
+  isBrowser,
+  isMobile
+} from "react-device-detect";
 
 init();
 const db = firebase.firestore();
+
+const customStyles = {
+  content : {
+    top                   : '0%',
+    left                  : '0%',
+    right                 : '0%',
+    bottom                : '0%',
+    padding: '0',
+    overflow: 'hidden',
+  }
+};
 
 
 const Character = (props) => {
@@ -140,6 +160,15 @@ const Character = (props) => {
     });
   }
 
+  const [modalIsOpen,setIsOpen] = React.useState(false);
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal(){
+    setIsOpen(false);
+  }
+
   if(character && characteristics.length > 0 && skills.length > 0) {
     return (
       <div className='containerCharacterView'>
@@ -214,10 +243,30 @@ const Character = (props) => {
               }
               </ul>
             </div>
-            <div className='diceHistorical'>
-              <DiceHistorical/>
-              <DiceRoll/>
-            </div>
+            <BrowserView>
+              <div className='diceHistorical'>
+                <DiceHistorical/>
+                <DiceRoll/>
+              </div>
+            </BrowserView>
+            <MobileView>
+              <div>
+                <button onClick={openModal}>Open Modal</button>
+                <Modal
+                  isOpen={modalIsOpen}
+                  style={customStyles}
+                  onRequestClose={closeModal}
+                  contentLabel="Example Modal"
+                >
+                <div className='headerModal'>
+
+                  <button className='empty' onClick={closeModal}>Close</button>
+                </div>
+                  <DiceHistorical/>
+                  {/* <DiceRoll/> */}
+                </Modal>
+              </div>
+            </MobileView>
           </div>
           
         )}

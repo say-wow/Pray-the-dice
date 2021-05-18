@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useContext} from 'react';
+import React, {useEffect, useState, useContext, useRef} from 'react';
 import firebase from "firebase/app";
 import "firebase/analytics";
 import "firebase/auth";
@@ -14,11 +14,14 @@ const DiceHistorical = (props) => {
   const {character} = useContext(CharacterContext);
   const {user} = useContext(UserContext);
   const {campaign} = useContext(CampaignContext);
+  const [limitHisto, setLimitHisto] = useState(15)
   const [diceHistorical, setDiceHistorical] = useState([]);
   const db = firebase.firestore();
-  const query = db.collection('dice').where("campaignId", "==", campaign.uid).orderBy('createdAt', 'desc').limit(10);
+  const query = db.collection('dice').where("campaignId", "==", campaign.uid).orderBy('createdAt', 'desc').limit(limitHisto);
+  const histoView = useRef(null)
 
   useEffect(() => {
+    histoView.current.scrollIntoView()
     const unsubscribe = query.onSnapshot(querySnapshot => {
       const data = querySnapshot.docs.map(doc => ({
         ...doc.data(),
@@ -38,26 +41,33 @@ const DiceHistorical = (props) => {
   }
 
   return (
-    <ul className="listHisto">
-      {diceHistorical.map(histo => {
-        if (!histo.isDmRoll || (histo.isDmRoll && campaign.idUserDm === user.uid)) {
-          return (
-            <li
-              className={`${isMyRoll(histo) ? "myhistoRow" : "histoRow"} bubbleHisto`}
-              key={histo.uid}
-            >
-              <span>
-                {histo.userName}
-              </span>
-              <span>
-                {histo.value}
-              </span>
-            </li>
-          )
-        }
-        return null;
-      })}
-    </ul>
+    <div ref={histoView}>
+      <ul className="listHisto">
+        {diceHistorical.map(histo => {
+          if (!histo.isDmRoll || (histo.isDmRoll && campaign.idUserDm === user.uid)) {
+            return (
+              <li
+                className={`${isMyRoll(histo) ? "histoRow" : "myhistoRow"} bubbleHisto`}
+                key={histo.uid}
+              >
+                <div className='histoLeftSide'>
+                  <span>
+                    {histo.userName}
+                  </span>
+                  <span>
+                    d{histo.diceType}
+                  </span>
+                </div>
+                <span className='histoRightSide'>
+                  {histo.value}
+                </span>
+              </li>
+            )
+          }
+          return null;
+        })}
+      </ul>
+    </div>
   );
 }
 export default DiceHistorical

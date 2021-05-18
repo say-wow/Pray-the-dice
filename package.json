@@ -1,6 +1,6 @@
 {
   "name": "beyond-the-dice",
-  "version": "ALPHA-0.1.0",
+  "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@babel/core": "^7.13.16",
@@ -12,7 +12,9 @@
     "firebase": "^8.3.1",
     "i18next": "^20.2.1",
     "react": "^17.0.1",
+    "react-device-detect": "^1.17.0",
     "react-dom": "^17.0.1",
+    "react-modal": "^3.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "uid": "^2.0.0",

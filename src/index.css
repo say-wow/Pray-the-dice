@@ -55,6 +55,12 @@ input[type=submit], button {
   font-weight: bold;
   /* text-transform: uppercase; */
 }
+button.empty {
+  background-color: transparent;
+  color: #284B63;
+  box-shadow: none;
+}
+
 input[type=submit].black, button.black {
     background-color: #0A0A0A;
 }
