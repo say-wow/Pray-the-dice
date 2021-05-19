@@ -4,7 +4,11 @@ import "firebase/analytics";
 import "firebase/auth";
 import "firebase/firestore";
 import {
+  Switch,
+  Route,
+  Link,
   useParams,
+  useRouteMatch,
 } from "react-router-dom";
 import { uid } from 'uid';
 import i18next from 'i18next';
@@ -16,7 +20,7 @@ import CharacterContext from '../context/CharacterContext';
 import CampaignContext from '../context/CampaignContext';
 import '../styles/character.css';
 import '../styles/modal.css';
-import Modal from 'react-modal';
+import DiceChat from './DiceChat';
 
 import {
   BrowserView,
@@ -28,24 +32,13 @@ import {
 init();
 const db = firebase.firestore();
 
-const customStyles = {
-  content : {
-    top                   : '0%',
-    left                  : '0%',
-    right                 : '0%',
-    bottom                : '0%',
-    padding: '0',
-    overflow: 'hidden',
-  }
-};
-
-
 const Character = (props) => {
+  let match = useRouteMatch();
   const {user} = useContext(UserContext);
   const {campaign} = useContext(CampaignContext);
   const {character, updateCharacter} = useContext(CharacterContext);
   
-  let { campaignIdUrl, characterIdUrl } = useParams();
+  let { characterIdUrl } = useParams();
   const [characteristics, setCharacteristics] = useState([])
   const [skills, setSkills] = useState([])
   const [inventory, setInventory] = useState([])
@@ -54,7 +47,6 @@ const Character = (props) => {
   const [numberOfnewItem, setNumberOfnewItem] = useState()
 
   useEffect( () => {
-    console.log(character)
     getCharacter();
   }, [user, campaign]);
 
@@ -160,161 +152,152 @@ const Character = (props) => {
     });
   }
 
-  const [modalIsOpen,setIsOpen] = React.useState(false);
-  function openModal() {
-    setIsOpen(true);
-  }
-
-  function closeModal(){
-    setIsOpen(false);
-  }
-
   if(character && characteristics.length > 0 && skills.length > 0) {
     return (
-      <div className='containerCharacterView'>
-        {(character.idUser === user.uid || campaign.idUserDm === user.uid) && (
-          <div className='characterContainer'>
-            <div className='characterDetails'>
-              <p>{`${i18next.t('name')} : ${character.name}`}</p>
-              <p>{`${i18next.t('age')} : ${character.age}`}</p>
-              <p>{`${i18next.t('hp')} : ${character.currentHp} / ${character.maxHp}`}</p>
-              <p>{`${i18next.t('description')} :`}</p>
-              <p>{character.description}</p>
-            </div>
-            {/* <p style={{display: "inline-block"}}>
-              <input
-                name="problemWithSociety"
-                type="text"
-                value={updateHp}
-                onChange={(e) => {
-                  setUpdateHp(e.target.value ? JSON.parse(e.target.value) : '');
-                }}
-              />
-              <button
-              onClick={() => {
-                setCharacter('characters',character ,'currentHp',character.currentHp - updateHp)
-                setUpdateHp('');
-              }}
-            >
-              Remove
-            </button>
-            <button
-              onClick={() => {
-                setCharacter('characters',character ,'currentHp',character.currentHp + updateHp)
-                setUpdateHp('');
-              }}
-            >
-              Add
-            </button>
-            </p> */}
-          
-            <div className='characteristicsDetail'>
-              <p className='titleSection'><b>Characteristics</b></p>
+      <Switch>
+        <Route path={`${match.url}/Chat`}>
+          <DiceChat/>
+        </Route>
+        <Route path={match.path}>
+          <div className='containerCharacterView'>
+            {(character.idUser === user.uid || campaign.idUserDm === user.uid) && (
+              <div className='characterContainer'>
+                <div className='characterDetails'>
+                  <p>{`${i18next.t('name')} : ${character.name}`}</p>
+                  <p>{`${i18next.t('age')} : ${character.age}`}</p>
+                  <p>{`${i18next.t('hp')} : ${character.currentHp} / ${character.maxHp}`}</p>
+                  <p>{`${i18next.t('description')} :`}</p>
+                  <p>{character.description}</p>
+                </div>
+                {/* <p style={{display: "inline-block"}}>
+                  <input
+                    name="problemWithSociety"
+                    type="text"
+                    value={updateHp}
+                    onChange={(e) => {
+                      setUpdateHp(e.target.value ? JSON.parse(e.target.value) : '');
+                    }}
+                  />
+                  <button
+                  onClick={() => {
+                    setCharacter('characters',character ,'currentHp',character.currentHp - updateHp)
+                    setUpdateHp('');
+                  }}
+                >
+                  Remove
+                </button>
+                <button
+                  onClick={() => {
+                    setCharacter('characters',character ,'currentHp',character.currentHp + updateHp)
+                    setUpdateHp('');
+                  }}
+                >
+                  Add
+                </button>
+                </p> */}
+              
+                <div className='characteristicsDetail'>
+                  <p className='titleSection'><b>Characteristics</b></p>
+                  <ul>
+                    {
+                      characteristics.map((charac) => (
+                        <li key={charac.uid}>
+                          <span className='title'>
+                            {i18next.t(`characteristics.${charac.name}`)}
+                          </span>
+                          <span className='value'>
+                            {charac.value}
+                          </span>
+                        </li>
+                      ))
+                    }
+                  </ul>
+                </div>
+                
+                <div className='skillsDetail'>
+                  <p className='titleSection'><b>Skills</b></p>
+                  <ul>
+                    {
+                    skills.map((skill) => (
+                      <li key={skill.uid}>
+                        <span>
+                          {i18next.t(`skills.${skill.name}`)}
+                        </span>
+                        <span>
+                          {skill.value}
+                        </span>
+                      </li>
+                    ))
+                  }
+                  </ul>
+                </div>
+                <BrowserView>
+                  <div className='diceHistorical'>
+                    <DiceHistorical/>
+                    <DiceRoll/>
+                  </div>
+                </BrowserView>
+                <MobileView>
+                  <div>
+                    <Link
+                      className='link'
+                      to={`${match.url}/chat`}
+                    >
+                      Open Chat
+                    </Link>
+                  </div>
+                </MobileView>
+              </div>
+              
+            )}
+            
+            <div className='inventory'>
+              <p>Inventaire</p>
               <ul>
                 {
-                  characteristics.map((charac) => (
-                    <li key={charac.uid}>
-                      <span className='title'>
-                        {i18next.t(`characteristics.${charac.name}`)}
-                      </span>
-                      <span className='value'>
-                        {charac.value}
-                      </span>
+                  inventory.map((item) => (
+                    <li>
+                      {`${item.name} x${item.number}`}
+                      <button
+                        onClick={() => {
+                          removeItem(item.uid);
+                        }}
+                      >
+                        X
+                      </button>
                     </li>
                   ))
                 }
               </ul>
+              <form  style={{display: "inline-block"}} onSubmit={(e) => {
+                createItem();
+                setItemName('');
+                setNumberOfnewItem('');
+                e.preventDefault();
+              }}>
+                <input
+                  name="newItemInventory"
+                  type="text"
+                  value={itemName}
+                  onChange={(e) => {
+                    setItemName(e.target.value);
+                  }}
+                />
+                <input
+                  name="numberOfNewItem"
+                  type="number"
+                  value={numberOfnewItem}
+                  onChange={(e) => {
+                    setNumberOfnewItem(e.target.value ? JSON.parse(e.target.value) : '');
+                  }}
+                />
+                <input type="submit" value="Ajouter" />
+              </form>
             </div>
-            
-            <div className='skillsDetail'>
-              <p className='titleSection'><b>Skills</b></p>
-              <ul>
-                {
-                skills.map((skill) => (
-                  <li key={skill.uid}>
-                    <span>
-                      {i18next.t(`skills.${skill.name}`)}
-                    </span>
-                    <span>
-                      {skill.value}
-                    </span>
-                  </li>
-                ))
-              }
-              </ul>
-            </div>
-            <BrowserView>
-              <div className='diceHistorical'>
-                <DiceHistorical/>
-                <DiceRoll/>
-              </div>
-            </BrowserView>
-            <MobileView>
-              <div>
-                <button onClick={openModal}>Open Modal</button>
-                <Modal
-                  isOpen={modalIsOpen}
-                  style={customStyles}
-                  onRequestClose={closeModal}
-                  contentLabel="Example Modal"
-                >
-                <div className='headerModal'>
-
-                  <button className='empty' onClick={closeModal}>Close</button>
-                </div>
-                  <DiceHistorical/>
-                  {/* <DiceRoll/> */}
-                </Modal>
-              </div>
-            </MobileView>
           </div>
-          
-        )}
-        
-        <div className='inventory'>
-          <p>Inventaire</p>
-          <ul>
-            {
-              inventory.map((item) => (
-                <li>
-                  {`${item.name} x${item.number}`}
-                  <button
-                    onClick={() => {
-                      removeItem(item.uid);
-                    }}
-                  >
-                    X
-                  </button>
-                </li>
-              ))
-            }
-          </ul>
-          <form  style={{display: "inline-block"}} onSubmit={(e) => {
-            createItem();
-            setItemName('');
-            setNumberOfnewItem('');
-            e.preventDefault();
-          }}>
-            <input
-              name="newItemInventory"
-              type="text"
-              value={itemName}
-              onChange={(e) => {
-                setItemName(e.target.value);
-              }}
-            />
-            <input
-              name="numberOfNewItem"
-              type="number"
-              value={numberOfnewItem}
-              onChange={(e) => {
-                setNumberOfnewItem(e.target.value ? JSON.parse(e.target.value) : '');
-              }}
-            />
-            <input type="submit" value="Ajouter" />
-          </form>
-        </div>
-      </div>
+        </Route>
+      </Switch>
+
     );
   } else {
     return null;

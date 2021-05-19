@@ -1,6 +1,10 @@
 .listHisto {
   flex-direction: column;
-  height: 500px;
+  /* height: 500px; */
+  overflow: auto;
+}
+.diceChatContainer {
+  /* flex: 1; */
   overflow: auto;
 }
 .bubbleHisto{
@@ -12,7 +16,6 @@
   margin: 10px 2px;
   padding: 0 8px;
   justify-content: space-between;
-  box-shadow: rgb(50 50 93 / 11%) 0px 4px 6px, rgb(0 0 0 / 8%) 0px 1px 3px;
   font-weight: bold;
   overflow: hidden;
 }
