@@ -7,7 +7,6 @@
 }
 .diceHistorical {
   grid-area: diceHistorical;
-  max-height: 80%;
   overflow: auto;
   /* -ms-overflow-style: none;
   scrollbar-width: none; */
@@ -76,11 +75,12 @@
     font-size: 12px;
     padding: 8px;
     margin: 0 0 20px 0;
+    /* border: 1px solid #353535; */
 }
 .skillsDetail ul li {
   border-bottom: 1px solid #353535;
-  margin-bottom: 10px;
-  padding-bottom: 10px;
+  margin-bottom: 7px;
+  padding-bottom: 7px;
   display: flex;
   justify-content: space-between;
 }
@@ -105,21 +105,52 @@
 }
 
 @media (min-width: 1000px) {
+  .characterDetails {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
   .characterContainer {
-    grid-template-columns: 2fr 1fr 2fr 2fr;
+    grid-template-columns: 1fr 2fr;
+    width: 80%;
+    justify-content: center;
+    align-content: center;
     grid-template-areas:
-      "characterDetails characteristicsDetail skillsDetail diceHistorical";
+      "characterDetails characterDetails"
+      "characteristicsDetail skillsDetail"
   }
   .containerCharacterView {
-    /* grid-template-columns: 3fr 1fr;
-    grid-template-areas:
-      "characterContainer diceHistorical"; */
+    display: flex;
+    justify-content: center;
   }
   .characteristicsDetail ul {
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
   }
   .titleSection{
     display: none;
+  }
+  .diceHistorical {
+    position: absolute;
+    right: 0px;
+    top: 50px;
+    width: 400px;
+    bottom: 0;
+    background-color: #fff;
+    overflow-x: hidden;
+  }
+  .characteristicsDetail {
+    padding: 0 20px;
+  }
+  .skillsDetail {
+    padding: 0 20px;
+    justify-content: center;
+    align-content: center;
+    display: flex;
+  }
+  .skillsDetail ul {
+    margin: 0;
+    width: 500px;
   }
 }

@@ -26,15 +26,17 @@
   overflow: hidden;
 }
 .histoRow {
-  background-color: #D9D9D9;
+  background-color: #353535;
+  margin-left: 10px;
 }
 .histoRow span {
-  color: #353535;
+  color: #D9D9D9;
 }
 .myhistoRow {
   border-radius: .75rem .75rem 0 .75rem;
   background-color: #3C6E71;
   align-self: flex-end;
+  margin-right: 10px;
 }
 
 .myhistoRow span {
@@ -65,4 +67,5 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
+  background-color: #f3f3f3;
 }

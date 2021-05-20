@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useContext} from 'react';
+import React, {useEffect, useState, useContext, useRef} from 'react';
 import firebase from "firebase/app";
 import "firebase/analytics";
 import "firebase/auth";
@@ -35,7 +35,7 @@ const Character = (props) => {
   const {user} = useContext(UserContext);
   const {campaign} = useContext(CampaignContext);
   const {character, updateCharacter} = useContext(CharacterContext);
-  
+
   let { characterIdUrl } = useParams();
   const [characteristics, setCharacteristics] = useState([])
   const [skills, setSkills] = useState([])
@@ -43,6 +43,7 @@ const Character = (props) => {
   const [updateHp, setUpdateHp] = useState()
   const [itemName, setItemName] = useState()
   const [numberOfnewItem, setNumberOfnewItem] = useState()
+  const [chatIsVisible, setChatIsVisible] = useState(false)
 
   useEffect( () => {
     getCharacter();
@@ -150,7 +151,6 @@ const Character = (props) => {
     });
   }
   
-  const heightContainer = window.innerHeight;
   // const heightContainer = window.innerHeight - ((window.innerHeight * 10 ) / 100) - 50;
   if(character && characteristics.length > 0 && skills.length > 0) {
     return (
@@ -163,11 +163,20 @@ const Character = (props) => {
             {(character.idUser === user.uid || campaign.idUserDm === user.uid) && (
               <div className='characterContainer'>
                 <div className='characterDetails'>
-                  <p>{`${i18next.t('name')} : ${character.name}`}</p>
-                  <p>{`${i18next.t('age')} : ${character.age}`}</p>
-                  <p>{`${i18next.t('hp')} : ${character.currentHp} / ${character.maxHp}`}</p>
+                  <h2>{character.name}</h2>
+                  <span>{`${i18next.t('hp')} : ${character.currentHp} / ${character.maxHp}`}</span>
                   <p>{`${i18next.t('description')} :`}</p>
                   <p>{character.description}</p>
+                  <BrowserView>
+                    <button
+                      className='openChat'
+                      onClick={() => {
+                        setChatIsVisible(true);
+                      }}
+                    >
+                      X
+                    </button>
+                  </BrowserView>
                 </div>
                 {/* <p style={{display: "inline-block"}}>
                   <input
@@ -231,12 +240,22 @@ const Character = (props) => {
                   }
                   </ul>
                 </div>
-                <BrowserView>
-                  <div className='diceHistorical' style={{maxHeight: heightContainer}}>
-                    <DiceHistorical/>
-                    <DiceRoll/>
+                <BrowserView className='diceHistorical'>
+                  <div
+                    style={{
+                      height: window.innerHeight - 80,
+                      right: chatIsVisible ? 0 : -450,
+                      display: chatIsVisible ? 'block' : 'none'
+                    }}
+                  >
+                      <DiceHistorical
+                        display={(state) => {
+                          setChatIsVisible(state)
+                        }}
+                      />
                   </div>
                 </BrowserView>
+                <DiceRoll/>
                 <MobileView>
                   <div>
                     <Link

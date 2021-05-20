@@ -16,6 +16,7 @@ const DiceHistorical = (props) => {
   const {campaign} = useContext(CampaignContext);
   const [limitHisto, setLimitHisto] = useState(15)
   const [diceHistorical, setDiceHistorical] = useState([]);
+  const [classListToListen] = useState(['openChat', 'mainRoll', 'subRoll'])
   const db = firebase.firestore();
   const histoView = useRef(null)
 
@@ -32,6 +33,20 @@ const DiceHistorical = (props) => {
     });
     return unsubscribe;
   }, []);
+
+
+      useEffect(() => {
+        function handleClickOutside(event) {
+            if (histoView.current && !histoView.current.contains(event.target) && !classListToListen.includes(event.srcElement.className)) {
+                props.display(false);
+            }
+        }
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [histoView]);
 
   const isMyRoll = (roll) => {
     if(character.uid === roll.characterId) {

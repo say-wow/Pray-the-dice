@@ -21,6 +21,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
     /* background-color: #202122; */
   /* color: #D9D9D9; */
+  position: relative;
 }
 #root { 
   margin: 0;
