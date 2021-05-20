@@ -7,7 +7,29 @@
 }
 .diceHistorical {
   grid-area: diceHistorical;
+  max-height: 80%;
+  overflow: auto;
+  /* -ms-overflow-style: none;
+  scrollbar-width: none; */
 }
+.diceHistorical::-webkit-scrollbar {
+  /* display: none; */
+}
+/* width */
+.diceHistorical::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+.diceHistorical::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+.diceHistorical::-webkit-scrollbar-thumb {
+  background: #e2e2e2;
+}
+
 .characterContainer {
   grid-area: characterContainer;
 }

@@ -25,8 +25,6 @@ import DiceChat from './DiceChat';
 import {
   BrowserView,
   MobileView,
-  isBrowser,
-  isMobile
 } from "react-device-detect";
 
 init();
@@ -151,7 +149,9 @@ const Character = (props) => {
       console.log(e)
     });
   }
-
+  
+  const heightContainer = window.innerHeight;
+  // const heightContainer = window.innerHeight - ((window.innerHeight * 10 ) / 100) - 50;
   if(character && characteristics.length > 0 && skills.length > 0) {
     return (
       <Switch>
@@ -232,7 +232,7 @@ const Character = (props) => {
                   </ul>
                 </div>
                 <BrowserView>
-                  <div className='diceHistorical'>
+                  <div className='diceHistorical' style={{maxHeight: heightContainer}}>
                     <DiceHistorical/>
                     <DiceRoll/>
                   </div>

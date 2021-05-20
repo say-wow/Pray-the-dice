@@ -1,11 +1,17 @@
 .listHisto {
   flex-direction: column;
-  /* height: 500px; */
+  display: flex;
   overflow: auto;
+  margin-block-start: 0;
+  margin-block-end: 0;
 }
 .diceChatContainer {
-  /* flex: 1; */
-  overflow: auto;
+  overflow-y: auto;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.diceChatContainer::-webkit-scrollbar {
+  display: none;
 }
 .bubbleHisto{
   display: flex;
@@ -13,7 +19,7 @@
   border-radius: .75rem .75rem .75rem 0;
   height: 50px;
   width: 150px;
-  margin: 10px 2px;
+  margin: 5px 2px;
   padding: 0 8px;
   justify-content: space-between;
   font-weight: bold;
@@ -28,6 +34,7 @@
 .myhistoRow {
   border-radius: .75rem .75rem 0 .75rem;
   background-color: #3C6E71;
+  align-self: flex-end;
 }
 
 .myhistoRow span {
@@ -53,4 +60,9 @@
 .histoLeftSide span:last-child {
   font-size: 10px;
   font-style: italic;
+}
+.histoView {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }

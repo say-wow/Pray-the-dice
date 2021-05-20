@@ -17,12 +17,14 @@ const DiceHistorical = (props) => {
   const [limitHisto, setLimitHisto] = useState(15)
   const [diceHistorical, setDiceHistorical] = useState([]);
   const db = firebase.firestore();
-  const query = db.collection('dice').where("campaignId", "==", campaign.uid).orderBy('createdAt', 'desc').limit(limitHisto);
   const histoView = useRef(null)
 
   useEffect(() => {
-    histoView.current.scrollIntoView()
+    const query = db.collection('dice').where("campaignId", "==", campaign.uid).orderBy('createdAt', 'desc').limit(limitHisto);
     const unsubscribe = query.onSnapshot(querySnapshot => {
+      if(document.getElementById("last")) {
+        document.getElementById("last").scrollIntoView({ behavior: 'smooth'});    
+      }
       const data = querySnapshot.docs.map(doc => ({
         ...doc.data(),
       }));
@@ -40,14 +42,39 @@ const DiceHistorical = (props) => {
     return false;
   }
 
+  useEffect(() => {
+    if(document.getElementById("last") && limitHisto === 15) {
+      document.getElementById("last").scrollIntoView({ behavior: 'smooth'});    
+    }
+  });
   return (
-    <div ref={histoView}>
+    <div ref={histoView} className='histoView'>
+      { diceHistorical.length >= limitHisto && (
+        <button
+          className='empty'
+          onClick={() => {
+            const limit = limitHisto + 10;
+            setLimitHisto(limit)
+            const query = db.collection('dice').where("campaignId", "==", campaign.uid).orderBy('createdAt', 'desc').limit(limit);
+            const unsubscribe = query.onSnapshot(querySnapshot => {
+              const data = querySnapshot.docs.map(doc => ({
+                ...doc.data(),
+              }));
+              setDiceHistorical(data.reverse());
+            });
+            return unsubscribe;
+          }}
+        >
+          Load more ...
+        </button>
+      )}
       <ul className="listHisto">
-        {diceHistorical.map(histo => {
+        {diceHistorical.map((histo, i) => {
           if (!histo.isDmRoll || (histo.isDmRoll && campaign.idUserDm === user.uid)) {
             return (
               <li
-                className={`${isMyRoll(histo) ? "histoRow" : "myhistoRow"} bubbleHisto`}
+                id={i+1 === diceHistorical.length ? 'last' : `dice${i+1}`}
+                className={`${isMyRoll(histo) ? "myhistoRow" : "histoRow"} bubbleHisto`}
                 key={histo.uid}
               >
                 <div className='histoLeftSide'>

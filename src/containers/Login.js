@@ -12,8 +12,8 @@ export default function Login() {
 
 
   return (
-    <div class="wrapperLogin">
-      <div class='loginBtn'>
+    <div className="wrapperLogin">
+      <div className='loginBtn'>
         <button
           onClick={() => {
             const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
@@ -39,7 +39,7 @@ export default function Login() {
           Sign In with Google
         </button>
       </div>
-      <div class='characterPanel'>
+      <div className='characterPanel'>
         <img src={loginCharacter} alt='' />
       </div>
     </div>

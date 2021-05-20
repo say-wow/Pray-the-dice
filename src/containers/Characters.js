@@ -164,8 +164,8 @@ const Characters = (props) => {
             <div className='listCharacters'>
               <h3>Character</h3>
               <ul className='list'>
-                {characters.map(character => (
-                  <li>
+                {characters.map((character, i) => (
+                  <li key={i}>
                     <Link
                       className='link'
                       key={character.uid}

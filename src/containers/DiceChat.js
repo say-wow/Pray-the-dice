@@ -1,5 +1,4 @@
-import React, {useEffect, useState, useContext} from 'react';
-import firebase from "firebase/app";
+import React from 'react';
 import "firebase/analytics";
 import "firebase/auth";
 import "firebase/firestore";
@@ -7,15 +6,21 @@ import {init} from '../utils/initFirebase'
 import DiceHistorical from '../components/DiceHistorical';
 import DiceRoll from '../components/DiceRoll';
 import '../styles/diceHisto.css';
-
+// import { css } from 'emotion';
+// import ScrollToBottom from 'react-scroll-to-bottom';
 init();
 
+
 const DiceChat = (props) => {
-  console.log(window.innerHeight)
-  const heightContainer = window.innerHeight - 70;
+  const heightContainer = window.innerHeight - 110;
+
+
   return (
     <div className='diceChatContainer' style={{height: heightContainer}}>
-      <DiceHistorical />
+      <DiceHistorical 
+        chat={true}
+      />
+      <DiceRoll />
     </div>
   );
   
