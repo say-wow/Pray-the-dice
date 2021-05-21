@@ -58,6 +58,10 @@
 }
 .histoLeftSide {
   display: flex;
+  flex-direction: row;
+}
+.infoRoll {
+  display: flex;
   flex-direction: column;
 }
 .histoLeftSide span:first-child {
@@ -73,9 +77,18 @@
   flex-direction: column;
 }
 #last {
-
   width: 200px;
   height: 100px;
+}
+#last .histoRightSide{
+  font-size: 30px;
+  margin-right: 10px;
+}
+.userPictureRoll {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  margin: 0 5px 0 0;
 }
 @media (min-width: 1000px) {
   .histoView {
@@ -84,7 +97,7 @@
   .listHisto {
     margin-bottom: 20px;
   }
-  .listHisto div {
+  .listHisto .containerRollAndDate {
     display: flex;
     flex-direction: column;
   }

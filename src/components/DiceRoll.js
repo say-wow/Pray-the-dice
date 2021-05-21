@@ -31,7 +31,8 @@ const DiceRoll = () => {
       campaignId: character.idCampaign,
       uid: rollUid,
       isDmRoll: isDm,
-      diceType: max
+      diceType: max,
+      pictureUserSendRoll: user.photoURL,
     }
     await db.collection('dice').doc(rollUid).set(dataRoll).then(res => {
     

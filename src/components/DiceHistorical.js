@@ -95,7 +95,7 @@ const DiceHistorical = (props) => {
         {diceHistorical.map((histo, i) => {
           if (!histo.isDmRoll || (histo.isDmRoll && campaign.idUserDm === user.uid)) {
             return (
-              <div key={histo.uid}>
+              <div key={histo.uid} className='containerRollAndDate'>
                 {histo.createdAt && (
                   <span className='date'>
                     {histo.createdAt.toDate().toLocaleDateString()}
@@ -106,12 +106,17 @@ const DiceHistorical = (props) => {
                   className={`${isMyRoll(histo) ? "myhistoRow" : "histoRow"} bubbleHisto`}
                 >
                   <div className='histoLeftSide'>
-                    <span>
-                      {histo.userName}
-                    </span>
-                    <span>
-                      d{histo.diceType}
-                    </span>
+                    {histo.pictureUserSendRoll && (
+                      <img alt="userPicture" className='userPictureRoll' src={histo.pictureUserSendRoll} />
+                    )}
+                    <div className='infoRoll'>
+                      <span>
+                        {histo.userName}
+                      </span>
+                      <span>
+                        d{histo.diceType}
+                      </span>
+                    </div>
                   </div>
                   <span className='histoRightSide'>
                     {histo.value}
