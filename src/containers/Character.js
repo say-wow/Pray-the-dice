@@ -21,6 +21,7 @@ import CampaignContext from '../context/CampaignContext';
 import '../styles/character.css';
 import '../styles/modal.css';
 import DiceChat from './DiceChat';
+import { ChatIcon } from '@heroicons/react/solid'
 
 import {
   BrowserView,
@@ -174,9 +175,17 @@ const Character = (props) => {
                         setChatIsVisible(true);
                       }}
                     >
-                      X
+                      <ChatIcon className=""/>
                     </button>
                   </BrowserView>
+                  <MobileView>
+                    <Link
+                      className='link'
+                      to={`${match.url}/chat`}
+                    >
+                      <ChatIcon className=""/>
+                    </Link>
+                </MobileView>
                 </div>
                 {/* <p style={{display: "inline-block"}}>
                   <input
@@ -240,32 +249,22 @@ const Character = (props) => {
                   }
                   </ul>
                 </div>
-                <BrowserView className='diceHistorical'>
-                  <div
-                    style={{
-                      height: window.innerHeight - 80,
+                <BrowserView 
+                  className='diceHistorical'
+                  style={{
                       right: chatIsVisible ? 0 : -450,
                       display: chatIsVisible ? 'block' : 'none'
                     }}
-                  >
-                      <DiceHistorical
-                        display={(state) => {
-                          setChatIsVisible(state)
-                        }}
-                      />
-                  </div>
+                >
+                  <DiceHistorical
+                    display={(state) => {
+                      setChatIsVisible(state)
+                    }}
+                  />
                 </BrowserView>
-                <DiceRoll/>
-                <MobileView>
-                  <div>
-                    <Link
-                      className='link'
-                      to={`${match.url}/chat`}
-                    >
-                      Open Chat
-                    </Link>
-                  </div>
-                </MobileView>
+                <BrowserView>
+                  <DiceRoll/>
+                </BrowserView>
               </div>
               
             )}

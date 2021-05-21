@@ -6,6 +6,8 @@ import "firebase/firestore";
 import UserContext from "../context/UserContext";
 import '../styles/headerbar.css';
 import {Link} from "react-router-dom";
+import { ChatIcon } from '@heroicons/react/solid'
+
 
 const HeaderBar = (props) => {
   const {user, updateUser} = useContext(UserContext)
@@ -28,7 +30,7 @@ const HeaderBar = (props) => {
             firebase.auth().signOut();
           }}
         >
-          {user.displayName}
+          <ChatIcon className="" style={{height : 30}}/>
         </button>
       </div>
     </header>

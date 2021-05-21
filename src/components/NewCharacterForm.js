@@ -5,7 +5,6 @@ import '../styles/characters.css';
 
 const NewCharacterForm = (props) => {
   const [name, setName] = useState('');
-  const [age, setAge] = useState('');
   const [listCharac, setListCharac] = useState(dataCharacter.characteristics);
   const [characComplete, setCharacComplete] = useState(false);
   const [listSkills, setListSkills] = useState([...dataCharacter.skills]);
@@ -100,7 +99,6 @@ const NewCharacterForm = (props) => {
           }
           createCharacter({
             name,
-            age,
             hp,
             description,
             alive: true,
@@ -108,7 +106,6 @@ const NewCharacterForm = (props) => {
             skills: skillsCalculated
           });
           setName('')
-          setAge(null);
           setListCharac([...dataCharacter.characteristics]);
           setCharacComplete(false);
           setListSkills([...dataCharacter.skills]);
@@ -140,17 +137,6 @@ const NewCharacterForm = (props) => {
               type="number"
               value={hp}
               onChange={(e) => {setHp(JSON.parse(e.target.value))}}
-            />
-          </label>
-        </p>
-        <p>
-          <label>
-            {i18next.t('age')} :
-            <input
-              name="age"
-              type="text"
-              value={age}
-              onChange={(e) => {setAge(e.target.value)}}
             />
           </label>
         </p>

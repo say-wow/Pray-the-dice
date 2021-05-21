@@ -24,6 +24,10 @@
   justify-content: space-between;
   font-weight: bold;
   overflow: hidden;
+  -webkit-transition: all 0.25s ease-in-out;
+  -moz-transition: all 0.25s ease-in-out;
+  -o-transition: all 0.25s ease-in-out;
+  transition: all 0.25s ease-in-out;
 }
 .histoRow {
   background-color: #353535;
@@ -67,5 +71,17 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  background-color: #f3f3f3;
+}
+#last {
+
+  width: 200px;
+  height: 100px;
+}
+@media (min-width: 1000px) {
+  .histoView {
+    background-color: #f3f3f3;
+  }
+  .listHisto {
+    margin-bottom: 20px;
+  }
 }

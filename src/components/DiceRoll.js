@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useEffect, useRef} from 'react';
 import firebase from "firebase/app";
 import "firebase/analytics";
 import "firebase/auth";
@@ -13,10 +13,12 @@ init();
 const db = firebase.firestore();
 
 const DiceRoll = () => {
-const {character} = useContext(CharacterContext);
-const {user} = useContext(UserContext);
-const {campaign} = useContext(CampaignContext);
-const [isOpen, setIsOpen] = useState(false)
+  const {character} = useContext(CharacterContext);
+  const {user} = useContext(UserContext);
+  const {campaign} = useContext(CampaignContext);
+  const [isOpen, setIsOpen] = useState(false)
+  const [classListToListen] = useState(['openChat', 'mainRoll', 'subRoll'])
+  const diceRef = useRef(null)
 
   const roll = async (max, isDm) => {
     const randomValue = Math.floor(Math.random() * max) + 1;
@@ -32,14 +34,27 @@ const [isOpen, setIsOpen] = useState(false)
       diceType: max
     }
     await db.collection('dice').doc(rollUid).set(dataRoll).then(res => {
-      // getCampaigns();
+    
     }).catch(e => {
       console.log(e)
     });
   }
 
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (diceRef.current && !diceRef.current.contains(event.target) && !classListToListen.includes(event.srcElement.className)) {
+        setIsOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [diceRef]);
+
   return (
-    <div className='containerRollButton'>
+    <div ref={diceRef} className='containerRollButton'>
       <div className={`${isOpen ? 'open': 'close'}`}>
         <div className='subChoice'>
           <button

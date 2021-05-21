@@ -35,18 +35,18 @@ const DiceHistorical = (props) => {
   }, []);
 
 
-      useEffect(() => {
-        function handleClickOutside(event) {
-            if (histoView.current && !histoView.current.contains(event.target) && !classListToListen.includes(event.srcElement.className)) {
-                props.display(false);
-            }
-        }
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (histoView.current && !histoView.current.contains(event.target) && !classListToListen.includes(event.srcElement.className)) {
+        props.display(false);
+      }
+    }
 
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, [histoView]);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [histoView]);
 
   const isMyRoll = (roll) => {
     if(character.uid === roll.characterId) {
@@ -58,7 +58,7 @@ const DiceHistorical = (props) => {
   }
 
   useEffect(() => {
-    if(document.getElementById("last") && limitHisto === 15) {
+    if(document.getElementById("last") && limitHisto >= 15) {
       document.getElementById("last").scrollIntoView({ behavior: 'smooth'});    
     }
   });
