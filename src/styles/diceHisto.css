@@ -84,4 +84,14 @@
   .listHisto {
     margin-bottom: 20px;
   }
+  .listHisto div {
+    display: flex;
+    flex-direction: column;
+  }
+  .listHisto span.date {
+    color: #8d8d8d;
+    font-size: 12px;
+    font-style: italic;
+    margin-left: 15px;
+  }
 }

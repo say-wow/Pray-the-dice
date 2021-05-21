@@ -10,30 +10,47 @@ import UserContext from '../context/UserContext';
 import '../styles/diceHisto.css'
 init();
 
+const cleanDate = (arrayDate) => {
+  let savedDate = null;
+  arrayDate.map(date => {
+    if(date.createdAt && savedDate !== date.createdAt.toDate().toLocaleDateString()) {
+      savedDate = date.createdAt.toDate().toLocaleDateString();
+    } else {
+      date.createdAt = null;
+    }
+  });
+  return arrayDate;
+};
+
+
 const DiceHistorical = (props) => {
   const {character} = useContext(CharacterContext);
   const {user} = useContext(UserContext);
   const {campaign} = useContext(CampaignContext);
-  const [limitHisto, setLimitHisto] = useState(15)
+  const [limitHisto, setLimitHisto] = useState(15);
   const [diceHistorical, setDiceHistorical] = useState([]);
   const [classListToListen] = useState(['openChat', 'mainRoll', 'subRoll'])
   const db = firebase.firestore();
   const histoView = useRef(null)
 
-  useEffect(() => {
-    const query = db.collection('dice').where("campaignId", "==", campaign.uid).orderBy('createdAt', 'desc').limit(limitHisto);
+  const getDice = (numberOfDiceToAdd = 0) => {
+    const limit = limitHisto + numberOfDiceToAdd;
+    setLimitHisto(limit)
+    const query = db.collection('dice').where("campaignId", "==", campaign.uid).orderBy('createdAt', 'desc').limit(limit);
     const unsubscribe = query.onSnapshot(querySnapshot => {
-      if(document.getElementById("last")) {
-        document.getElementById("last").scrollIntoView({ behavior: 'smooth'});    
-      }
       const data = querySnapshot.docs.map(doc => ({
         ...doc.data(),
       }));
-      setDiceHistorical(data.reverse());
+      setDiceHistorical(cleanDate(data.reverse()));
     });
     return unsubscribe;
+  }
+
+  useEffect(() => {
+    getDice();
   }, []);
 
+  // console.log(user.photoURL);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -58,7 +75,7 @@ const DiceHistorical = (props) => {
   }
 
   useEffect(() => {
-    if(document.getElementById("last") && limitHisto >= 15) {
+    if(document.getElementById("last") && limitHisto === 15) {
       document.getElementById("last").scrollIntoView({ behavior: 'smooth'});    
     }
   });
@@ -68,16 +85,7 @@ const DiceHistorical = (props) => {
         <button
           className='empty'
           onClick={() => {
-            const limit = limitHisto + 10;
-            setLimitHisto(limit)
-            const query = db.collection('dice').where("campaignId", "==", campaign.uid).orderBy('createdAt', 'desc').limit(limit);
-            const unsubscribe = query.onSnapshot(querySnapshot => {
-              const data = querySnapshot.docs.map(doc => ({
-                ...doc.data(),
-              }));
-              setDiceHistorical(data.reverse());
-            });
-            return unsubscribe;
+            getDice(10);
           }}
         >
           Load more ...
@@ -87,23 +95,29 @@ const DiceHistorical = (props) => {
         {diceHistorical.map((histo, i) => {
           if (!histo.isDmRoll || (histo.isDmRoll && campaign.idUserDm === user.uid)) {
             return (
-              <li
-                id={i+1 === diceHistorical.length ? 'last' : `dice${i+1}`}
-                className={`${isMyRoll(histo) ? "myhistoRow" : "histoRow"} bubbleHisto`}
-                key={histo.uid}
-              >
-                <div className='histoLeftSide'>
-                  <span>
-                    {histo.userName}
+              <div key={histo.uid}>
+                {histo.createdAt && (
+                  <span className='date'>
+                    {histo.createdAt.toDate().toLocaleDateString()}
                   </span>
-                  <span>
-                    d{histo.diceType}
+                )}
+                <li
+                  id={i+1 === diceHistorical.length ? 'last' : `dice${i+1}`}
+                  className={`${isMyRoll(histo) ? "myhistoRow" : "histoRow"} bubbleHisto`}
+                >
+                  <div className='histoLeftSide'>
+                    <span>
+                      {histo.userName}
+                    </span>
+                    <span>
+                      d{histo.diceType}
+                    </span>
+                  </div>
+                  <span className='histoRightSide'>
+                    {histo.value}
                   </span>
-                </div>
-                <span className='histoRightSide'>
-                  {histo.value}
-                </span>
-              </li>
+                </li>
+              </div>
             )
           }
           return null;
