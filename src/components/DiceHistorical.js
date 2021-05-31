@@ -10,16 +10,24 @@ import UserContext from '../context/UserContext';
 import '../styles/diceHisto.css'
 init();
 
-const cleanDate = (arrayDate) => {
+const cleanDuplicate = (arrayRoll) => {
   let savedDate = null;
-  arrayDate.map(date => {
-    if(date.createdAt && savedDate !== date.createdAt.toDate().toLocaleDateString()) {
-      savedDate = date.createdAt.toDate().toLocaleDateString();
+  let savedPictureUrl = null;
+
+  arrayRoll.map((roll,i) => {
+    roll.displayPicture = true;
+    if(roll.createdAt && savedDate !== roll.createdAt.toDate().toLocaleDateString()) {
+      savedDate = roll.createdAt.toDate().toLocaleDateString();
     } else {
-      date.createdAt = null;
+      roll.createdAt = null;
+    }
+    if(roll.pictureUserSendRoll && savedPictureUrl !== roll.pictureUserSendRoll) {
+      savedPictureUrl = roll.pictureUserSendRoll;
+    } else if(i >= 1){
+      arrayRoll[i-1].displayPicture = false;
     }
   });
-  return arrayDate;
+  return arrayRoll;
 };
 
 
@@ -41,7 +49,7 @@ const DiceHistorical = (props) => {
       const data = querySnapshot.docs.map(doc => ({
         ...doc.data(),
       }));
-      setDiceHistorical(cleanDate(data.reverse()));
+      setDiceHistorical(cleanDuplicate(data.reverse()));
     });
     return unsubscribe;
   }
@@ -49,8 +57,6 @@ const DiceHistorical = (props) => {
   useEffect(() => {
     getDice();
   }, []);
-
-  // console.log(user.photoURL);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -95,21 +101,28 @@ const DiceHistorical = (props) => {
         {diceHistorical.map((histo, i) => {
           if (!histo.isDmRoll || (histo.isDmRoll && campaign.idUserDm === user.uid)) {
             return (
-              <div key={histo.uid} className='containerRollAndDate'>
+              <div key={histo.uid}>
                 {histo.createdAt && (
                   <span className='date'>
                     {histo.createdAt.toDate().toLocaleDateString()}
                   </span>
                 )}
-                <li
-                  id={i+1 === diceHistorical.length ? 'last' : `dice${i+1}`}
-                  className={`${isMyRoll(histo) ? "myhistoRow" : "histoRow"} bubbleHisto`}
-                >
-                  <div className='histoLeftSide'>
-                    {histo.pictureUserSendRoll && (
-                      <img alt="userPicture" className='userPictureRoll' src={histo.pictureUserSendRoll} />
-                    )}
-                    <div className='infoRoll'>
+                <div className={`${isMyRoll(histo) ? "containerRowReverse" : "containerRow"}`}>
+                  {histo.displayPicture && !isMyRoll(histo) && (
+                    <img
+                      alt="userPicture"
+                      className={`${i !== 0 && !diceHistorical[i-1].displayPicture ? 'pictureAnimated' : 'userPictureRoll'}`}
+                      src={histo.pictureUserSendRoll}
+                    />
+                  )}
+                    
+                  <li
+                    id={i+1 === diceHistorical.length ? 'last' : `dice${i+1}`}
+                    className={`${isMyRoll(histo) ? "myhistoRow" : "histoRow"} bubbleHisto`}
+                    style={{margin: '5px 35px'}}
+                    // style={histo.displayPicture ? {margin: '5px 2px'} : null}
+                  >
+                    <div className='histoLeftSide'>
                       <span>
                         {histo.userName}
                       </span>
@@ -117,11 +130,11 @@ const DiceHistorical = (props) => {
                         d{histo.diceType}
                       </span>
                     </div>
-                  </div>
-                  <span className='histoRightSide'>
-                    {histo.value}
-                  </span>
-                </li>
+                    <span className='histoRightSide'>
+                      {histo.value}
+                    </span>
+                  </li>
+                </div>
               </div>
             )
           }

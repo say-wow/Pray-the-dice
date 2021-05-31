@@ -39,7 +39,7 @@ const firebaseConfig = {
 
 export const init = () => {
   if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig.dev);
+    firebase.initializeApp(firebaseConfig.prod);
   }else {
     firebase.app();
   }

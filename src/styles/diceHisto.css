@@ -19,7 +19,7 @@
   border-radius: .75rem .75rem .75rem 0;
   height: 50px;
   width: 150px;
-  margin: 5px 2px;
+  margin: 5px 37px;
   padding: 0 8px;
   justify-content: space-between;
   font-weight: bold;
@@ -31,7 +31,6 @@
 }
 .histoRow {
   background-color: #353535;
-  margin-left: 10px;
 }
 .histoRow span {
   color: #D9D9D9;
@@ -40,7 +39,7 @@
   border-radius: .75rem .75rem 0 .75rem;
   background-color: #3C6E71;
   align-self: flex-end;
-  margin-right: 10px;
+  margin: 5px 5px;
 }
 
 .myhistoRow span {
@@ -57,10 +56,6 @@
   overflow: hidden;
 }
 .histoLeftSide {
-  display: flex;
-  flex-direction: row;
-}
-.infoRoll {
   display: flex;
   flex-direction: column;
 }
@@ -80,31 +75,76 @@
   width: 200px;
   height: 100px;
 }
-#last .histoRightSide{
-  font-size: 30px;
-  margin-right: 10px;
+#last .histoRightSide {
+  font-size: 25px;
+}
+.histoRightSide {
+  font-size: 16px;
+  -webkit-transition: all 0.25s ease-in-out;
+  -moz-transition: all 0.25s ease-in-out;
+  -o-transition: all 0.25s ease-in-out;
+  transition: all 0.25s ease-in-out;
 }
 .userPictureRoll {
-  height: 30px;
-  width: 30px;
+  height: 25px;
+  width: 25px;
   border-radius: 50%;
-  margin: 0 5px 0 0;
+  align-self: flex-end;
+  margin: 5px 5px 0px 5px;
+  -webkit-transition: all 0.25s ease-in-out;
+  -moz-transition: all 0.25s ease-in-out;
+  -o-transition: all 0.25s ease-in-out;
+  transition: all 0.25s ease-in-out;
+  position: absolute;
+  bottom: 5px;
 }
+.pictureAnimated {
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  align-self: flex-end;
+  margin: 5px 5px 0px 5px;
+  -webkit-transition: all 0.25s ease-in-out;
+  -moz-transition: all 0.25s ease-in-out;
+  -o-transition: all 0.25s ease-in-out;
+  transition: all 0.25s ease-in-out;
+  position: absolute;
+  bottom: 105px;
+  animation: pictureAnimation 0.5s ease-in-out 0.15s 1 normal forwards;
+}
+
+@keyframes pictureAnimation {
+  from {
+    bottom: 105px;
+    opacity: 1;
+  }
+  to {
+    bottom: 5px;
+  }
+}
+
+.containerRow {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+}
+.containerRowReverse {
+  display: flex;
+  position: relative;
+  flex-direction: row-reverse;
+}
+.listHisto span.date {
+  color: #8d8d8d;
+  font-size: 12px;
+  font-style: italic;
+  margin-left: 15px;
+}
+
 @media (min-width: 1000px) {
   .histoView {
     background-color: #f3f3f3;
   }
   .listHisto {
     margin-bottom: 20px;
-  }
-  .listHisto .containerRollAndDate {
-    display: flex;
-    flex-direction: column;
-  }
-  .listHisto span.date {
-    color: #8d8d8d;
-    font-size: 12px;
-    font-style: italic;
-    margin-left: 15px;
   }
 }

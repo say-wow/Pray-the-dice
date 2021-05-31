@@ -20,7 +20,7 @@ const DiceChat = (props) => {
       <DiceHistorical 
         chat={true}
       />
-      <DiceRoll />
+      <DiceRoll chat={true}/>
     </div>
   );
   

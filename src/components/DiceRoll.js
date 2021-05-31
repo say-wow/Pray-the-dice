@@ -12,7 +12,7 @@ import '../styles/diceRoll.css'
 init();
 const db = firebase.firestore();
 
-const DiceRoll = () => {
+const DiceRoll = (props) => {
   const {character} = useContext(CharacterContext);
   const {user} = useContext(UserContext);
   const {campaign} = useContext(CampaignContext);
@@ -55,7 +55,10 @@ const DiceRoll = () => {
   }, [diceRef]);
 
   return (
-    <div ref={diceRef} className='containerRollButton'>
+    <div
+      ref={diceRef}
+      className={`${props.chat}` ? 'containerRollButtonPhone' : 'containerRollButton'}  
+    >
       <div className={`${isOpen ? 'open': 'close'}`}>
         <div className='subChoice'>
           <button

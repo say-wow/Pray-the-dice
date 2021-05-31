@@ -9,6 +9,11 @@
   bottom: 20px;
   left: 20px;
 }
+.containerRollButtonPhone {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
 .subChoice {
   display: flex;
   flex-direction: column;

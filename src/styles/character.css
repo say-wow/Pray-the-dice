@@ -8,6 +8,7 @@
 .diceHistorical {
   grid-area: diceHistorical;
   overflow: auto;
+  background-color: #f3f3f3;
   /* -ms-overflow-style: none;
   scrollbar-width: none; */
 }

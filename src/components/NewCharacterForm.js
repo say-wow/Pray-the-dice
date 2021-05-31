@@ -99,7 +99,7 @@ const NewCharacterForm = (props) => {
           }
           createCharacter({
             name,
-            hp,
+            hp: dataCharacter.characteristics.find((chara) => ( chara.label === 'endurance')).value <= 15 ? dataCharacter.characteristics.find((chara) => ( chara.label === 'endurance')).value : 15,
             description,
             alive: true,
             characteristics: listCharac,
@@ -194,7 +194,6 @@ const NewCharacterForm = (props) => {
             <p>
               <b>Skills ({additionalSkillPoint})</b>
             </p>
-            {console.log(listBonusSkills)}
             {listSkills.map((skill, i) => (
               <div className='skillRow'>
                 <span>

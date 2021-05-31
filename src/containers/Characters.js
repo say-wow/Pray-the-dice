@@ -104,7 +104,6 @@ const Characters = (props) => {
       uid: characterUid,
       idCampaign: campaignIdUsed,
       idUser: user.uid,
-      age: characterData.age,
       currentHp: characterData.hp,
       maxHp: characterData.hp,
       description: characterData.description,
@@ -127,6 +126,7 @@ const Characters = (props) => {
         value: characteristics[i].value,
         characterId: characterUid
       }
+      console.log(dataChara);
       await db.collection('characteristics').doc(uidChara).set(dataChara).then(res => {
         console.log('OK')
       }).catch(e => {
