@@ -119,8 +119,8 @@ const DiceHistorical = (props) => {
                   <li
                     id={i+1 === diceHistorical.length ? 'last' : `dice${i+1}`}
                     className={`${isMyRoll(histo) ? "myhistoRow" : "histoRow"} bubbleHisto`}
-                    style={{margin: '5px 35px'}}
-                    // style={histo.displayPicture ? {margin: '5px 2px'} : null}
+                    style={!isMyRoll(histo) ? {margin: '5px 35px'} : null}
+                    
                   >
                     <div className='histoLeftSide'>
                       <span>

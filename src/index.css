@@ -1,3 +1,8 @@
+/*
+#353535
+#D9D9D9
+#284B63
+*/
 html {
   margin: 0;
   padding: 0;
@@ -29,16 +34,19 @@ body {
   height: 100%;
   width: 100%;
 }
+.compactPage {
+  width: 70%;
+  margin: auto
+}
 input[type=text], input[type=number], textarea {
   background-color: transparent;
   border-width: 0;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #353535;
   margin: 5px
 }
-input:focus {
+input:focus, textarea:focus {
   outline: none;
 }
-
 input[type=submit], button {
   background-color: #284B63;
   box-shadow: rgb(50 50 93 / 11%) 0px 4px 6px, rgb(0 0 0 / 8%) 0px 1px 3px;
@@ -63,7 +71,7 @@ button.empty {
 }
 
 input[type=submit].black, button.black {
-    background-color: #0A0A0A;
+  background-color: #0A0A0A;
 }
 .link {
   color :#284B63;
@@ -77,59 +85,3 @@ ul {
   padding-inline-start: 0;
   list-style-type: none;
 }
-/* .wrapper {
-  display: grid;
-  grid-gap: 20px;
-  grid-template-areas:
-    "header"
-    "nav"
-    "content"
-    "sidebar"
-    "ad"
-    "footer";
-}
-@media (min-width: 500px) {
-  .wrapper {
-    grid-template-columns: 1fr 3fr;
-    grid-template-areas:
-      "header  header"
-      "nav     nav"
-      "sidebar content"
-      "ad      footer";
-  }
-  nav ul {
-    display: flex;
-    justify-content: space-between;
-  }
-}
-@media (min-width: 700px) {
-  .wrapper {
-    grid-template-columns: 1fr 4fr 1fr;
-    grid-template-areas:
-      "header header  header"
-      "nav    content sidebar"
-      "nav    content ad"
-      "footer footer  footer"
-   }
-   nav ul {
-     flex-direction: column;
-   }
-} */
-/* .main-head {
-  grid-area: header;
-}
-.content {
-  grid-area: content;
-}
-.main-nav {
-  grid-area: nav;
-}
-.side {
-  grid-area: sidebar;
-}
-.ad {
-  grid-area: ad;
-}
-.main-footer {
-  grid-area: footer;
-} */

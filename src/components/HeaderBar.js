@@ -6,7 +6,7 @@ import "firebase/firestore";
 import UserContext from "../context/UserContext";
 import '../styles/headerbar.css';
 import {Link} from "react-router-dom";
-import { ChatIcon } from '@heroicons/react/solid'
+import { LogoutIcon, HomeIcon } from '@heroicons/react/outline'
 
 
 const HeaderBar = (props) => {
@@ -15,7 +15,9 @@ const HeaderBar = (props) => {
   return (
     <header>
       <div className='logo'>
-        <Link className='link' to="/campaigns">LOGO</Link>
+        <Link className={'link homeLink'} to="/campaigns">
+          <HomeIcon className='homeLinkIcon' />
+        </Link>
       </div>
       <div className='name'>
         {user.displayName}
@@ -30,7 +32,7 @@ const HeaderBar = (props) => {
             firebase.auth().signOut();
           }}
         >
-          <ChatIcon className="" style={{height : 30}}/>
+          <LogoutIcon className="" style={{height : 30}}/>
         </button>
       </div>
     </header>

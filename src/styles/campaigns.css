@@ -8,6 +8,7 @@
 }
 @media (min-width: 500px) {
   .containerCampaigns {
+    padding-top: 30px;
     grid-template-columns: 5fr 4fr;
     grid-template-areas:
       "campaignList    formNewCampaign"

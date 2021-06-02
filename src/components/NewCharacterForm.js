@@ -25,9 +25,6 @@ const NewCharacterForm = (props) => {
 
     if(dexterity && intelligence && strength && charisma && endurance) {
       setCharacComplete(true);
-      // setTimeout(() => {
-      //   skillsRef.current.scrollIntoView();  
-      // }, 100);      
     }
     if(dexterity && intelligence) {
       const dexInt = (dexterity + intelligence) * 2
@@ -87,147 +84,156 @@ const NewCharacterForm = (props) => {
   }
 
   return (
-    <form
-      className='formNewCharacter'
-      onSubmit={(e) => {
-        if(additionalSkillPoint >= 0) {
-          let skillsCalculated = [...listSkills];
-          for(let i=0; i < skillsCalculated.length; i+=1) {
-            if(listBonusSkills[i].value) {
-              skillsCalculated[i].value += listBonusSkills[i].value;
+    <div>
+      <h3>New character</h3>
+      <form
+        className='formNewCharacter'
+        onSubmit={(e) => {
+          let valid = true;
+          if(additionalSkillPoint >= 0) {
+            let skillsCalculated = [...listSkills];
+            for(let i=0; i < skillsCalculated.length; i+=1) {
+              if(skillsCalculated[i].value > 90) {
+                valid = false;
+              }
+            }
+            if(valid) {
+              for(let i=0; i < skillsCalculated.length; i+=1) {
+                if(listBonusSkills[i].value) {
+                  skillsCalculated[i].value += listBonusSkills[i].value;
+                }
+              }
+              createCharacter({
+                name,
+                hp: dataCharacter.characteristics.find((chara) => ( chara.label === 'endurance')).value <= 15 ? dataCharacter.characteristics.find((chara) => ( chara.label === 'endurance')).value : 15,
+                description,
+                alive: true,
+                characteristics: listCharac,
+                skills: skillsCalculated
+              });
+              setName('');
+              setDescription('');
+              setListCharac([...dataCharacter.characteristics]);
+              setCharacComplete(false);
+              setListSkills([...dataCharacter.skills]);
+              setAdditionalSkillPoint(50);
+              setListBonusSkills([...dataCharacter.skillsBonus]);
+              setHp(null);
+            } else {
+              alert('ERROR')
             }
           }
-          createCharacter({
-            name,
-            hp: dataCharacter.characteristics.find((chara) => ( chara.label === 'endurance')).value <= 15 ? dataCharacter.characteristics.find((chara) => ( chara.label === 'endurance')).value : 15,
-            description,
-            alive: true,
-            characteristics: listCharac,
-            skills: skillsCalculated
-          });
-          setName('')
-          setListCharac([...dataCharacter.characteristics]);
-          setCharacComplete(false);
-          setListSkills([...dataCharacter.skills]);
-          setAdditionalSkillPoint(50);
-          setListBonusSkills([...dataCharacter.skillsBonus]);
-          setHp(null);
-        }
-        e.preventDefault();
-      }}
-    >
-      <div className='defaultInformation'>
-          <h3>New character</h3>
-        <p>
-          <label>
-            {i18next.t('name')} :
-            <input
-              name="name"
-              type="text"
-              value={name}
-              onChange={(e) => {setName(e.target.value)}}
-            />
-          </label>
-        </p>
-        <p>
-          <label>
-            {i18next.t('hp')} :
-            <input
-              name="hp"
-              type="number"
-              value={hp}
-              onChange={(e) => {setHp(JSON.parse(e.target.value))}}
-            />
-          </label>
-        </p>
-        <p>
-          <label>
-            {i18next.t('description')} :
-            <textarea
-              name="description"
-              value={description}
-              onChange={(e) => {setDescription(e.target.value)}}
-            />
-          </label>
-        </p>
-      </div>
-        <div className='characteristics'>
+          e.preventDefault();
+        }}
+      >
+        <div className='defaultInformation'>
           <p>
-            <b>characteristic</b>
+            <label>
+              {i18next.t('name')} :
+              <input
+                name="name"
+                type="text"
+                className='nameNewCharacter'
+                value={name}
+                onChange={(e) => {setName(e.target.value)}}
+              />
+            </label>
           </p>
-          {listCharac.map((chara) => (
-            <div>
-              <label>
-                {i18next.t(`characteristics.${chara.label}`)}
-                <input
-                  name={chara.label}
-                  type="number"
-                  max={18}
-                  value={chara.value}
-                  onChange={(e) => {
-                    const newValue = e.target.value !== '' ? JSON.parse(e.target.value) : null;
-                    const newList = [...listCharac]
-                    newList[newList.findIndex((charac) => charac.label === chara.label)].value = newValue
-                    setListCharac(newList);
-                  }}
-                />
-              </label>
-            </div>
-          ))}
-          <button
-            className='autoGeneration'
-            onClick={(e) => {
-              listCharac.map((chara) => {
-                e.preventDefault();
-                const newList = [...listCharac]
-                newList[newList.findIndex((charac) => charac.label === chara.label)].value = diceRollForNewStat();
-                setListCharac(newList);
-              });
-            }}
-          >
-            Generate auto
-          </button>
+          <p>
+            <label>
+              {i18next.t('description')} :
+              <textarea
+                className='textAreaDescription'
+                name="description"
+                value={description}
+                onChange={(e) => {setDescription(e.target.value)}}
+              />
+            </label>
+          </p>
         </div>
-      {characComplete && (
-        <div className='skillsContainer'>
-          <div ref={skillsRef} className='skills'>
+          <div className='characteristics'>
             <p>
-              <b>Skills ({additionalSkillPoint})</b>
+              <b>Characteristic</b>
             </p>
-            {listSkills.map((skill, i) => (
-              <div className='skillRow'>
-                <span>
-                  {i18next.t(`skills.${skill.label}`)}
-                </span>
-                <div>
-                  <span>
-                    {skill.value}
-                  </span>
+            {listCharac.map((chara) => (
+              <div>
+                <label>
+                  {i18next.t(`characteristics.${chara.label}`)}
                   <input
-                    name={skill.label}
+                    name={chara.label}
                     type="number"
-                    value={listBonusSkills[i].value}
+                    className='inputCharacteristics'
+                    max={18}
+                    min={3}
+                    value={chara.value}
                     onChange={(e) => {
                       const newValue = e.target.value !== '' ? JSON.parse(e.target.value) : null;
-                      const newListBonus = [...listBonusSkills]
-                      newListBonus[newListBonus.findIndex((charac) => charac.label === listBonusSkills[i].label)].value = newValue;
-                      setListBonusSkills(newListBonus);
+                      const newList = [...listCharac]
+                      newList[newList.findIndex((charac) => charac.label === chara.label)].value = newValue
+                      setListCharac(newList);
                     }}
                   />
-                </div>
+                </label>
               </div>
             ))}
+            <button
+              className='autoGeneration'
+              onClick={(e) => {
+                listCharac.map((chara) => {
+                  e.preventDefault();
+                  const newList = [...listCharac]
+                  newList[newList.findIndex((charac) => charac.label === chara.label)].value = diceRollForNewStat();
+                  setListCharac(newList);
+                });
+              }}
+            >
+              Generate auto
+            </button>
           </div>
-          <div>
-            {additionalSkillPoint === 0 && (
-              <div>
-                <input type="submit" value="Envoyer" />
-              </div>
-            )}
+        {characComplete && (
+          <div className='skillsContainer'>
+            <div ref={skillsRef} className='skills'>
+              <p>
+                <b>Skills ({additionalSkillPoint})</b>
+              </p>
+              {listSkills.map((skill, i) => (
+                <div className='skillRow'>
+                  <span>
+                    {i18next.t(`skills.${skill.label}`)}
+                  </span>
+                  <div>
+                    <span>
+                      {skill.value}
+                    </span>
+                    <input
+                      name={skill.label}
+                      max={50}
+                      min={0}
+                      className='inputSkills'
+                      type="number"
+                      value={listBonusSkills[i].value}
+                      onChange={(e) => {
+                        const newValue = e.target.value !== '' ? JSON.parse(e.target.value) : null;
+                        const newListBonus = [...listBonusSkills]
+                        newListBonus[newListBonus.findIndex((charac) => charac.label === listBonusSkills[i].label)].value = newValue;
+                        setListBonusSkills(newListBonus);
+                      }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className='createCharacterButton'>
+              {additionalSkillPoint === 0 && (
+                <div>
+                  <input type="submit" value="Creer" />
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-      )}
-    </form>
+        )}
+      </form>
+    </div>
   );
 }
 

@@ -16,11 +16,35 @@
 }
 .skillsContainer {
   grid-area: skillsContainer;
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  justify-content: flex-start;
+  grid-template-areas:
+    "createCharacterButton"
+    "skills";
+}
+.createCharacterButton {
+  grid-area: createCharacterButton;
 }
 .characteristics {
   grid-area: characteristics;
+  max-width: 215px;
+}
+.characteristics label {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.textAreaDescription {
+  height: 100px;
+  margin: 5px 0;
+  width: calc(100% - 5px);
+  border-left: 1px solid #353535;
+  display: block;
+}
+input[type=text].nameNewCharacter {
+  margin: 5px 0px;
+  width: calc(100% - 5px);
+  display: block;
 }
 .list {
   display: flex;
@@ -55,20 +79,37 @@
     "characteristics"
     "skillsContainer";
 }
-
+.inputCharacteristics, .inputSkills {
+  width: 100px;
+}
 @media (min-width: 500px) {
   .containerCharacters {
-  grid-template-areas:
-    "listCharacters"
-    "newCharacterForm";
+    grid-template-areas:
+      "listCharacters"
+      "newCharacterForm";
   }
   .formNewCharacter {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 20px;
     grid-template-areas:
-      "defaultInformation characteristics"
-      "skillsContainer             skillsContainer";
+      "defaultInformation  skillsContainer"
+      "characteristics skillsContainer"
+      "characteristics skillsContainer";
+  }
+  .textAreaDescription {
+    max-height: 100px;
+    min-height: 100px;
+    max-width: 490px;
+    min-width: 490px;
+  }
+  input[type=text].nameNewCharacter {
+    margin: 5px 0px;
+    width: auto;
+    display: inline-block;
+  }
+  .skillsContainer {
+    justify-content: flex-start;
   }
 }
 @media (min-width: 700px) {
@@ -82,8 +123,16 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 20px;
-    grid-template-areas:
-      "defaultInformation characteristics"
-      "skillsContainer             skillsContainer";
+  }
+  .textAreaDescription {
+    max-height: 100px;
+    min-height: 100px;
+    max-width: 490px;
+    min-width: 490px;
+  }
+  input[type=text].nameNewCharacter {
+    margin: 5px 0px;
+    width: auto;
+    display: inline-block;
   }
 }

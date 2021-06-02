@@ -142,7 +142,8 @@ const Characters = (props) => {
         uid: uidChara,
         name: skills[i].label,
         value: skills[i].value,
-        characterId: characterUid
+        characterId: characterUid,
+        isCustom: false,
       }
       await db.collection('skills').doc(uidChara).set(dataChara).then(res => {
         console.log('OK')
@@ -152,7 +153,7 @@ const Characters = (props) => {
     }
   }
 
-
+  console.log(campaign)
   return (
     <div className='containerCharacters'>
       <CharacterContext.Provider value={contextValue}>
@@ -161,29 +162,40 @@ const Characters = (props) => {
             <Character character={character}/>
           </Route>
           <Route path={match.path}>
-            <div className='listCharacters'>
-              <h3>Character</h3>
-              <ul className='list'>
-                {characters.map((character, i) => (
-                  <li key={i}>
-                    <Link
-                      className='link'
-                      key={character.uid}
-                      onClick={() => {
-                        setCharacter(character)
-                      }}
-                      to={`${match.url}/${character.uid}`}
-                    >
-                      {character.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+            <div className="compactPage">
+              <div className='listCharacters'>
+                <h3>Campaign information</h3>
+                <div>
+                  <p>
+                    Nom : {campaign.name}
+                  </p>
+                  <p>
+                    Code d'invitation : {campaign.invitationCode}
+                  </p>
+                </div>
+                <h3>Character</h3>
+                <ul className='list'>
+                  {characters.map((character, i) => (
+                    <li key={i}>
+                      <Link
+                        className='link'
+                        key={character.uid}
+                        onClick={() => {
+                          setCharacter(character)
+                        }}
+                        to={`${match.url}/${character.uid}`}
+                      >
+                        {character.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <NewCharacterForm
+                className='newCharacterForm'
+                createCharacter={(character) => {createCharacter(character)}}
+              />
             </div>
-            <NewCharacterForm
-              className='newCharacterForm'
-              createCharacter={(character) => {createCharacter(character)}}
-            />
           </Route>
         </Switch>
       </CharacterContext.Provider>

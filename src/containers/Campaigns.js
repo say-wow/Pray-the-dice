@@ -58,7 +58,7 @@ const Campaigns = (props) => {
     var result = '';
     var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789';
     var charactersLength = characters.length;
-    for (var i = 0; i < 4; i++) {
+    for (var i = 0; i < 6; i++) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     return result;
@@ -157,7 +157,7 @@ const Campaigns = (props) => {
             <Characters/>
           </Route>
           <Route path={match.path}>
-            <div className='containerCampaigns'>
+            <div className={'containerCampaigns compactPage'}>
               <div className='campaignList'>
                 <ul>
                   {campaigns.map(campaign => (

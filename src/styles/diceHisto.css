@@ -30,10 +30,10 @@
   transition: all 0.25s ease-in-out;
 }
 .histoRow {
-  background-color: #353535;
+  background-color: #eaeaea;
 }
 .histoRow span {
-  color: #D9D9D9;
+  color: #050505;
 }
 .myhistoRow {
   border-radius: .75rem .75rem 0 .75rem;
@@ -110,7 +110,7 @@
   transition: all 0.25s ease-in-out;
   position: absolute;
   bottom: 105px;
-  animation: pictureAnimation 0.5s ease-in-out 0.15s 1 normal forwards;
+  animation: pictureAnimation 0.5s ease-in-out 0.2s 1 normal forwards;
 }
 
 @keyframes pictureAnimation {
@@ -142,7 +142,7 @@
 
 @media (min-width: 1000px) {
   .histoView {
-    background-color: #f3f3f3;
+    /* background-color: #f3f3f3; */
   }
   .listHisto {
     margin-bottom: 20px;

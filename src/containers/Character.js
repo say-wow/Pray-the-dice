@@ -21,7 +21,7 @@ import CampaignContext from '../context/CampaignContext';
 import '../styles/character.css';
 import '../styles/modal.css';
 import DiceChat from './DiceChat';
-import { ChatIcon } from '@heroicons/react/solid'
+import { ChatIcon } from '@heroicons/react/outline'
 
 import {
   BrowserView,
@@ -41,7 +41,6 @@ const Character = (props) => {
   const [characteristics, setCharacteristics] = useState([])
   const [skills, setSkills] = useState([])
   const [inventory, setInventory] = useState([])
-  const [updateHp, setUpdateHp] = useState()
   const [itemName, setItemName] = useState()
   const [numberOfnewItem, setNumberOfnewItem] = useState()
   const [chatIsVisible, setChatIsVisible] = useState(false)
@@ -137,7 +136,7 @@ const Character = (props) => {
       number: numberOfnewItem,
       characterId: character.uid,
     };
-    db.collection('Items').doc(itemUid).set(newItem).then(res => {
+    db.collection('items').doc(itemUid).set(newItem).then(res => {
       getInventory(character.uid)
     }).catch(e => {
       console.log(e)
@@ -145,14 +144,13 @@ const Character = (props) => {
   }
 
   const removeItem = (itemUid) => {
-    db.collection('Items').doc(itemUid).delete().then(res => {
+    db.collection('items').doc(itemUid).delete().then(res => {
       getInventory(character.uid)
     }).catch(e => {
       console.log(e)
     });
   }
   
-  // const heightContainer = window.innerHeight - ((window.innerHeight * 10 ) / 100) - 50;
   if(character && characteristics.length > 0 && skills.length > 0) {
     return (
       <Switch>
@@ -164,28 +162,34 @@ const Character = (props) => {
             {(character.idUser === user.uid || campaign.idUserDm === user.uid) && (
               <div className='characterContainer'>
                 <div className='characterDetails'>
-                  <h2>{character.name}</h2>
-                  <span>{`${i18next.t('hp')} : ${character.currentHp} / ${character.maxHp}`}</span>
-                  <p>{`${i18next.t('description')} :`}</p>
-                  <p>{character.description}</p>
-                  <BrowserView>
-                    <button
-                      className='openChat'
-                      onClick={() => {
-                        setChatIsVisible(true);
-                      }}
-                    >
-                      <ChatIcon className=""/>
-                    </button>
-                  </BrowserView>
-                  <MobileView>
-                    <Link
-                      className='link'
-                      to={`${match.url}/chat`}
-                    >
-                      <ChatIcon className=""/>
-                    </Link>
-                </MobileView>
+                  <div className='headDetails'>
+                    <h2>{character.name}</h2>
+                    <MobileView className='linkChatContainer'>
+                      <Link
+                        className='link'
+                        to={`${match.url}/chat`}
+                      >
+                        <ChatIcon className="iconChat"/>
+                      </Link>
+                    </MobileView>
+                    <BrowserView className='linkChatContainer'>
+                      <button
+                        className={'openChat'}
+                        onClick={() => {
+                          setChatIsVisible(true);
+                        }}
+                      >
+                        <ChatIcon className="iconChat"/>
+                      </button>
+                    </BrowserView>
+                  </div>
+                  <div className='healthDetails'>
+                    <span>{`${i18next.t('hp')} : ${character.currentHp} / ${character.maxHp}`}</span>
+                  </div>
+                  <div className='descriptionDetails'>
+                    <p>{`${i18next.t('description')} :`}</p>
+                    <p>{character.description}</p>
+                  </div>
                 </div>
                 {/* <p style={{display: "inline-block"}}>
                   <input
@@ -224,7 +228,7 @@ const Character = (props) => {
                             {i18next.t(`characteristics.${charac.name}`)}
                           </span>
                           <span className='value'>
-                            {charac.value}
+                            {charac.value * 5}
                           </span>
                         </li>
                       ))
@@ -239,7 +243,7 @@ const Character = (props) => {
                     skills.map((skill) => (
                       <li key={skill.uid}>
                         <span>
-                          {i18next.t(`skills.${skill.name}`)}
+                          {skill.isCustom ? skill.name : i18next.t(`skills.${skill.name}`)}
                         </span>
                         <span>
                           {skill.value}
@@ -248,6 +252,49 @@ const Character = (props) => {
                     ))
                   }
                   </ul>
+                </div>
+                <div className='inventory'>
+                  <p className='titleSection'><b>Inventory</b></p>
+                  <ul>
+                    {
+                      inventory.map((item) => (
+                        <li>
+                          {`${item.name} x${item.number}`}
+                          {/* <button
+                            onClick={() => {
+                              removeItem(item.uid);
+                            }}
+                          >
+                            X
+                          </button> */}
+                        </li>
+                      ))
+                    }
+                  </ul>
+                  <form  style={{display: "inline-block"}} onSubmit={(e) => {
+                    createItem();
+                    setItemName('');
+                    setNumberOfnewItem('');
+                    e.preventDefault();
+                  }}>
+                    <input
+                      name="newItemInventory"
+                      type="text"
+                      value={itemName}
+                      onChange={(e) => {
+                        setItemName(e.target.value);
+                      }}
+                    />
+                    <input
+                      name="numberOfNewItem"
+                      type="number"
+                      value={numberOfnewItem}
+                      onChange={(e) => {
+                        setNumberOfnewItem(e.target.value ? JSON.parse(e.target.value) : '');
+                      }}
+                    />
+                    <input type="submit" value="Ajouter" />
+                  </form>
                 </div>
                 <BrowserView 
                   className='diceHistorical'
@@ -263,55 +310,11 @@ const Character = (props) => {
                   />
                 </BrowserView>
                 <BrowserView>
-                  <DiceRoll/>
+                  <DiceRoll chat={false}/>
                 </BrowserView>
               </div>
               
             )}
-            
-            <div className='inventory'>
-              <p>Inventaire</p>
-              <ul>
-                {
-                  inventory.map((item) => (
-                    <li>
-                      {`${item.name} x${item.number}`}
-                      <button
-                        onClick={() => {
-                          removeItem(item.uid);
-                        }}
-                      >
-                        X
-                      </button>
-                    </li>
-                  ))
-                }
-              </ul>
-              <form  style={{display: "inline-block"}} onSubmit={(e) => {
-                createItem();
-                setItemName('');
-                setNumberOfnewItem('');
-                e.preventDefault();
-              }}>
-                <input
-                  name="newItemInventory"
-                  type="text"
-                  value={itemName}
-                  onChange={(e) => {
-                    setItemName(e.target.value);
-                  }}
-                />
-                <input
-                  name="numberOfNewItem"
-                  type="number"
-                  value={numberOfnewItem}
-                  onChange={(e) => {
-                    setNumberOfnewItem(e.target.value ? JSON.parse(e.target.value) : '');
-                  }}
-                />
-                <input type="submit" value="Ajouter" />
-              </form>
-            </div>
           </div>
         </Route>
       </Switch>

@@ -57,7 +57,7 @@ const DiceRoll = (props) => {
   return (
     <div
       ref={diceRef}
-      className={`${props.chat}` ? 'containerRollButtonPhone' : 'containerRollButton'}  
+      className={`${props.chat === true  ? 'containerRollButtonPhone' : 'containerRollButton'}`}  
     >
       <div className={`${isOpen ? 'open': 'close'}`}>
         <div className='subChoice'>

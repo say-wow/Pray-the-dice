@@ -40,7 +40,7 @@ export default function Login() {
         </button>
       </div>
       <div className='characterPanel'>
-        <img src={loginCharacter} alt='' />
+        {/* <img src={loginCharacter} alt='' /> */}
       </div>
     </div>
     );

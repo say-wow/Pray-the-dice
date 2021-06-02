@@ -24,165 +24,205 @@
   "skills": [
     {
       "label": "craft",
-      "value": null
+      "value": null,
+      "isCustom": false
     },
     {
       "label": "cac",
-      "value": null
+      "value": null,
+      "isCustom": false
     },
     {
       "label": "dist",
-      "value": null
+      "value": null,
+      "isCustom": false
     },
     {
       "label": "nature",
-      "value": null
+      "value": null,
+      "isCustom": false
     },
     {
       "label": "secret",
-      "value": null
+      "value": null,
+      "isCustom": false
     },
     {
       "label": "run",
-      "value": null
+      "value": null,
+      "isCustom": false
     },
     {
       "label": "stealth",
-      "value": null
+      "value": null,
+      "isCustom": false
     },
     {
       "label": "law",
-      "value": null
+      "value": null,
+      "isCustom": false
     },
     {
       "label": "dodge",
-      "value": null
+      "value": null,
+      "isCustom": false
     },
     {
       "label": "intimidate",
-      "value": null
+      "value": null,
+      "isCustom": false
     },
     {
       "label": "read",
-      "value": null
+      "value": null,
+      "isCustom": false
     },
     {
       "label": "lie",
-      "value": null
+      "value": null,
+      "isCustom": false
     },
     {
       "label": "perception",
-      "value": null
+      "value": null,
+      "isCustom": false
     },
     {
       "label": "pilot",
-      "value": null
+      "value": null,
+      "isCustom": false
     },
     {
       "label": "psychology",
-      "value": null
+      "value": null,
+      "isCustom": false
     },
     {
       "label": "reflexes",
-      "value": null
+      "value": null,
+      "isCustom": false
     },
     {
       "label": "lock",
-      "value": null
+      "value": null,
+      "isCustom": false
     },
     {
       "label": "heal",
-      "value": null
+      "value": null,
+      "isCustom": false
     },
     {
       "label": "survive",
-      "value": null
+      "value": null,
+      "isCustom": false
     },
     {
       "label": "steal",
-      "value": null
+      "value": null,
+      "isCustom": false
     }
   ],
   "skillsBonus": [
     {
       "label": "craft",
-      "value": null
+      "value": null,
+      "isCustom": false
     },
     {
       "label": "cac",
-      "value": null
+      "value": null,
+      "isCustom": false
     },
     {
       "label": "dist",
-      "value": null
+      "value": null,
+      "isCustom": false
     },
     {
       "label": "nature",
-      "value": null
+      "value": null,
+      "isCustom": false
     },
     {
       "label": "secret",
-      "value": null
+      "value": null,
+      "isCustom": false
     },
     {
       "label": "run",
-      "value": null
+      "value": null,
+      "isCustom": false
     },
     {
       "label": "stealth",
-      "value": null
+      "value": null,
+      "isCustom": false
     },
     {
       "label": "law",
-      "value": null
+      "value": null,
+      "isCustom": false
     },
     {
       "label": "dodge",
-      "value": null
+      "value": null,
+      "isCustom": false
     },
     {
       "label": "intimidate",
-      "value": null
+      "value": null,
+      "isCustom": false
     },
     {
       "label": "read",
-      "value": null
+      "value": null,
+      "isCustom": false
     },
     {
       "label": "lie",
-      "value": null
+      "value": null,
+      "isCustom": false
     },
     {
       "label": "perception",
-      "value": null
+      "value": null,
+      "isCustom": false
     },
     {
       "label": "pilot",
-      "value": null
+      "value": null,
+      "isCustom": false
     },
     {
       "label": "psychology",
-      "value": null
+      "value": null,
+      "isCustom": false
     },
     {
       "label": "reflexes",
-      "value": null
+      "value": null,
+      "isCustom": false
     },
     {
       "label": "lock",
-      "value": null
+      "value": null,
+      "isCustom": false
     },
     {
       "label": "heal",
-      "value": null
+      "value": null,
+      "isCustom": false
     },
     {
       "label": "survive",
-      "value": null
+      "value": null,
+      "isCustom": false
     },
     {
       "label": "steal",
-      "value": null
+      "value": null,
+      "isCustom": false
     }
   ]
 }
