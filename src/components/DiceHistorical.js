@@ -10,10 +10,10 @@ import UserContext from '../context/UserContext';
 import '../styles/diceHisto.css'
 init();
 
-const cleanDuplicate = (arrayRoll) => {
+const cleanDuplicate = (arrayRoll, userUid, campaignUserUidDm) => {
   let savedDate = null;
   let savedPictureUrl = null;
-
+  const newArrayRollList = [];
   arrayRoll.map((roll,i) => {
     roll.displayPicture = true;
     if(roll.createdAt && savedDate !== roll.createdAt.toDate().toLocaleDateString()) {
@@ -27,7 +27,14 @@ const cleanDuplicate = (arrayRoll) => {
       arrayRoll[i-1].displayPicture = false;
     }
   });
-  return arrayRoll;
+
+  arrayRoll.map(roll => {
+    console.log(roll.isDmRoll, campaignUserUidDm, userUid)
+    if(!roll.isDmRoll || (roll.isDmRoll && campaignUserUidDm === userUid)) {
+      newArrayRollList.push(roll);
+    }
+  })
+  return newArrayRollList;
 };
 
 
@@ -37,7 +44,7 @@ const DiceHistorical = (props) => {
   const {campaign} = useContext(CampaignContext);
   const [limitHisto, setLimitHisto] = useState(15);
   const [diceHistorical, setDiceHistorical] = useState([]);
-  const [classListToListen] = useState(['openChat', 'mainRoll', 'subRoll'])
+  const [classListToListen] = useState(['openChat', 'mainRoll', 'subRoll', 'diceHistorical'])
   const db = firebase.firestore();
   const histoView = useRef(null)
 
@@ -49,7 +56,7 @@ const DiceHistorical = (props) => {
       const data = querySnapshot.docs.map(doc => ({
         ...doc.data(),
       }));
-      setDiceHistorical(cleanDuplicate(data.reverse()));
+      setDiceHistorical(cleanDuplicate(data.reverse(), user.uid, campaign.idUserDm));
     });
     return unsubscribe;
   }
@@ -98,8 +105,8 @@ const DiceHistorical = (props) => {
         </button>
       )}
       <ul className="listHisto">
-        {diceHistorical.map((histo, i) => {
-          if (!histo.isDmRoll || (histo.isDmRoll && campaign.idUserDm === user.uid)) {
+        {diceHistorical.length > 0 && (
+          diceHistorical.map((histo, i) => {
             return (
               <div key={histo.uid}>
                 {histo.createdAt && (
@@ -137,9 +144,13 @@ const DiceHistorical = (props) => {
                 </div>
               </div>
             )
-          }
-          return null;
-        })}
+          })
+        )}
+        {diceHistorical.length === 0 && (
+          <p className='noDiceMessage'>
+            Aucun dès lancé pour le moment
+          </p>
+        )}
       </ul>
     </div>
   );

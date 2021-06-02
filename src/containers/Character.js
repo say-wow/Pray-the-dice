@@ -280,6 +280,7 @@ const Character = (props) => {
                     <input
                       name="newItemInventory"
                       type="text"
+                      placeholder='Item name'
                       value={itemName}
                       onChange={(e) => {
                         setItemName(e.target.value);
@@ -288,6 +289,7 @@ const Character = (props) => {
                     <input
                       name="numberOfNewItem"
                       type="number"
+                      placeholder='How many'
                       value={numberOfnewItem}
                       onChange={(e) => {
                         setNumberOfnewItem(e.target.value ? JSON.parse(e.target.value) : '');
