@@ -21,7 +21,7 @@ import CampaignContext from '../context/CampaignContext';
 import '../styles/character.css';
 import '../styles/modal.css';
 import DiceChat from './DiceChat';
-import { ChatIcon } from '@heroicons/react/outline'
+import { ChatIcon, PencilAltIcon } from '@heroicons/react/outline'
 
 import {
   BrowserView,
@@ -155,7 +155,9 @@ const Character = (props) => {
     return (
       <Switch>
         <Route path={`${match.url}/Chat`}>
-          <DiceChat/>
+          <DiceChat
+            display={() => {}}
+          />
         </Route>
         <Route path={match.path}>
           <div className='containerCharacterView'>
@@ -164,6 +166,12 @@ const Character = (props) => {
                 <div className='characterDetails'>
                   <div className='headDetails'>
                     <h2>{character.name}</h2>
+                    <Link
+                      className='link'
+                      to={`${match.url}/chat`}
+                    >
+                      <PencilAltIcon className="iconChat"/>
+                    </Link>
                     <MobileView className='linkChatContainer'>
                       <Link
                         className='link'
