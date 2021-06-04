@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import "firebase/analytics";
 import "firebase/auth";
 import "firebase/firestore";
@@ -14,12 +14,10 @@ init();
 const DiceChat = (props) => {
   const heightContainer = window.innerHeight - 110;
 
-
   return (
     <div className='diceChatContainer' style={{height: heightContainer}}>
       <DiceHistorical 
         chat={true}
-        display={() => {}}
       />
       <DiceRoll chat/>
     </div>

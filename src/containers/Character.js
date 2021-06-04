@@ -188,7 +188,6 @@ const Character = (props) => {
                         <PencilAltIcon className="iconEdit"/>
                       </Link>
                     </div>
-                    
                     <MobileView className='linkChatContainer'>
                       <Link
                         className='link'
@@ -197,16 +196,6 @@ const Character = (props) => {
                         <ChatIcon className="iconChat"/>
                       </Link>
                     </MobileView>
-                    <BrowserView className='linkChatContainer'>
-                      <button
-                        className={'openChat'}
-                        onClick={() => {
-                          setChatIsVisible(true);
-                        }}
-                      >
-                        <ChatIcon className="iconChat"/>
-                      </button>
-                    </BrowserView>
                   </div>
                   <div className='healthDetails'>
                     <span>{`${i18next.t('hp')} : ${character.currentHp} / ${character.maxHp}`}</span>
@@ -278,6 +267,9 @@ const Character = (props) => {
                   }
                   </ul>
                 </div>
+                  <BrowserView className='containerHisto'>
+                    <DiceHistorical/>
+                  </BrowserView>
                 <div className='inventory'>
                   <p className='titleSection'><b>Inventory</b></p>
                   <ul>
@@ -323,19 +315,6 @@ const Character = (props) => {
                     <input type="submit" value="Ajouter" />
                   </form>
                 </div>
-                <BrowserView 
-                  className='diceHistorical'
-                  style={{
-                      right: chatIsVisible ? 0 : -450,
-                      display: chatIsVisible ? 'block' : 'none'
-                    }}
-                >
-                  <DiceHistorical
-                    display={(state) => {
-                      setChatIsVisible(state)
-                    }}
-                  />
-                </BrowserView>
                 <BrowserView>
                   <DiceRoll chat={false}/>
                 </BrowserView>

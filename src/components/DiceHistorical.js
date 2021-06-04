@@ -7,7 +7,11 @@ import {init} from '../utils/initFirebase';
 import CharacterContext from '../context/CharacterContext';
 import CampaignContext from '../context/CampaignContext';
 import UserContext from '../context/UserContext';
-import '../styles/diceHisto.css'
+import '../styles/diceHisto.css';
+import {
+  isMobile
+} from "react-device-detect";
+
 init();
 
 const cleanDuplicate = (arrayRoll, userUid, campaignUserUidDm) => {
@@ -43,7 +47,6 @@ const DiceHistorical = (props) => {
   const {campaign} = useContext(CampaignContext);
   const [limitHisto, setLimitHisto] = useState(15);
   const [diceHistorical, setDiceHistorical] = useState([]);
-  const [classListToListen] = useState(['openChat', 'mainRoll', 'subRoll', 'diceHistorical', 'diceIcon'])
   const db = firebase.firestore();
   const histoView = useRef(null)
 
@@ -55,7 +58,7 @@ const DiceHistorical = (props) => {
       const data = querySnapshot.docs.map(doc => ({
         ...doc.data(),
       }));
-      setDiceHistorical(cleanDuplicate(data.reverse(), user.uid, campaign.idUserDm));
+      setDiceHistorical(cleanDuplicate(data.reverse(), user.uid, campaign.idUserDm).reverse());
     });
     return unsubscribe;
   }
@@ -64,19 +67,17 @@ const DiceHistorical = (props) => {
     getDice();
   }, []);
 
-  useEffect(() => {
-    function handleClickOutside(event) {
-      console.log(event.target, !classListToListen.includes(event.srcElement.className))
-      if (histoView.current && !histoView.current.contains(event.target) && !classListToListen.includes(event.srcElement.className)) {
-        props.display(false);
-      }
-    }
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [histoView]);
+  useEffect(() => {
+    if(document.getElementById("last") && props.chat) {
+      setTimeout(function(){
+        document.getElementById("last").scrollIntoView({ behavior: 'smooth'});
+        console.log('scroll');
+      }, 250);
+
+    }
+  });
+
 
   const isMyRoll = (roll) => {
     if(character.uid === roll.characterId) {
@@ -87,11 +88,6 @@ const DiceHistorical = (props) => {
     return false;
   }
 
-  useEffect(() => {
-    if(document.getElementById("last") && limitHisto === 15) {
-      document.getElementById("last").scrollIntoView({ behavior: 'smooth'});    
-    }
-  });
   return (
     <div ref={histoView} className='histoView'>
       { diceHistorical.length >= limitHisto && (
@@ -118,13 +114,13 @@ const DiceHistorical = (props) => {
                   {histo.displayPicture && !isMyRoll(histo) && (
                     <img
                       alt="userPicture"
-                      className={`${i !== 0 && !diceHistorical[i-1].displayPicture ? 'pictureAnimated' : 'userPictureRoll'}`}
+                      className={`${i === 0 && diceHistorical[i-1] && !diceHistorical[i-1].displayPicture ? 'pictureAnimated' : 'userPictureRoll'}`}
                       src={histo.pictureUserSendRoll}
                     />
                   )}
                     
                   <li
-                    id={i+1 === diceHistorical.length ? 'last' : `dice${i+1}`}
+                    id={i === 0 ? 'last' : `dice${i+1}`}
                     className={`${isMyRoll(histo) ? "myhistoRow" : "histoRow"} bubbleHisto`}
                     style={!isMyRoll(histo) ? {margin: '5px 35px'} : null}
                     

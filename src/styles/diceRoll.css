@@ -1,22 +1,35 @@
 .open {
   display: block;
+  animation: openRollButtonList 0.25s ease-in-out 0s 1 normal forwards;
+  overflow: hidden;
+  z-index: 10;
 }
 .close {
+  height: 0px;
+  animation: closeRollButtonList 0.25s ease-in-out 0s 1 normal forwards;
+  z-index: 10;
   display: none;
 }
 .containerRollButton {
   position: fixed;
   bottom: 20px;
   left: 20px;
+  /* padding: 10px 10px 0px 10px;
+  border-radius: 50px;
+  background-color:rgba(128, 128, 128, 0.281); */
 }
 .containerRollButtonPhone {
   position: fixed;
   bottom: 10px;
   right: 20px;
+  /* padding: 10px 10px 0px 10px;
+  border-radius: 50px;
+  background-color:rgba(128, 128, 128, 0.281); */
 }
 .subChoice {
   display: flex;
   flex-direction: column;
+  z-index: 1;
 }
 button.subRoll {
   margin: 0 0 10px 0;
@@ -36,5 +49,23 @@ button.mainRoll {
   width: 52px;
   height: 52px;
   padding: 0;
+}
 
+
+@keyframes openRollButtonList {
+  from {
+    height: 0px;
+  }
+  to {
+    height: 434px;
+  }
+}
+
+@keyframes closeRollButtonList {
+  from {
+    height: 434px;
+  }
+  to {
+    height: 0px;
+  }
 }
