@@ -11,21 +11,29 @@
     padding-top: 30px;
     grid-template-columns: 5fr 4fr;
     grid-template-areas:
-      "campaignList    formNewCampaign"
-      "campaignList    formJoin";
+      "campaignList    campaignList"
+      "formJoin    formNewCampaign";
   }
   nav ul {
     display: flex;
     justify-content: space-between;
   }
+  .campaignList ul {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .campaignList ul li{
+    margin: 10px 8px;
+  }
+
 }
 @media (min-width: 700px) {
   .containerCampaigns {
     grid-gap: 20px;
     grid-template-columns: 5fr 4fr;
     grid-template-areas:
-    "campaignList    formNewCampaign"
-    "campaignList    formJoin";
+      "campaignList    campaignList"
+      "formJoin    formNewCampaign";
   }
   nav ul {
     flex-direction: column;

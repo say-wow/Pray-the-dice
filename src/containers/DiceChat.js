@@ -19,6 +19,7 @@ const DiceChat = (props) => {
     <div className='diceChatContainer' style={{height: heightContainer}}>
       <DiceHistorical 
         chat={true}
+        display={() => {}}
       />
       <DiceRoll chat/>
     </div>

@@ -14,26 +14,31 @@ const HeaderBar = (props) => {
 
   return (
     <header>
-      <div className='logo'>
-        <Link className={'link homeLink'} to="/campaigns">
-          <HomeIcon className='homeLinkIcon' />
-        </Link>
-      </div>
-      <div className='name'>
-        {user.displayName}
-      </div>
-      <div className='log'>
-        <button
-          onClick={() => {
-            updateUser({
-              uid: null,
-              displayName: null,
-            });
-            firebase.auth().signOut();
-          }}
-        >
-          <LogoutIcon className="" style={{height : 30}}/>
-        </button>
+      <div className='header'>
+        <div className='logo'>
+          <Link className={'link homeLink'} to="/campaigns">
+            <HomeIcon className='homeLinkIcon' />
+          </Link>
+        </div>
+        {/* <div className='name'>
+          {user.displayName}
+        </div> */}
+        <div className='log'>
+          <button
+            onClick={() => {
+              updateUser({
+                uid: null,
+                displayName: null,
+              });
+              firebase.auth().signOut();
+            }}
+          >
+            <span>
+              {user.displayName}
+            </span>
+            <LogoutIcon className="" style={{height : 30}}/>
+          </button>
+        </div>
       </div>
     </header>
   );

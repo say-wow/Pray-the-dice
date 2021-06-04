@@ -120,9 +120,6 @@
     "inventory"
     "diceHistorical";
 }
-.iconChat {
-  height: 50px;
-}
 .linkChatContainer {
   display: flex;
   align-items: flex-end;
@@ -143,6 +140,16 @@
 .openChat .iconChat {
   height: 45px;
 }
+.iconEdit{
+  height: 30px;
+}
+.editLink {
+  /* align-self: flex-end; */
+}
+.nameContainer {
+  display: flex;
+  align-items: baseline;
+}
 @media (min-width: 1000px) {
   .characterDetails {
     /* display: flex;
@@ -156,7 +163,8 @@
     align-content: center;
     grid-template-areas:
       "characterDetails characterDetails characterDetails"
-      "characteristicsDetail skillsDetail inventory"
+      "characteristicsDetail skillsDetail diceHistorical"
+      "inventory inventory inventory"
   }
   .containerCharacterView {
     display: flex;

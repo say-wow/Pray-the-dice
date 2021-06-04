@@ -183,6 +183,7 @@ const Campaigns = (props) => {
                   <input
                     name="campaignName"
                     type="text"
+                    placeholder='Invitation code'
                     value={invitationJoinCode}
                     onChange={(e) => setInvitationJoinCode(e.target.value)}
                   />

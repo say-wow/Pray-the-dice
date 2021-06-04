@@ -29,7 +29,6 @@ const cleanDuplicate = (arrayRoll, userUid, campaignUserUidDm) => {
   });
 
   arrayRoll.map(roll => {
-    console.log(roll.isDmRoll, campaignUserUidDm, userUid)
     if(!roll.isDmRoll || (roll.isDmRoll && campaignUserUidDm === userUid)) {
       newArrayRollList.push(roll);
     }
@@ -44,7 +43,7 @@ const DiceHistorical = (props) => {
   const {campaign} = useContext(CampaignContext);
   const [limitHisto, setLimitHisto] = useState(15);
   const [diceHistorical, setDiceHistorical] = useState([]);
-  const [classListToListen] = useState(['openChat', 'mainRoll', 'subRoll', 'diceHistorical'])
+  const [classListToListen] = useState(['openChat', 'mainRoll', 'subRoll', 'diceHistorical', 'diceIcon'])
   const db = firebase.firestore();
   const histoView = useRef(null)
 
@@ -67,6 +66,7 @@ const DiceHistorical = (props) => {
 
   useEffect(() => {
     function handleClickOutside(event) {
+      console.log(event.target, !classListToListen.includes(event.srcElement.className))
       if (histoView.current && !histoView.current.contains(event.target) && !classListToListen.includes(event.srcElement.className)) {
         props.display(false);
       }

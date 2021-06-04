@@ -21,6 +21,7 @@ import CampaignContext from '../context/CampaignContext';
 import '../styles/character.css';
 import '../styles/modal.css';
 import DiceChat from './DiceChat';
+import EditCharacter from './EditCharacter';
 import { ChatIcon, PencilAltIcon } from '@heroicons/react/outline'
 
 import {
@@ -49,9 +50,19 @@ const Character = (props) => {
     getCharacter();
   }, [user, campaign]);
 
+  useEffect( () => {
+    updateCharacter({
+      ...character,
+      skills: skills,
+      characteristics: characteristics,
+      inventory: inventory,
+    });
+  }, [characteristics, skills, inventory]);
+
   const getCharacter = async () => {
     db.collection('characters').doc(character.uid || characterIdUrl).get()
       .then(doc => {
+        console.log('get')
         updateCharacter(doc.data());
         getCharacteristics(doc.data().uid)
         getSkills(doc.data().uid)
@@ -154,10 +165,11 @@ const Character = (props) => {
   if(character && characteristics.length > 0 && skills.length > 0) {
     return (
       <Switch>
-        <Route path={`${match.url}/Chat`}>
-          <DiceChat
-            display={() => {}}
-          />
+        <Route path={`${match.url}/chat`}>
+          <DiceChat/>
+        </Route>
+        <Route path={`${match.url}/edit`}>
+          <EditCharacter/>
         </Route>
         <Route path={match.path}>
           <div className='containerCharacterView'>
@@ -165,13 +177,18 @@ const Character = (props) => {
               <div className='characterContainer'>
                 <div className='characterDetails'>
                   <div className='headDetails'>
-                    <h2>{character.name}</h2>
-                    <Link
-                      className='link'
-                      to={`${match.url}/chat`}
-                    >
-                      <PencilAltIcon className="iconChat"/>
-                    </Link>
+                    <div className='nameContainer'>
+                      <h2>
+                        {character.name}
+                      </h2>
+                      <Link
+                        className={'link editLink'}
+                        to={`${match.url}/edit`}
+                      >
+                        <PencilAltIcon className="iconEdit"/>
+                      </Link>
+                    </div>
+                    
                     <MobileView className='linkChatContainer'>
                       <Link
                         className='link'

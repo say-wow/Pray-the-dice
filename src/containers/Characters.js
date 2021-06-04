@@ -33,7 +33,9 @@ const Characters = (props) => {
       age: '',
       currentHp: undefined,
       maxHp: undefined,
-      description: ''
+      description: '',
+      skills: [],
+      characteristics: [],
   })
   const {user} = useContext(UserContext)
   const {campaign, updateCampaign} = useContext(CampaignContext)
@@ -126,7 +128,6 @@ const Characters = (props) => {
         value: characteristics[i].value,
         characterId: characterUid
       }
-      console.log(dataChara);
       await db.collection('characteristics').doc(uidChara).set(dataChara).then(res => {
         console.log('OK')
       }).catch(e => {
@@ -137,15 +138,15 @@ const Characters = (props) => {
 
   const createSkills = async (skills, characterUid) => {
     for(let i=0; i < skills.length; i+=1) {
-      const uidChara = uid();
-      const dataChara = {
-        uid: uidChara,
+      const uidSkill = uid();
+      const dataSkill = {
+        uid: uidSkill,
         name: skills[i].label,
         value: skills[i].value,
         characterId: characterUid,
         isCustom: false,
       }
-      await db.collection('skills').doc(uidChara).set(dataChara).then(res => {
+      await db.collection('skills').doc(uidSkill).set(dataSkill).then(res => {
         console.log('OK')
       }).catch(e => {
         console.log(e)
@@ -153,7 +154,6 @@ const Characters = (props) => {
     }
   }
 
-  console.log(campaign)
   return (
     <div className='containerCharacters'>
       <CharacterContext.Provider value={contextValue}>

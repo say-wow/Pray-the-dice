@@ -13,6 +13,7 @@ const NewCampaignForm = (props) => {
       <input
         name="campaignName"
         type="text"
+        placeholder='Campaign name'
         value={campaignName}
         onChange={(e) => setCompaignName(e.target.value)}
       />

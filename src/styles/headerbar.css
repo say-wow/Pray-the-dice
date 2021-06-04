@@ -4,7 +4,16 @@ header {
   color: #D9D9D9;
   display: grid;
   align-items: space-between;
+}
+.header {
+  width: 100%;
+  margin: auto;
+  display: grid;
+  align-items: space-between;
   grid-template-areas: "logo name log";
+}
+.header button {
+  box-shadow: none;
 }
 .name {
   display: flex;
@@ -19,6 +28,9 @@ header {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.log button span {
+  margin: 0 5px;
 }
 .logo {
   display: flex;
@@ -39,4 +51,9 @@ header {
 }
 .homeLinkIcon {
   color: #D9D9D9;
+}
+@media (min-width: 700px) {
+  .header {
+    width: 85%;
+  }
 }

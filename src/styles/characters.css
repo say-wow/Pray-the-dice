@@ -17,6 +17,7 @@
 .skillsContainer {
   grid-area: skillsContainer;
   display: grid;
+  grid-template-columns: 1fr;
   justify-content: flex-start;
   grid-template-areas:
     "createCharacterButton"
@@ -27,7 +28,6 @@
 }
 .characteristics {
   grid-area: characteristics;
-  max-width: 215px;
 }
 .characteristics label {
   display: flex;
@@ -57,9 +57,15 @@ input[type=text].nameNewCharacter {
 .skillRow {
   display: flex;
   justify-content: space-between;
+  margin: 5px 0;
 }
 .skillRow div {
-  margin-left: 20px;
+  /* margin-left: 10px; */
+}
+.skillRow input[type=number] {
+  margin: 0 0 5px 5px;
+  align-self: flex-end;
+  justify-self: flex-end;
 }
 .skillRow label input {
   min-width: 25px;
@@ -80,22 +86,13 @@ input[type=text].nameNewCharacter {
     "skillsContainer";
 }
 .inputCharacteristics, .inputSkills {
-  width: 100px;
+  width: 50px;
 }
 @media (min-width: 500px) {
   .containerCharacters {
     grid-template-areas:
       "listCharacters"
       "newCharacterForm";
-  }
-  .formNewCharacter {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 20px;
-    grid-template-areas:
-      "defaultInformation  skillsContainer"
-      "characteristics skillsContainer"
-      "characteristics skillsContainer";
   }
   .textAreaDescription {
     max-height: 100px;
@@ -111,6 +108,12 @@ input[type=text].nameNewCharacter {
   .skillsContainer {
     justify-content: flex-start;
   }
+  .textAreaDescription {
+    max-height: 100px;
+    min-height: 100px;
+    max-width: 80%;
+    min-width: 80%;
+  }
 }
 @media (min-width: 700px) {
   .containerCharacters {
@@ -124,15 +127,30 @@ input[type=text].nameNewCharacter {
     grid-template-columns: 1fr 1fr;
     grid-gap: 20px;
   }
+  input[type=text].nameNewCharacter {
+    margin: 5px 0px;
+    width: auto;
+    display: inline-block;
+  }
   .textAreaDescription {
     max-height: 100px;
     min-height: 100px;
     max-width: 490px;
     min-width: 490px;
   }
-  input[type=text].nameNewCharacter {
-    margin: 5px 0px;
-    width: auto;
-    display: inline-block;
+  .characteristics {
+    grid-area: characteristics;
+    max-width: 215px;
+  }
+}
+@media (min-width: 1300px) {
+  .formNewCharacter {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+    grid-template-areas:
+      "defaultInformation  skillsContainer"
+      "characteristics skillsContainer"
+      "characteristics skillsContainer";
   }
 }

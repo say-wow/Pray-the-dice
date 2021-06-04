@@ -203,7 +203,7 @@ const NewCharacterForm = (props) => {
                   </span>
                   <div>
                     <span>
-                      {skill.value}
+                      {`${skill.value} +`}
                     </span>
                     <input
                       name={skill.label}
