@@ -22,7 +22,7 @@ import '../styles/character.css';
 import '../styles/modal.css';
 import DiceChat from './DiceChat';
 import EditCharacter from './EditCharacter';
-import { ChatIcon, PencilAltIcon } from '@heroicons/react/outline'
+import { ChatIcon, PencilAltIcon, ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/outline'
 
 import {
   BrowserView,
@@ -44,7 +44,7 @@ const Character = (props) => {
   const [inventory, setInventory] = useState([])
   const [itemName, setItemName] = useState()
   const [numberOfnewItem, setNumberOfnewItem] = useState()
-  const [chatIsVisible, setChatIsVisible] = useState(false)
+  const [descriptionIsDisplay, setDescriptionIsDisplay] = useState(false)
 
   useEffect( () => {
     getCharacter();
@@ -62,7 +62,6 @@ const Character = (props) => {
   const getCharacter = async () => {
     db.collection('characters').doc(character.uid || characterIdUrl).get()
       .then(doc => {
-        console.log('get')
         updateCharacter(doc.data());
         getCharacteristics(doc.data().uid)
         getSkills(doc.data().uid)
@@ -110,7 +109,7 @@ const Character = (props) => {
         doc.forEach( doc => {
           listItems.push(doc.data())
         });
-        // listItems.sort(dynamicSortWithTraduction("name"));
+        listItems.sort(dynamicSortWithTraduction("name"));
         setInventory(listItems)
     })
     .catch(err => {
@@ -201,8 +200,22 @@ const Character = (props) => {
                     <span>{`${i18next.t('hp')} : ${character.currentHp} / ${character.maxHp}`}</span>
                   </div>
                   <div className='descriptionDetails'>
-                    <p>{`${i18next.t('description')} :`}</p>
-                    <p>{character.description}</p>
+                    <p
+                      onClick={() => {
+                        setDescriptionIsDisplay(!descriptionIsDisplay)
+                      }}
+                    >
+                      {`${i18next.t('description')}`}
+                      {descriptionIsDisplay && (
+                        <ChevronUpIcon className='iconDescriptionOpen' />
+                      )}
+                      {!descriptionIsDisplay && (
+                        <ChevronDownIcon className='iconDescriptionOpen' />
+                      )}
+                    </p>
+                    {descriptionIsDisplay && (
+                      <p>{character.description}</p>
+                    )}
                   </div>
                 </div>
                 {/* <p style={{display: "inline-block"}}>
@@ -272,11 +285,16 @@ const Character = (props) => {
                   </BrowserView>
                 <div className='inventory'>
                   <p className='titleSection'><b>Inventory</b></p>
-                  <ul>
+                  <table>
                     {
                       inventory.map((item) => (
-                        <li>
-                          {`${item.name} x${item.number}`}
+                        <tr>
+                          <td>
+                            {item.name}
+                          </td>
+                          <td>
+                            {`x${item.number}`}
+                          </td>
                           {/* <button
                             onClick={() => {
                               removeItem(item.uid);
@@ -284,10 +302,10 @@ const Character = (props) => {
                           >
                             X
                           </button> */}
-                        </li>
+                        </tr>
                       ))
                     }
-                  </ul>
+                  </table>
                   <form  style={{display: "inline-block"}} onSubmit={(e) => {
                     createItem();
                     setItemName('');

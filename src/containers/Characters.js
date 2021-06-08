@@ -18,6 +18,8 @@ import CampaignContext from '../context/CampaignContext';
 import CharacterContext from '../context/CharacterContext';
 import {init} from '../utils/initFirebase'
 import '../styles/characters.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 init();
 const db = firebase.firestore();
 
@@ -114,6 +116,16 @@ const Characters = (props) => {
       createCharacteristics(characterData.characteristics, characterUid)
       createSkills(characterData.skills, characterUid)
       getCharactersVisibleForUser(campaignIdUsed);
+
+      toast.success(`${characterData.name} was created with success`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }).catch(e => {
       console.log(e)
     });
@@ -198,6 +210,17 @@ const Characters = (props) => {
             </div>
           </Route>
         </Switch>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={true}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </CharacterContext.Provider>
     </div>
   );

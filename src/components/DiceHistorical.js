@@ -72,7 +72,6 @@ const DiceHistorical = (props) => {
     if(document.getElementById("last") && props.chat) {
       setTimeout(function(){
         document.getElementById("last").scrollIntoView({ behavior: 'smooth'});
-        console.log('scroll');
       }, 250);
 
     }

@@ -17,6 +17,8 @@ import {
 } from "react-router-dom";
 import CharacterContext from '../context/CharacterContext';
 import CampaignContext from '../context/CampaignContext';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 init();
 const db = firebase.firestore();
@@ -30,6 +32,8 @@ const EditCharacter = (props) => {
   const [nameNewSkill, setNameNewSkill] = useState('');
   const [valueNewSkill, setValueNewSkill] = useState('');
   const [skillToUpdate, setSkillToUpdate] = useState({});
+
+  const notify = () => toast("Wow so easy!");
 
   useEffect( () => {
     if(!skillToUpdate.uid) {
@@ -55,6 +59,15 @@ const EditCharacter = (props) => {
           ...character,
           skills: [...listSkills],
         })
+        toast.success('New skill created with success', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       }).catch(e => {
         console.log(e)
       });
@@ -63,7 +76,6 @@ const EditCharacter = (props) => {
   const updateSkill = async () => {
       const listSkills = character.skills;
       await db.collection('skills').doc(skillToUpdate.uid).set(skillToUpdate).then(res => {
-        console.log('OK');
         listSkills.find((skill) => (
           skill.uid === skillToUpdate.uid
         )).value = skillToUpdate.value;
@@ -71,7 +83,25 @@ const EditCharacter = (props) => {
           ...character,
           skills: [...listSkills],
         })
+        toast.success('Update succed', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       }).catch(e => {
+        toast.error('An error is appeare', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
         console.log(e)
       });
   }
@@ -147,6 +177,18 @@ const EditCharacter = (props) => {
         </label>
         <input type="submit" value="Creer" />
       </form>
+      <button onClick={notify}>Notify!</button>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
   

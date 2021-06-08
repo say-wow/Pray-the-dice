@@ -18,6 +18,8 @@ import Characters from './Characters';
 import NewCampaignForm from '../components/NewCampaignForm';
 import {init} from '../utils/initFirebase'
 import '../styles/campaigns.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 init();
 const db = firebase.firestore();
 
@@ -64,7 +66,7 @@ const Campaigns = (props) => {
     return result;
   }
 
-  const sendGame = async (name = 'test') => {
+  const sendGame = async (name) => {
     const invitationCode = getInvitationCodeGame();
     const gameUid = uid();
     const data = {
@@ -76,6 +78,15 @@ const Campaigns = (props) => {
     await db.collection('campaigns').doc(gameUid).set(data).then(res => {
       console.log('game created', invitationCode);
       getCampaigns();
+      toast.success(`${name} was created with success`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }).catch(e => {
       console.log(e)
     });
@@ -201,6 +212,17 @@ const Campaigns = (props) => {
           </Route>
         </Switch>
       </CampaignContext.Provider>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 }

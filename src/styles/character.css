@@ -52,6 +52,10 @@
 .descriptionDetails {
   grid-area: descriptionDetails;
 }
+.descriptionDetails p{
+  display: flex;
+  align-items: flex-end;
+}
 .characteristicsDetail {
   grid-area: characteristicsDetail;
 }
@@ -144,17 +148,32 @@
 .iconEdit{
   height: 30px;
 }
+.iconDescriptionOpen{
+  height: 15px;
+  color: #969595;
+}
 .editLink {
   /* align-self: flex-end; */
 }
 .nameContainer {
   display: flex;
-  align-items: baseline;
+  align-items: center;
+}
+.nameContainer h2{
+  margin-right: 10px;
 }
 .containerHisto {
   grid-area: containerHisto;
   height: 400px;
 }
+
+table tr td {
+  width: 250px;
+}
+table tr td:last-child {
+  text-align: right;
+}
+
 @media (min-width: 1000px) {
   .characterDetails {
     /* display: flex;
