@@ -113,7 +113,7 @@
 }
 .inventory {
   grid-area: inventory;
-  /* display: none; */
+  display: none;
 }
 .characterContainer {
   display: grid;
@@ -173,7 +173,11 @@ table tr td {
 table tr td:last-child {
   text-align: right;
 }
-
+@media (min-width: 700px) {
+  .inventory {
+    display: block;
+  }
+}
 @media (min-width: 1000px) {
   .characterDetails {
     /* display: flex;
@@ -188,7 +192,7 @@ table tr td:last-child {
     grid-template-areas:
       "characterDetails characterDetails containerHisto"
       "characteristicsDetail skillsDetail containerHisto"
-      "inventory inventory inventory"
+      "characteristicsDetail inventory containerHisto"
   }
   .containerCharacterView {
     display: flex;

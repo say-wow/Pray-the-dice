@@ -10,11 +10,11 @@ import {
   useParams,
   useRouteMatch,
 } from "react-router-dom";
-import { uid } from 'uid';
 import i18next from 'i18next';
 import {init} from '../utils/initFirebase'
 import DiceHistorical from '../components/DiceHistorical';
 import DiceRoll from '../components/DiceRoll';
+import Inventory from '../components/Inventory';
 import UserContext from '../context/UserContext';
 import CharacterContext from '../context/CharacterContext';
 import CampaignContext from '../context/CampaignContext';
@@ -23,7 +23,7 @@ import '../styles/modal.css';
 import DiceChat from './DiceChat';
 import EditCharacter from './EditCharacter';
 import { ChatIcon, PencilAltIcon, ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/outline'
-
+import {dynamicSortWithTraduction} from '../utils/sort';
 import {
   BrowserView,
   MobileView,
@@ -37,7 +37,6 @@ const Character = (props) => {
   const {user} = useContext(UserContext);
   const {campaign} = useContext(CampaignContext);
   const {character, updateCharacter} = useContext(CharacterContext);
-
   let { characterIdUrl } = useParams();
   const [characteristics, setCharacteristics] = useState([])
   const [skills, setSkills] = useState([])
@@ -62,7 +61,10 @@ const Character = (props) => {
   const getCharacter = async () => {
     db.collection('characters').doc(character.uid || characterIdUrl).get()
       .then(doc => {
-        updateCharacter(doc.data());
+        updateCharacter({
+          ...character,
+          ...doc.data()
+        });
         getCharacteristics(doc.data().uid)
         getSkills(doc.data().uid)
         getInventory(doc.data().uid)
@@ -79,7 +81,7 @@ const Character = (props) => {
         doc.forEach( doc => {      
           listCharacteristics.push(doc.data())
         });
-        listCharacteristics.sort(dynamicSortWithTraduction("name"));
+        listCharacteristics.sort(dynamicSortWithTraduction("name", 'characteristics'));
         setCharacteristics(listCharacteristics)
     })
     .catch(err => {
@@ -94,7 +96,7 @@ const Character = (props) => {
         doc.forEach( doc => {      
           listSkills.push(doc.data())
         });
-        listSkills.sort(dynamicSortWithTraduction("name"));
+        listSkills.sort(dynamicSortWithTraduction("name", 'skills'));
         setSkills(listSkills)
     })
     .catch(err => {
@@ -117,17 +119,6 @@ const Character = (props) => {
     })
   }
 
-  const dynamicSortWithTraduction = (property) => {
-      var sortOrder = 1;
-      return function (a,b) {
-          if(sortOrder === -1){
-              return i18next.t(`skills.${b[property]}`).localeCompare(i18next.t(`skills.${a[property]}`));
-          }else{
-              return i18next.t(`skills.${a[property]}`).localeCompare(i18next.t(`skills.${b[property]}`));
-          }        
-      }
-  }
-
   const setCharacter = (table, dataToUpdate, key, newVal) => {
     const newData = {...dataToUpdate};
     newData[key] = newVal;
@@ -137,29 +128,6 @@ const Character = (props) => {
       console.log(e)
     });
   };
-
-  const createItem = () => {
-    const itemUid = uid();
-    const newItem = {
-      uid: itemUid,
-      name: itemName,
-      number: numberOfnewItem,
-      characterId: character.uid,
-    };
-    db.collection('items').doc(itemUid).set(newItem).then(res => {
-      getInventory(character.uid)
-    }).catch(e => {
-      console.log(e)
-    });
-  }
-
-  const removeItem = (itemUid) => {
-    db.collection('items').doc(itemUid).delete().then(res => {
-      getInventory(character.uid)
-    }).catch(e => {
-      console.log(e)
-    });
-  }
   
   if(character && characteristics.length > 0 && skills.length > 0) {
     return (
@@ -284,60 +252,12 @@ const Character = (props) => {
                     <DiceHistorical/>
                   </BrowserView>
                 <div className='inventory'>
-                  <p className='titleSection'><b>Inventory</b></p>
-                  <table>
-                    {
-                      inventory.map((item) => (
-                        <tr>
-                          <td>
-                            {item.name}
-                          </td>
-                          <td>
-                            {`x${item.number}`}
-                          </td>
-                          {/* <button
-                            onClick={() => {
-                              removeItem(item.uid);
-                            }}
-                          >
-                            X
-                          </button> */}
-                        </tr>
-                      ))
-                    }
-                  </table>
-                  <form  style={{display: "inline-block"}} onSubmit={(e) => {
-                    createItem();
-                    setItemName('');
-                    setNumberOfnewItem('');
-                    e.preventDefault();
-                  }}>
-                    <input
-                      name="newItemInventory"
-                      type="text"
-                      placeholder='Item name'
-                      value={itemName}
-                      onChange={(e) => {
-                        setItemName(e.target.value);
-                      }}
-                    />
-                    <input
-                      name="numberOfNewItem"
-                      type="number"
-                      placeholder='How many'
-                      value={numberOfnewItem}
-                      onChange={(e) => {
-                        setNumberOfnewItem(e.target.value ? JSON.parse(e.target.value) : '');
-                      }}
-                    />
-                    <input type="submit" value="Ajouter" />
-                  </form>
+                  <Inventory/>
                 </div>
                 <BrowserView>
                   <DiceRoll chat={false}/>
                 </BrowserView>
               </div>
-              
             )}
           </div>
         </Route>

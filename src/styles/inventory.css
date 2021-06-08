@@ -1,0 +1,51 @@
+.tableInvHeader {
+  display: flex;
+  flex-wrap: nowrap;
+  background-color: #353535;
+  border-radius: 8px 8px 0 0;
+  padding: 3px 10px;
+}
+.tableInvHeader div:first-child {
+  width: 80%;
+}
+.tableInvHeader span {
+  color: #fff;
+}
+.tableInvRow {
+  display: flex;
+  flex-wrap: nowrap;
+  border-bottom: 1px solid #353535;
+  padding: 3px 10px;
+  align-items: baseline;
+}
+.formNewInv {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+.formNewInv input {
+  width: 32%;
+  margin: 0 !important;
+}
+.tableInvRow input[type=number] {
+  margin: 0px;
+}
+
+.tableInvRow div:first-child {
+  width: 50%;
+}
+.tableInvRow div:nth-child(2) {
+  width: 30%;
+}
+.tableInvRow div:last-child {
+  width: 20%;
+}
+.tableInvRow div:last-child button {
+  padding: 2px 5px;
+}
+.optionBtnInv {
+  height: 25px;
+  width: 30px;
+  padding: 0;
+  margin-left: 3px;
+}

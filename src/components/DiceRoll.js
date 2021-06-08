@@ -94,7 +94,7 @@ const DiceRoll = (props) => {
               roll(6, user.uid === campaign.idUserDm)
             }}
           >
-            <svg className='diceIcon' width='27' height='27' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M1 6.978h17.602M1 6.978L10.444 1H26M1 6.978V26h17.602m0-19.022L26 1m-7.398 5.978V26M26 1v17.391L18.602 26' stroke='#fff' stroke-width='1.75'/></svg>
+            <svg className='diceIcon' width='27' height='27' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M1 6.978h17.602M1 6.978L10.444 1H26M1 6.978V26h17.602m0-19.022L26 1m-7.398 5.978V26M26 1v17.391L18.602 26' stroke='#fff' strokeWidth='1.75'/></svg>
           </button>
           <button
             className='subRoll'
@@ -102,7 +102,7 @@ const DiceRoll = (props) => {
               roll(4, user.uid === campaign.idUserDm)
             }}
           >
-            <svg className='diceIcon' width='31' height='27' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M14.5 2L2 25.5h22.5M14.5 2l10 23.5M14.5 2l15 11-5 12.5' stroke='#fff' stroke-width='1.75'/></svg>
+            <svg className='diceIcon' width='31' height='27' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M14.5 2L2 25.5h22.5M14.5 2l10 23.5M14.5 2l15 11-5 12.5' stroke='#fff' strokeWidth='1.75'/></svg>
           </button>
         </div>
       </div>
@@ -113,7 +113,7 @@ const DiceRoll = (props) => {
         }}
       >
         {!isOpen ? <svg className='diceIcon' xmlns="http://www.w3.org/2000/svg" width="28" height="31" fill="#fff"><path d="M14 0L0 7.5v15.2l14 7.5 13-7 1-.6V7.5L14 0zm-2 8.3l-5.9 8.8-3.7-8 9.6-.8zM8 18l6-9.1 6 9.1H8zm13.8-.9L16 8.3l9.5.7-3.7 8.1zM15 2.8l7.4 4-7.4-.6V2.8zm-2 0v3.4l-7.4.6 7.4-4zm-11 10l2.7 6L2 20.4v-7.6zm1 9.3l2.7-1.6 4.4 5.5L3 22.1zM8 20h11l-5 7.5L8 20zm9.9 5.9l4.4-5.5L25 22l-7.1 3.9zm5.6-7l-.2-.1 2.7-6v7.6l-2.5-1.5z"/></svg> : <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M6 18L18 6M6 6l12 12" />
+        <path stroke-linecap="round" stroke-linejoin="round" strokeWidth="1" d="M6 18L18 6M6 6l12 12" />
       </svg>
       }
       </button>
