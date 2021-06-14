@@ -22,7 +22,8 @@ import '../styles/character.css';
 import '../styles/modal.css';
 import DiceChat from './DiceChat';
 import EditCharacter from './EditCharacter';
-import { ChatIcon, PencilAltIcon, ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/outline'
+import MobileInventory from './MobileInventory';
+import { ChatIcon, PencilAltIcon, ChevronDownIcon, ChevronUpIcon, CollectionIcon, ArchiveIcon } from '@heroicons/react/outline'
 import {dynamicSortWithTraduction} from '../utils/sort';
 import {
   BrowserView,
@@ -128,7 +129,6 @@ const Character = (props) => {
       console.log(e)
     });
   };
-  
   if(character && characteristics.length > 0 && skills.length > 0) {
     return (
       <Switch>
@@ -138,6 +138,9 @@ const Character = (props) => {
         <Route path={`${match.url}/edit`}>
           <EditCharacter/>
         </Route>
+        <Route path={`${match.url}/inventory`}>
+          <MobileInventory/>
+        </Route>
         <Route path={match.path}>
           <div className='containerCharacterView'>
             {(character.idUser === user.uid || campaign.idUserDm === user.uid) && (
@@ -146,7 +149,10 @@ const Character = (props) => {
                   <div className='headDetails'>
                     <div className='nameContainer'>
                       <h2>
-                        {character.name}
+                        <span>{character.name}</span>
+                        {campaign.idUserDm === user.uid && (
+                          <span className='infoDmView'>({i18next.t('dm')})</span>
+                        )}
                       </h2>
                       <Link
                         className={'link editLink'}
@@ -214,7 +220,7 @@ const Character = (props) => {
                 </p> */}
               
                 <div className='characteristicsDetail'>
-                  <p className='titleSection'><b>Characteristics</b></p>
+                  <p className='titleSection'><b>{i18next.t('characteristic')}</b></p>
                   <ul>
                     {
                       characteristics.map((charac) => (
@@ -232,7 +238,7 @@ const Character = (props) => {
                 </div>
                 
                 <div className='skillsDetail'>
-                  <p className='titleSection'><b>Skills</b></p>
+                  <p className='titleSection'><b>{i18next.t('skill')}</b></p>
                   <ul>
                     {
                     skills.map((skill) => (
@@ -248,9 +254,18 @@ const Character = (props) => {
                   }
                   </ul>
                 </div>
-                  <BrowserView className='containerHisto'>
-                    <DiceHistorical/>
-                  </BrowserView>
+                <MobileView className='mobileInv'>
+                  <Link
+                    className='fullButton'
+                    to={`${match.url}/inventory`}
+                  >
+                    <ArchiveIcon className="iconEdit"/>
+                    <span>{i18next.t('inventory')}</span>
+                  </Link>
+                </MobileView>
+                <BrowserView className='containerHisto'>
+                  <DiceHistorical/>
+                </BrowserView>
                 <div className='inventory'>
                   <Inventory/>
                 </div>

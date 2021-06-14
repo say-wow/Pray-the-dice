@@ -6,6 +6,7 @@ import "firebase/analytics";
 import "firebase/auth";
 import "firebase/firestore";
 import UserContext from "../context/UserContext";
+import i18next from "i18next";
 
 export default function Login() {
   const {user, updateUser} = useContext(UserContext)
@@ -36,7 +37,8 @@ export default function Login() {
             });
           }}
         >
-          Sign In with Google
+          {i18next.t('sign in with google')}
+          {/* Sign In with Google */}
         </button>
       </div>
       <div className='characterPanel'>

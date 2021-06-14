@@ -18,8 +18,9 @@ import CampaignContext from '../context/CampaignContext';
 import CharacterContext from '../context/CharacterContext';
 import {init} from '../utils/initFirebase'
 import '../styles/characters.css';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import i18next from 'i18next';
 init();
 const db = firebase.firestore();
 
@@ -32,7 +33,6 @@ const Characters = (props) => {
       uid: undefined,
       idCampaign: undefined,
       idUser: undefined,
-      age: '',
       currentHp: undefined,
       maxHp: undefined,
       description: '',
@@ -56,6 +56,8 @@ const Characters = (props) => {
     else if(campaignIdUrl && user) {
       getCharactersVisibleForUser(campaign);
     }
+    // getDiceForThisCampaign();
+    // getCharacterForUser();
   }, [user]);
 
 
@@ -90,6 +92,20 @@ const Characters = (props) => {
     }
   }
 
+  const getDiceForThisCampaign = async () => {
+    db.collection('dice').where('campaignId', '==', campaign.uid).get()
+    .then(querySnapshot => {
+      const rollForCampaign = {
+        ...campaign,
+        roll: querySnapshot.size
+      }
+      updateCampaign(rollForCampaign);
+    })
+    .catch(err => {
+      console.log(err.messsage)
+    })
+  }
+
   const getCampaign = async () => {
     db.collection('campaigns').doc(campaignIdUsed).get()
       .then(doc => {
@@ -117,7 +133,7 @@ const Characters = (props) => {
       createSkills(characterData.skills, characterUid)
       getCharactersVisibleForUser(campaignIdUsed);
 
-      toast.success(`${characterData.name} was created with success`, {
+      toast.success(`${characterData.name} ${i18next.t('was created with success')}`, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: true,
@@ -131,6 +147,26 @@ const Characters = (props) => {
     });
   }
 
+  const getCharacterForUser = async () => {
+    const listUser = [];
+    db.collection('characters').where('idCampaign', '==', campaign.uid).get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          if(listUser.indexOf(doc.data().idUser) === -1) {
+            listUser.push(doc.data().idUser);
+          }
+      });
+      const userForCampaign = {
+        ...campaign,
+        userForCampaign: listUser.length
+      }
+      updateCampaign(userForCampaign);
+    })
+    .catch(err => {
+      console.log(err.message)
+    })
+  }
+  
   const createCharacteristics = async (characteristics, characterUid) => {
     for(let i=0; i < characteristics.length; i+=1) {
       const uidChara = uid();
@@ -141,7 +177,6 @@ const Characters = (props) => {
         characterId: characterUid
       }
       await db.collection('characteristics').doc(uidChara).set(dataChara).then(res => {
-        console.log('OK')
       }).catch(e => {
         console.log(e)
       });
@@ -159,7 +194,6 @@ const Characters = (props) => {
         isCustom: false,
       }
       await db.collection('skills').doc(uidSkill).set(dataSkill).then(res => {
-        console.log('OK')
       }).catch(e => {
         console.log(e)
       });
@@ -176,16 +210,27 @@ const Characters = (props) => {
           <Route path={match.path}>
             <div className="compactPage">
               <div className='listCharacters'>
-                <h3>Campaign information</h3>
+                <h3>{i18next.t('campaign information')}</h3>
                 <div>
                   <p>
-                    Nom : {campaign.name}
+                    {`${i18next.t('name')} : ${campaign.name}`}
                   </p>
                   <p>
-                    Code d'invitation : {campaign.invitationCode}
+                    {`${i18next.t('invitation code')} : ${campaign.invitationCode}`}
+                  </p>
+                  {campaign.createdAt && (
+                    <p>
+                      {`${i18next.t('created at')} : ${campaign.createdAt.toDate().toLocaleDateString()}`}
+                    </p>
+                  )}
+                  <p>
+                    {`${i18next.t('number of dice roll')} : ${campaign.roll || 0}`}
+                  </p>
+                  <p>
+                    {`${i18next.t('number of user')} : ${campaign.userForCampaign || 0}`}
                   </p>
                 </div>
-                <h3>Character</h3>
+                <h3>{i18next.t('my characters')}</h3>
                 <ul className='list'>
                   {characters.map((character, i) => (
                     <li key={i}>
@@ -210,17 +255,6 @@ const Characters = (props) => {
             </div>
           </Route>
         </Switch>
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={true}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
       </CharacterContext.Provider>
     </div>
   );

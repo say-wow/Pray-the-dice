@@ -34,6 +34,11 @@
   flex-direction: row;
   justify-content: space-between;
 }
+.defaultInformation label.column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 .textAreaDescription {
   height: 100px;
   margin: 5px 0;
@@ -95,7 +100,6 @@ input[type=text].nameNewCharacter {
       "newCharacterForm";
   }
   .textAreaDescription {
-    max-height: 100px;
     min-height: 100px;
     max-width: 490px;
     min-width: 490px;
@@ -109,7 +113,6 @@ input[type=text].nameNewCharacter {
     justify-content: flex-start;
   }
   .textAreaDescription {
-    max-height: 100px;
     min-height: 100px;
     max-width: 80%;
     min-width: 80%;
@@ -133,7 +136,6 @@ input[type=text].nameNewCharacter {
     display: inline-block;
   }
   .textAreaDescription {
-    max-height: 100px;
     min-height: 100px;
     max-width: 490px;
     min-width: 490px;

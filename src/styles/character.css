@@ -173,6 +173,19 @@ table tr td {
 table tr td:last-child {
   text-align: right;
 }
+.infoDmView {
+  margin-left: 10px;
+  color:#353535;
+  font-size: 20px;
+}
+.mobileInv {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+.fullButton span {
+  margin: 0 5px;
+}
 @media (min-width: 700px) {
   .inventory {
     display: block;

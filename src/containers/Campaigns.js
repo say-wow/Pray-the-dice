@@ -31,6 +31,7 @@ const Campaigns = (props) => {
     idUserDm: null,
     name: null,
     invitationCode: null,
+    createdAt: null
   });
   const [invitationJoinCode, setInvitationJoinCode] = useState(undefined);
   const [campaignToJoin, setCampaignToJoin] = useState(undefined);
@@ -70,15 +71,15 @@ const Campaigns = (props) => {
     const invitationCode = getInvitationCodeGame();
     const gameUid = uid();
     const data = {
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       idUserDm: user.uid,
       invitationCode: invitationCode,
       name: name,
       uid: gameUid
     };
     await db.collection('campaigns').doc(gameUid).set(data).then(res => {
-      console.log('game created', invitationCode);
       getCampaigns();
-      toast.success(`${name} was created with success`, {
+      toast.success(`${name} ${i18next.t('was created with success')}`, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: true,
@@ -97,7 +98,6 @@ const Campaigns = (props) => {
     db.collection('campaigns').where('invitationCode', '==', invitationJoinCode).get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
-          console.log(doc.data());
           setCampaignToJoin(doc.data());
         });
       })
@@ -132,7 +132,6 @@ const Campaigns = (props) => {
       });
       const cleanListUid = listUidToSearch.filter((currentUid) => {
         for(let i = 0; i < campaigns.length; i+=1) {
-          console.log(currentUid, campaigns[i].uid)
           if(currentUid === campaigns[i].uid) {
             return false;
           }
@@ -170,6 +169,7 @@ const Campaigns = (props) => {
           <Route path={match.path}>
             <div className={'containerCampaigns compactPage'}>
               <div className='campaignList'>
+                <h3>{i18next.t('my campaign')}</h3>
                 <ul>
                   {campaigns.map(campaign => (
                   <li key={campaign.uid}>
@@ -180,32 +180,36 @@ const Campaigns = (props) => {
                 ))}
                 </ul>
               </div>
-              
-              <NewCampaignForm className='formNewCampaign' createCampaign={(campaignName) => {
-                sendGame(campaignName);
-              }}/>
-
+              <div>
+                <h3>{i18next.t('create campaign')}</h3>
+                <NewCampaignForm className='formNewCampaign' createCampaign={(campaignName) => {
+                  sendGame(campaignName);
+                }}/>
+              </div>
 
               <div className='formJoin'>
-                <form onSubmit={(e) => {
+                <h3>{i18next.t('join campaign')}</h3>
+                <form  
+                  className='formFullWidthMobile'
+                  onSubmit={(e) => {
                   joinCampaignByInvitationCode();
                   e.preventDefault();
                 }}>
                   <input
                     name="campaignName"
                     type="text"
-                    placeholder='Invitation code'
+                    placeholder={i18next.t('invitation code')}
                     value={invitationJoinCode}
                     onChange={(e) => setInvitationJoinCode(e.target.value)}
                   />
-                  <input type="submit" value="Rejoindre" />
+                  <input type="submit" value={i18next.t('search')} />
                 </form>
 
               </div>
 
               {campaignToJoin && (
                 <Link className='link' onClick={() => setCampaign(campaignToJoin)} to={`${match.url}/${campaignToJoin.uid}`}>
-                  {`JOIN ${campaignToJoin.name}`}
+                  {`${i18next.t('join')} ${campaignToJoin.name}`}
                 </Link>
               )}
             </div>

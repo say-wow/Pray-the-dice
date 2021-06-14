@@ -17,7 +17,7 @@ const DiceChat = (props) => {
   return (
     <div className='diceChatContainer' style={{height: heightContainer}}>
       <DiceHistorical 
-        chat={true}
+        chat
       />
       <DiceRoll chat/>
     </div>

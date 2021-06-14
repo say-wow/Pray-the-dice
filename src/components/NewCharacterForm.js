@@ -85,7 +85,7 @@ const NewCharacterForm = (props) => {
 
   return (
     <div>
-      <h3>New character</h3>
+      <h3>{i18next.t('new character')}</h3>
       <form
         className='formNewCharacter'
         onSubmit={(e) => {
@@ -128,7 +128,7 @@ const NewCharacterForm = (props) => {
       >
         <div className='defaultInformation'>
           <p>
-            <label>
+            <label className='column'>
               {i18next.t('name')} :
               <input
                 name="name"
@@ -140,7 +140,7 @@ const NewCharacterForm = (props) => {
             </label>
           </p>
           <p>
-            <label>
+            <label className='column'>
               {i18next.t('description')} :
               <textarea
                 className='textAreaDescription'
@@ -153,7 +153,7 @@ const NewCharacterForm = (props) => {
         </div>
           <div className='characteristics'>
             <p>
-              <b>Characteristic</b>
+              <b>{i18next.t('characteristic')}</b>
             </p>
             {listCharac.map((chara) => (
               <div>
@@ -187,14 +187,14 @@ const NewCharacterForm = (props) => {
                 });
               }}
             >
-              Generate auto
+              {i18next.t('auto generation')}
             </button>
           </div>
         {characComplete && (
           <div className='skillsContainer'>
             <div ref={skillsRef} className='skills'>
               <p>
-                <b>Skills ({additionalSkillPoint})</b>
+                <b>{i18next.t('skill')} ({additionalSkillPoint})</b>
               </p>
               {listSkills.map((skill, i) => (
                 <div className='skillRow'>
@@ -226,7 +226,7 @@ const NewCharacterForm = (props) => {
             <div className='createCharacterButton'>
               {additionalSkillPoint === 0 && (
                 <div>
-                  <input type="submit" value="Creer" />
+                  <input type="submit" value={i18next.t('create')} />
                 </div>
               )}
             </div>

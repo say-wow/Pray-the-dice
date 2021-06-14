@@ -9,6 +9,7 @@ import {dynamicSortWithTraduction} from '../utils/sort';
 import CharacterContext from '../context/CharacterContext';
 import '../styles/inventory.css'
 import { PencilIcon, TrashIcon, RefreshIcon } from '@heroicons/react/solid'
+import i18next from 'i18next';
 
 init();
 const db = firebase.firestore();
@@ -78,17 +79,17 @@ const Inventory = () => {
 
   return (
     <div>
-      <p className='titleSection'><b>Inventory</b></p>
+      <p className='titleSection'><b>{i18next.t('inventory')}</b></p>
         <div>
           <div className={'tableInvHeader tableInvRow'}>
             <div>
-              <span>Nom</span>
+              <span>{i18next.t('name')}</span>
             </div>
             <div>
-              <span>Nombre</span>
+              <span>{i18next.t('number')}</span>
             </div>
             <div>
-              <span>Option</span>
+              <span>{i18next.t('option')}</span>
             </div>
           </div>
         {
@@ -156,7 +157,7 @@ const Inventory = () => {
           <input
             name="newItemInventory"
             type="text"
-            placeholder='Item name'
+            placeholder={i18next.t('item name')}
             value={itemName}
             onChange={(e) => {
               setItemName(e.target.value);
@@ -165,13 +166,13 @@ const Inventory = () => {
           <input
             name="numberOfNewItem"
             type="number"
-            placeholder='How many'
+            placeholder={i18next.t('number of item')}
             value={numberOfnewItem}
             onChange={(e) => {
               setNumberOfnewItem(e.target.value ? JSON.parse(e.target.value) : '');
             }}
           />
-          <input type="submit" value="Ajouter" />
+          <input type="submit" value={i18next.t('create')} />
         </form>
     </div>
   )

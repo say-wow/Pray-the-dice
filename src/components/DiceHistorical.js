@@ -11,6 +11,7 @@ import '../styles/diceHisto.css';
 import {
   isMobile
 } from "react-device-detect";
+import i18next from 'i18next';
 
 init();
 
@@ -96,7 +97,7 @@ const DiceHistorical = (props) => {
             getDice(10);
           }}
         >
-          Load more ...
+          {i18next.t('load more')}
         </button>
       )}
       <ul className="listHisto">
@@ -143,7 +144,7 @@ const DiceHistorical = (props) => {
         )}
         {diceHistorical.length === 0 && (
           <p className='noDiceMessage'>
-            Aucun dès lancé pour le moment
+            {i18next.t('load more')}
           </p>
         )}
       </ul>

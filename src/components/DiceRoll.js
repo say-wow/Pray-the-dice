@@ -17,7 +17,6 @@ const DiceRoll = (props) => {
   const {user} = useContext(UserContext);
   const {campaign} = useContext(CampaignContext);
   const [isOpen, setIsOpen] = useState(false)
-  const [classListToListen] = useState(['openChat', 'mainRoll', 'subRoll'])
   const diceRef = useRef(null)
 
   const roll = async (max, isDm) => {
@@ -54,7 +53,10 @@ const DiceRoll = (props) => {
               roll(100, user.uid === campaign.idUserDm)
             }}
           >
-            <svg className='diceIcon' width='32' height='29' fill='#fff' xmlns='http://www.w3.org/2000/svg'><path d='M16 0L0 12l1 6 15 11 15-11 1-6L16 0zm13.7 12.8l-.5 3.2-3.5-1.7-5.4-9 9.4 7.5zM15 19.6v6.1l-11.1-8L7 16.1l8 3.5zm2 0l8-3.5 3.1 1.6L17 25.8v-6.2zm6.6-5.1L16 17.9l-7.6-3.4L16 2.9l7.6 11.6zM2.3 12.8l9.4-7.5-5.4 9L2.8 16l-.5-3.2z'/></svg>
+            <svg version="1.2" baseProfile="tiny-ps" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 29" width="42" height="38" fill="#fff">
+              <path id="Layer" fill-rule="evenodd" class="shp0" d="M16 13.5L15.5 16.5L8 22L0.5 16.5L0 13.5L8 7.5L16 13.5ZM14.85 13.9L10.15 10.15L12.85 14.65L14.6 15.5L14.85 13.9ZM3.5 15.55L1.95 16.35L7.5 20.35L7.5 17.3L3.5 15.55ZM8.5 20.4L14.05 16.35L12.5 15.55L8.5 17.3L8.5 20.4ZM11.8 14.75L8 8.95L4.2 14.75L8 16.45L11.8 14.75ZM1.4 15.5L3.15 14.65L5.85 10.15L1.15 13.9L1.4 15.5Z" />
+              <path id="Layer copy" fill-rule="evenodd" class="shp0" d="M32 13.5L31.5 16.5L24 22L16.5 16.5L16 13.5L24 7.5L32 13.5ZM30.85 13.9L26.15 10.15L28.85 14.65L30.6 15.5L30.85 13.9ZM19.5 15.55L17.95 16.35L23.5 20.35L23.5 17.3L19.5 15.55ZM24.5 20.4L30.05 16.35L28.5 15.55L24.5 17.3L24.5 20.4ZM27.8 14.75L24 8.95L20.2 14.75L24 16.45L27.8 14.75ZM17.4 15.5L19.15 14.65L21.85 10.15L17.15 13.9L17.4 15.5Z" />
+            </svg>
           </button>
           <button
             className='subRoll'

@@ -6,6 +6,16 @@
     "formNewCampaign"
     "formJoin"
 }
+.formFullWidthMobile {
+  display: flex;
+}
+.formFullWidthMobile input[type='text'] {
+  display: flex;
+  flex: 1
+}
+.campaignList ul li{
+  margin: 10px 0px;
+}
 @media (min-width: 500px) {
   .containerCampaigns {
     padding-top: 30px;
@@ -25,7 +35,13 @@
   .campaignList ul li{
     margin: 10px 8px;
   }
-
+  .formFullWidthMobile {
+    display: flex;
+  }
+  .formFullWidthMobile input[type='text'] {
+    flex: none;
+    width: 220px;
+  }
 }
 @media (min-width: 700px) {
   .containerCampaigns {

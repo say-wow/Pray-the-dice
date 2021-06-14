@@ -6,7 +6,6 @@ export default React.createContext({
       uid: undefined,
       idCampaign: undefined,
       idUser: undefined,
-      age: '',
       currentHp: undefined,
       maxHp: undefined,
       description: ''
