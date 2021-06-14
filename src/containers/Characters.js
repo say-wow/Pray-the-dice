@@ -42,13 +42,14 @@ const Characters = (props) => {
   const {user} = useContext(UserContext)
   const {campaign, updateCampaign} = useContext(CampaignContext)
   const campaignIdUsed = campaign.uid || campaignIdUrl;
+  const [playersOnThisCampaign, setPlayersOnThisCampaign] = useState();
+  const [campaignRolls, setCampaignRolls] = useState();
   
   const contextValue = {
     character,
     updateCharacter: setCharacter
   }
 
-  // console.log(user)
   useEffect( () => {
     if(!campaign.uid) {
       getCampaign();
@@ -56,9 +57,14 @@ const Characters = (props) => {
     else if(campaignIdUrl && user) {
       getCharactersVisibleForUser(campaign);
     }
-    // getDiceForThisCampaign();
-    // getCharacterForUser();
   }, [user]);
+
+  useEffect( () => {
+    if((!playersOnThisCampaign || !campaignRolls) && campaign && campaign.uid) {
+      getCharacterForUser();
+      getDiceForThisCampaign();
+    }
+  });
 
 
   const getCharactersVisibleForUser = async (currentCampaign) => {
@@ -95,11 +101,7 @@ const Characters = (props) => {
   const getDiceForThisCampaign = async () => {
     db.collection('dice').where('campaignId', '==', campaign.uid).get()
     .then(querySnapshot => {
-      const rollForCampaign = {
-        ...campaign,
-        roll: querySnapshot.size
-      }
-      updateCampaign(rollForCampaign);
+      setCampaignRolls(querySnapshot.size || 0);
     })
     .catch(err => {
       console.log(err.messsage)
@@ -156,11 +158,7 @@ const Characters = (props) => {
             listUser.push(doc.data().idUser);
           }
       });
-      const userForCampaign = {
-        ...campaign,
-        userForCampaign: listUser.length
-      }
-      updateCampaign(userForCampaign);
+      setPlayersOnThisCampaign(listUser.length || 0);
     })
     .catch(err => {
       console.log(err.message)
@@ -224,10 +222,10 @@ const Characters = (props) => {
                     </p>
                   )}
                   <p>
-                    {`${i18next.t('number of dice roll')} : ${campaign.roll || 0}`}
+                    {`${i18next.t('number of dice roll')} : ${campaignRolls || 0}`}
                   </p>
                   <p>
-                    {`${i18next.t('number of user')} : ${campaign.userForCampaign || 0}`}
+                    {`${i18next.t('number of user')} : ${playersOnThisCampaign || 0}`}
                   </p>
                 </div>
                 <h3>{i18next.t('my characters')}</h3>
