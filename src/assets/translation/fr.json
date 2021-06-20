@@ -41,6 +41,9 @@
   "created at": "Créé le",
   "number of dice roll": "Nombre de dé lancé",
   "number of user": "Nombre de joueur",
+  "character generation type": "Génération des personnages",
+  "classique": "Classique",
+  "custom": "Personnaliser",
   "characteristics": {
     "strength": "Force",
     "dexterity": "Dextérité",

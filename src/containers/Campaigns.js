@@ -75,7 +75,8 @@ const Campaigns = (props) => {
       idUserDm: user.uid,
       invitationCode: invitationCode,
       name: name,
-      uid: gameUid
+      uid: gameUid,
+      characterGenerationClassic: true
     };
     console.log('sendGame');
     await db.collection('campaigns').doc(gameUid).set(data).then(res => {

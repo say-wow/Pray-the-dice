@@ -60,10 +60,8 @@ const Characters = (props) => {
   }, [user]);
 
   useEffect( () => {
-    if((!playersOnThisCampaign || !campaignRolls) && campaign && campaign.uid) {
       getCharacterForUser();
       getDiceForThisCampaign();
-    }
   }, [user]);
 
 
@@ -235,6 +233,32 @@ const Characters = (props) => {
                   <p>
                     {`${i18next.t('number of user')} : ${playersOnThisCampaign || 0}`}
                   </p>
+                  {user.uid === campaign.idUserDm && (
+                    <p>
+                      {i18next.t('character generation type')}
+                      <select
+                        value={campaign.characterGenerationClassic}
+                        onChange={(e) => {
+                          const campaignUpdate = {
+                            ...campaign,
+                            characterGenerationClassic: JSON.parse(e.target.value),
+                          }
+                          db.collection('campaigns').doc(campaign.uid).set(campaignUpdate).then(res => {
+                            updateCampaign(campaignUpdate);
+                          }).catch(e => {
+                            console.log(e)
+                          });
+                        }}
+                      >
+                        <option value={true}>
+                          {i18next.t('classique')}
+                        </option>
+                        <option value={false}>
+                          {i18next.t('custom')}
+                        </option>
+                      </select>
+                    </p>
+                  )}
                 </div>
                 <h3>{i18next.t('my characters')}</h3>
                 <ul className='list'>

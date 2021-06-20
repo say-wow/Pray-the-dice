@@ -1,9 +1,11 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState, useRef, useContext} from 'react';
 import i18next from 'i18next';
-import dataCharacter from '../assets/dataCharacter.json'
+import dataCharacter from '../assets/dataCharacter.json';
+import CampaignContext from '../context/CampaignContext';
 import '../styles/characters.css';
 
 const NewCharacterForm = (props) => {
+  const {campaign} = useContext(CampaignContext)
   const [name, setName] = useState('');
   const [listCharac, setListCharac] = useState(dataCharacter.characteristics);
   const [characComplete, setCharacComplete] = useState(false);
@@ -15,6 +17,13 @@ const NewCharacterForm = (props) => {
   const {createCharacter} = props;
   const skillsRef = useRef(null)
 
+  const calculStat = (stat1, stat2, generationClassic) => {
+    if(generationClassic) {
+      return Math.floor((stat1+stat2)/2)*5 
+    }
+    return (stat1 + stat2) * 2
+  }
+
   useEffect( () => {
     const skills = [...listSkills];
     const dexterity = listCharac.find((chara) => ( chara.label === 'dexterity')).value
@@ -22,50 +31,39 @@ const NewCharacterForm = (props) => {
     const strength = listCharac.find((chara) => ( chara.label === 'strength')).value
     const charisma = listCharac.find((chara) => ( chara.label === 'charisma')).value
     const endurance = listCharac.find((chara) => ( chara.label === 'endurance')).value
-
     if(dexterity && intelligence && strength && charisma && endurance) {
       setCharacComplete(true);
     }
-    if(dexterity && intelligence) {
-      const dexInt = (dexterity + intelligence) * 2
-      skills[skills.findIndex((skill) => skill.label === 'craft')].value = dexInt
-      skills[skills.findIndex((skill) => skill.label === 'dist')].value = dexInt
-      skills[skills.findIndex((skill) => skill.label === 'nature')].value = dexInt
-      skills[skills.findIndex((skill) => skill.label === 'reflexes')].value = dexInt
-      skills[skills.findIndex((skill) => skill.label === 'dodge')].value = dexInt
-    }
-    if(strength && dexterity) {
-      const strDex = (strength + dexterity) * 2
-      skills[skills.findIndex((skill) => skill.label === 'cac')].value = strDex
-      skills[skills.findIndex((skill) => skill.label === 'lock')].value = strDex
-    }
-    if(intelligence && charisma) {
-      const intCha = (intelligence + charisma) * 2;
-      skills[skills.findIndex((skill) => skill.label === 'secret')].value = intCha
-      skills[skills.findIndex((skill) => skill.label === 'law')].value = intCha
-      skills[skills.findIndex((skill) => skill.label === 'read')].value = intCha
-      skills[skills.findIndex((skill) => skill.label === 'lie')].value = intCha
-      skills[skills.findIndex((skill) => skill.label === 'perception')].value = intCha
-      skills[skills.findIndex((skill) => skill.label === 'heal')].value = intCha
-      skills[skills.findIndex((skill) => skill.label === 'steal')].value = intCha
-    }
-    if(dexterity && endurance) {
-      const dexEnd = (dexterity + endurance) * 2;
-      skills[skills.findIndex((skill) => skill.label === 'run')].value = dexEnd
-      skills[skills.findIndex((skill) => skill.label === 'stealth')].value = dexEnd
-      skills[skills.findIndex((skill) => skill.label === 'pilot')].value = dexEnd
-    }
-    if(strength && charisma) {
-      const strCha = (strength + charisma) * 2;
-      skills[skills.findIndex((skill) => skill.label === 'intimidate')].value = strCha
-    }
-    if(endurance && intelligence) {
-      const endInt = (endurance + intelligence) * 2;
-      skills[skills.findIndex((skill) => skill.label === 'psychology')].value = endInt
-      skills[skills.findIndex((skill) => skill.label === 'survive')].value = endInt
-    }
+    const dexInt = calculStat(dexterity,intelligence, campaign.characterGenerationClassic);
+    const strDex = calculStat(strength,dexterity, campaign.characterGenerationClassic);
+    const intCha = calculStat(intelligence,charisma, campaign.characterGenerationClassic);
+    const dexEnd = calculStat(dexterity,endurance, campaign.characterGenerationClassic);
+    const strCha = calculStat(strength,charisma, campaign.characterGenerationClassic);
+    const endInt = calculStat(endurance,intelligence, campaign.characterGenerationClassic);
+
+    skills[skills.findIndex((skill) => skill.label === 'psychology')].value = endInt
+    skills[skills.findIndex((skill) => skill.label === 'survive')].value = endInt
+    skills[skills.findIndex((skill) => skill.label === 'intimidate')].value = strCha
+    skills[skills.findIndex((skill) => skill.label === 'run')].value = dexEnd
+    skills[skills.findIndex((skill) => skill.label === 'stealth')].value = dexEnd
+    skills[skills.findIndex((skill) => skill.label === 'pilot')].value = dexEnd
+    skills[skills.findIndex((skill) => skill.label === 'secret')].value = intCha
+    skills[skills.findIndex((skill) => skill.label === 'law')].value = intCha
+    skills[skills.findIndex((skill) => skill.label === 'read')].value = intCha
+    skills[skills.findIndex((skill) => skill.label === 'lie')].value = intCha
+    skills[skills.findIndex((skill) => skill.label === 'perception')].value = intCha
+    skills[skills.findIndex((skill) => skill.label === 'heal')].value = intCha
+    skills[skills.findIndex((skill) => skill.label === 'steal')].value = intCha
+    skills[skills.findIndex((skill) => skill.label === 'cac')].value = strDex
+    skills[skills.findIndex((skill) => skill.label === 'lock')].value = strDex
+    skills[skills.findIndex((skill) => skill.label === 'craft')].value = dexInt
+    skills[skills.findIndex((skill) => skill.label === 'dist')].value = dexInt
+    skills[skills.findIndex((skill) => skill.label === 'nature')].value = dexInt
+    skills[skills.findIndex((skill) => skill.label === 'reflexes')].value = dexInt
+    skills[skills.findIndex((skill) => skill.label === 'dodge')].value = dexInt
+
     setListSkills(skills);
-  }, [listCharac]);
+  }, [listCharac, campaign]);
 
   useEffect(() => {
     let bonusUsed = 0;
@@ -194,7 +192,7 @@ const NewCharacterForm = (props) => {
           <div className='skillsContainer'>
             <div ref={skillsRef} className='skills'>
               <p>
-                <b>{i18next.t('skill')} ({additionalSkillPoint})</b>
+                <b>{i18next.t('skill')} {!campaign.characterGenerationClassic ? `(${additionalSkillPoint})` : null}</b>
               </p>
               {listSkills.map((skill, i) => (
                 <div className='skillRow'>
@@ -203,28 +201,35 @@ const NewCharacterForm = (props) => {
                   </span>
                   <div>
                     <span>
-                      {`${skill.value} +`}
+                      {`${skill.value}`}
                     </span>
-                    <input
-                      name={skill.label}
-                      max={50}
-                      min={0}
-                      className='inputSkills'
-                      type="number"
-                      value={listBonusSkills[i].value}
-                      onChange={(e) => {
-                        const newValue = e.target.value !== '' ? JSON.parse(e.target.value) : null;
-                        const newListBonus = [...listBonusSkills]
-                        newListBonus[newListBonus.findIndex((charac) => charac.label === listBonusSkills[i].label)].value = newValue;
-                        setListBonusSkills(newListBonus);
-                      }}
-                    />
+                    {!campaign.characterGenerationClassic && (
+                      <span>
+                        +
+                      </span>
+                    )}
+                    {!campaign.characterGenerationClassic && (
+                      <input
+                        name={skill.label}
+                        max={50}
+                        min={0}
+                        className='inputSkills'
+                        type="number"
+                        value={listBonusSkills[i].value}
+                        onChange={(e) => {
+                          const newValue = e.target.value !== '' ? JSON.parse(e.target.value) : null;
+                          const newListBonus = [...listBonusSkills]
+                          newListBonus[newListBonus.findIndex((charac) => charac.label === listBonusSkills[i].label)].value = newValue;
+                          setListBonusSkills(newListBonus);
+                        }}
+                      />
+                    )}
                   </div>
                 </div>
               ))}
             </div>
             <div className='createCharacterButton'>
-              {additionalSkillPoint === 0 && (
+              {(additionalSkillPoint === 0 || campaign.characterGenerationClassic)&& (
                 <div>
                   <input type="submit" value={i18next.t('create')} />
                 </div>
