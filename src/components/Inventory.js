@@ -29,6 +29,7 @@ const Inventory = () => {
       number: numberOfnewItem,
       characterId: character.uid,
     };
+    console.log('Inventory');
     db.collection('items').doc(itemUid).set(newItem).then(res => {
       getInventory(character.uid)
     }).catch(e => {
@@ -41,7 +42,7 @@ const Inventory = () => {
       ...item,
       number: updateItem
     }
-    console.log(updateItem)
+    console.log('updateItemNumber')
     await db.collection('items').doc(item.uid).set(updatedItem).then(res => {
       getInventory(character.uid)
     }).catch(e => {
@@ -51,6 +52,7 @@ const Inventory = () => {
   } 
 
   const removeItem = (itemUid) => {
+    console.log('removeItem');
     db.collection('items').doc(itemUid).delete().then(res => {
       getInventory(character.uid)
     }).catch(e => {
@@ -60,6 +62,7 @@ const Inventory = () => {
 
   const getInventory = async (idCharacter) => {
     const listItems = [];
+    console.log('getInventory');
     db.collection('items').where('characterId', '==', idCharacter).get()
       .then(doc => {
         doc.forEach( doc => {

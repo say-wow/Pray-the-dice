@@ -64,13 +64,14 @@ const Characters = (props) => {
       getCharacterForUser();
       getDiceForThisCampaign();
     }
-  });
+  }, [user]);
 
 
   const getCharactersVisibleForUser = async (currentCampaign) => {
     try {
       const listCharacters = [];
       if (currentCampaign.idUserDm !== user.uid) {
+        console.log('getCharactersVisibleForUser, 1');
         db.collection('characters').where('idUser', '==', user.uid).where('idCampaign', '==', campaignIdUsed).get()
           .then(querySnapshot => {
             querySnapshot.forEach(doc => {
@@ -82,6 +83,7 @@ const Characters = (props) => {
             console.log(err.messsage)
           })
       } else {
+        console.log('getCharactersVisibleForUser, 2');
         db.collection('characters').where('idCampaign', '==', campaignIdUsed).get()
           .then(querySnapshot => {
             querySnapshot.forEach(doc => {
@@ -99,6 +101,7 @@ const Characters = (props) => {
   }
 
   const getDiceForThisCampaign = async () => {
+    console.log('getDiceForThisCampaign');
     db.collection('dice').where('campaignId', '==', campaign.uid).get()
     .then(querySnapshot => {
       setCampaignRolls(querySnapshot.size || 0);
@@ -109,6 +112,7 @@ const Characters = (props) => {
   }
 
   const getCampaign = async () => {
+    console.log('getCampaign');
     db.collection('campaigns').doc(campaignIdUsed).get()
       .then(doc => {
         updateCampaign(doc.data());
@@ -130,6 +134,7 @@ const Characters = (props) => {
       maxHp: characterData.hp,
       description: characterData.description,
     };
+    console.log('createCharacter');
     await db.collection('characters').doc(characterUid).set(data).then(res => {
       createCharacteristics(characterData.characteristics, characterUid)
       createSkills(characterData.skills, characterUid)
@@ -151,6 +156,7 @@ const Characters = (props) => {
 
   const getCharacterForUser = async () => {
     const listUser = [];
+    console.log('getCharacterForUser');
     db.collection('characters').where('idCampaign', '==', campaign.uid).get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
@@ -174,6 +180,7 @@ const Characters = (props) => {
         value: characteristics[i].value,
         characterId: characterUid
       }
+      console.log('createCharacteristics');
       await db.collection('characteristics').doc(uidChara).set(dataChara).then(res => {
       }).catch(e => {
         console.log(e)
@@ -191,6 +198,7 @@ const Characters = (props) => {
         characterId: characterUid,
         isCustom: false,
       }
+      console.log('createSkills');
       await db.collection('skills').doc(uidSkill).set(dataSkill).then(res => {
       }).catch(e => {
         console.log(e)

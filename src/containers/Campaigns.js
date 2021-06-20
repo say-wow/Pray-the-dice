@@ -77,6 +77,7 @@ const Campaigns = (props) => {
       name: name,
       uid: gameUid
     };
+    console.log('sendGame');
     await db.collection('campaigns').doc(gameUid).set(data).then(res => {
       getCampaigns();
       toast.success(`${name} ${i18next.t('was created with success')}`, {
@@ -95,6 +96,7 @@ const Campaigns = (props) => {
 
 
   const joinCampaignByInvitationCode = () => {
+    console.log('joinCampaignByInvitationCode');
     db.collection('campaigns').where('invitationCode', '==', invitationJoinCode).get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
@@ -110,6 +112,7 @@ const Campaigns = (props) => {
     setCampaigns([])
     const listCampaigns = [];
     setCampaigns(listCampaigns);
+    console.log('getCampaigns');
     db.collection('campaigns').where('idUserDm', '==', user.uid).get()
       .then(querySnapshot => {
         querySnapshot.forEach( doc => {
@@ -125,6 +128,7 @@ const Campaigns = (props) => {
 
   const getCharacterForUser = () => {
     const listUidToSearch = [];
+    console.log('getCharacterForUser');
     db.collection('characters').where('idUser', '==', user.uid).get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
@@ -148,6 +152,7 @@ const Campaigns = (props) => {
   const getCampaignForCharacter = (uidList) => {
     const campaignByCharacter = [...campaigns];
     uidList.map((uid) => {
+      console.log('getCampaignForCharacter');
       db.collection('campaigns').doc(uid).get()
         .then(queryCampaign => {
           campaignByCharacter.push(queryCampaign.data())

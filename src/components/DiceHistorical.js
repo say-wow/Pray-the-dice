@@ -54,6 +54,7 @@ const DiceHistorical = (props) => {
   const getDice = (numberOfDiceToAdd = 0) => {
     const limit = limitHisto + numberOfDiceToAdd;
     setLimitHisto(limit)
+    console.log('getDice');
     const query = db.collection('dice').where("campaignId", "==", campaign.uid).orderBy('createdAt', 'desc').limit(limit);
     const unsubscribe = query.onSnapshot(querySnapshot => {
       const data = querySnapshot.docs.map(doc => ({
@@ -66,7 +67,8 @@ const DiceHistorical = (props) => {
 
   useEffect(() => {
     getDice();
-  }, []);
+    console.log(user)
+  }, [user]);
 
 
   useEffect(() => {

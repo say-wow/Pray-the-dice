@@ -49,6 +49,7 @@ const EditCharacter = () => {
       }
       const listSkills = [...character.skills];
       listSkills.push(dataSkill);
+      console.log('createSkill');
       await db.collection('skills').doc(uidSkill).set(dataSkill).then(() => {
         updateCharacter({
           ...character,
@@ -82,6 +83,7 @@ const EditCharacter = () => {
     delete newDataCharacter.characteristics
     delete newDataCharacter.skills
     delete newDataCharacter.inventory
+    console.log('updateCharacterData');
     await db.collection('characters').doc(newDataCharacter.uid).set(newDataCharacter).then(res => {
       updateCharacter({
         ...character,
@@ -114,6 +116,7 @@ const EditCharacter = () => {
 
   const updateSkill = async () => {
     const listSkills = character.skills;
+    console.log('updateSkill');
     await db.collection('skills').doc(skillToUpdate.uid).set(skillToUpdate).then(() => {
       listSkills.find((skill) => (
         skill.uid === skillToUpdate.uid

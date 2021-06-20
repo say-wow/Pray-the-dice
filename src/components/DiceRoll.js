@@ -33,6 +33,7 @@ const DiceRoll = (props) => {
       diceType: max,
       pictureUserSendRoll: user.photoURL,
     }
+    console.log('roll');
     await db.collection('dice').doc(rollUid).set(dataRoll).then(res => {
     
     }).catch(e => {

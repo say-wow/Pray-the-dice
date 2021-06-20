@@ -48,7 +48,7 @@ const Character = (props) => {
 
   useEffect( () => {
     getCharacter();
-  }, [user, campaign]);
+  }, [user]);
 
   useEffect( () => {
     updateCharacter({
@@ -60,6 +60,7 @@ const Character = (props) => {
   }, [characteristics, skills, inventory]);
 
   const getCharacter = async () => {
+    console.log('getCharacter');
     db.collection('characters').doc(character.uid || characterIdUrl).get()
       .then(doc => {
         updateCharacter({
@@ -77,6 +78,7 @@ const Character = (props) => {
 
   const getCharacteristics = async (idCharacter) => {
     const listCharacteristics = [];
+    console.log('getCharacteristics');
     db.collection('characteristics').where('characterId', '==', idCharacter).get()
       .then(doc => {
         doc.forEach( doc => {      
@@ -92,6 +94,7 @@ const Character = (props) => {
 
   const getSkills = async (idCharacter) => {
     const listSkills = [];
+    console.log('getSkills');
     db.collection('skills').where('characterId', '==', idCharacter).get()
       .then(doc => {
         doc.forEach( doc => {      
@@ -107,6 +110,7 @@ const Character = (props) => {
 
   const getInventory = async (idCharacter) => {
     const listItems = [];
+    console.log('getInventory');
     db.collection('items').where('characterId', '==', idCharacter).get()
       .then(doc => {
         doc.forEach( doc => {
@@ -120,15 +124,6 @@ const Character = (props) => {
     })
   }
 
-  const setCharacter = (table, dataToUpdate, key, newVal) => {
-    const newData = {...dataToUpdate};
-    newData[key] = newVal;
-    db.collection(table).doc(dataToUpdate.uid).set(newData).then(res => {
-      getCharacter();
-    }).catch(e => {
-      console.log(e)
-    });
-  };
   if(character && characteristics.length > 0 && skills.length > 0) {
     return (
       <Switch>
@@ -192,33 +187,6 @@ const Character = (props) => {
                     )}
                   </div>
                 </div>
-                {/* <p style={{display: "inline-block"}}>
-                  <input
-                    name="problemWithSociety"
-                    type="text"
-                    value={updateHp}
-                    onChange={(e) => {
-                      setUpdateHp(e.target.value ? JSON.parse(e.target.value) : '');
-                    }}
-                  />
-                  <button
-                  onClick={() => {
-                    setCharacter('characters',character ,'currentHp',character.currentHp - updateHp)
-                    setUpdateHp('');
-                  }}
-                >
-                  Remove
-                </button>
-                <button
-                  onClick={() => {
-                    setCharacter('characters',character ,'currentHp',character.currentHp + updateHp)
-                    setUpdateHp('');
-                  }}
-                >
-                  Add
-                </button>
-                </p> */}
-              
                 <div className='characteristicsDetail'>
                   <p className='titleSection'><b>{i18next.t('characteristic')}</b></p>
                   <ul>
@@ -263,9 +231,9 @@ const Character = (props) => {
                     <span>{i18next.t('inventory')}</span>
                   </Link>
                 </MobileView>
-                <BrowserView className='containerHisto'>
+                {/* <BrowserView className='containerHisto'>
                   <DiceHistorical/>
-                </BrowserView>
+                </BrowserView> */}
                 <div className='inventory'>
                   <Inventory/>
                 </div>
