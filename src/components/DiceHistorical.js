@@ -51,23 +51,24 @@ const DiceHistorical = (props) => {
   const db = firebase.firestore();
   const histoView = useRef(null)
 
-  const getDice = (numberOfDiceToAdd = 0) => {
-    const limit = limitHisto + numberOfDiceToAdd;
-    setLimitHisto(limit)
-    console.log('getDice');
-    const query = db.collection('dice').where("campaignId", "==", campaign.uid).orderBy('createdAt', 'desc').limit(limit);
-    const unsubscribe = query.onSnapshot(querySnapshot => {
-      const data = querySnapshot.docs.map(doc => ({
-        ...doc.data(),
-      }));
-      setDiceHistorical(cleanDuplicate(data.reverse(), user.uid, campaign.idUserDm).reverse());
-    });
-    return unsubscribe;
-  }
+  // const getDice = (numberOfDiceToAdd = 0) => {
+  //   const limit = limitHisto + numberOfDiceToAdd;
+  //   setLimitHisto(limit)
+  //   console.log('getDice');
+  //   const query = db.collection('dice').where("campaignId", "==", campaign.uid).orderBy('createdAt', 'desc').limit(limit);
+  //   const unsubscribe = query.onSnapshot(querySnapshot => {
+  //     const data = querySnapshot.docs.map(doc => ({
+  //       ...doc.data(),
+  //     }));
+  //     setDiceHistorical(cleanDuplicate(data.reverse(), user.uid, campaign.idUserDm).reverse());
+  //   });
+  //   return unsubscribe;
+  // }
 
   useEffect(() => {
-    getDice();
-    console.log(user)
+    if(user.uid){
+      // getDice();
+    }
   }, [user]);
 
 
@@ -96,7 +97,7 @@ const DiceHistorical = (props) => {
         <button
           className='empty'
           onClick={() => {
-            getDice(10);
+            // getDice(10);
           }}
         >
           {i18next.t('load more')}

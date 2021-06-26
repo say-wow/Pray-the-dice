@@ -45,9 +45,11 @@ const Campaigns = (props) => {
   }
 
   useEffect( () => {
-    setCampaign([]);
-    getCampaigns();
-  }, [user]);
+    console.log(campaigns);
+    if(user.uid && campaigns.length === 0) {
+      getCampaigns();
+    }
+  }, []);
 
   useEffect( () => {
     let listCleanUidToSearch = campaignListToSearch.filter((data,index)=>{
@@ -110,15 +112,16 @@ const Campaigns = (props) => {
   }
 
   const getCampaigns = () => {
-    setCampaigns([])
+    // setCampaigns([])
     const listCampaigns = [];
-    setCampaigns(listCampaigns);
+    // setCampaigns(listCampaigns);
     console.log('getCampaigns');
     db.collection('campaigns').where('idUserDm', '==', user.uid).get()
       .then(querySnapshot => {
         querySnapshot.forEach( doc => {
           listCampaigns.push(doc.data())
         });
+        console.log(listCampaigns)
         setCampaigns(listCampaigns);
         getCharacterForUser()
       })
@@ -179,7 +182,12 @@ const Campaigns = (props) => {
                 <ul>
                   {campaigns.map(campaign => (
                   <li key={campaign.uid}>
-                    <Link className='link' onClick={() => setCampaign(campaign)} to={`${match.url}/${campaign.uid}`}>
+                    <Link
+                      className='link'
+                      onClick={() => {
+                        setCampaign(campaign)
+                      }}
+                      to={`${match.url}/${campaign.uid}`}>
                       {campaign.name}
                     </Link>
                   </li>
@@ -214,7 +222,13 @@ const Campaigns = (props) => {
               </div>
 
               {campaignToJoin && (
-                <Link className='link' onClick={() => setCampaign(campaignToJoin)} to={`${match.url}/${campaignToJoin.uid}`}>
+                <Link
+                  className='link'
+                  onClick={() => {
+                    setCampaign(campaignToJoin)
+                  }}
+                  to={`${match.url}/${campaignToJoin.uid}`}
+                >
                   {`${i18next.t('join')} ${campaignToJoin.name}`}
                 </Link>
               )}

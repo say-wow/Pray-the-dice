@@ -153,8 +153,8 @@ const NewCharacterForm = (props) => {
             <p>
               <b>{i18next.t('characteristic')}</b>
             </p>
-            {listCharac.map((chara) => (
-              <div>
+            {listCharac.map((chara, i) => (
+              <div key={i}>
                 <label>
                   {i18next.t(`characteristics.${chara.label}`)}
                   <input

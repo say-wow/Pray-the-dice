@@ -38,6 +38,7 @@ const firebaseConfig = {
 };
 
 export const init = () => {
+  console.log(!firebase.apps.length);
   if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig.dev);
   }else {

@@ -51,17 +51,16 @@ const Characters = (props) => {
   }
 
   useEffect( () => {
-    if(!campaign.uid) {
-      getCampaign();
-    }
-    else if(campaignIdUrl && user) {
-      getCharactersVisibleForUser(campaign);
-    }
-  }, [user]);
-
-  useEffect( () => {
+    if(user.uid){
+      if(!campaign.uid) {
+        getCampaign();
+      }
+      else if(campaignIdUrl && user) {
+        getCharactersVisibleForUser(campaign);
+      }
       getCharacterForUser();
       getDiceForThisCampaign();
+    }
   }, [user]);
 
 

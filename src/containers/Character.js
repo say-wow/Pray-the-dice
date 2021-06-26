@@ -47,7 +47,9 @@ const Character = (props) => {
   const [descriptionIsDisplay, setDescriptionIsDisplay] = useState(false)
 
   useEffect( () => {
-    getCharacter();
+    if(user.uid) {
+      getCharacter();
+    }
   }, [user]);
 
   useEffect( () => {
@@ -231,9 +233,9 @@ const Character = (props) => {
                     <span>{i18next.t('inventory')}</span>
                   </Link>
                 </MobileView>
-                {/* <BrowserView className='containerHisto'>
+                <BrowserView className='containerHisto'>
                   <DiceHistorical/>
-                </BrowserView> */}
+                </BrowserView>
                 <div className='inventory'>
                   <Inventory/>
                 </div>
