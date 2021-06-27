@@ -107,7 +107,8 @@ const NewCharacterForm = (props) => {
                 description,
                 alive: true,
                 characteristics: listCharac,
-                skills: skillsCalculated
+                skills: skillsCalculated,
+                inventory: []
               });
               setName('');
               setDescription('');

@@ -45,7 +45,6 @@ const Campaigns = (props) => {
   }
 
   useEffect( () => {
-    console.log(campaigns);
     if(user.uid && campaigns.length === 0) {
       getCampaigns();
     }
@@ -112,7 +111,6 @@ const Campaigns = (props) => {
   }
 
   const getCampaigns = () => {
-    // setCampaigns([])
     const listCampaigns = [];
     // setCampaigns(listCampaigns);
     console.log('getCampaigns');

@@ -25,6 +25,7 @@ import EditCharacter from './EditCharacter';
 import MobileInventory from './MobileInventory';
 import { ChatIcon, PencilAltIcon, ChevronDownIcon, ChevronUpIcon, CollectionIcon, ArchiveIcon } from '@heroicons/react/outline'
 import {dynamicSortWithTraduction} from '../utils/sort';
+import {setValueOnLocalStorage, getValueOnLocalStorage} from "../utils/localStorage";
 import {
   BrowserView,
   MobileView,
@@ -50,83 +51,77 @@ const Character = (props) => {
     if(user.uid) {
       getCharacter();
     }
-  }, [user]);
-
-  useEffect( () => {
-    updateCharacter({
-      ...character,
-      skills: skills,
-      characteristics: characteristics,
-      inventory: inventory,
-    });
-  }, [characteristics, skills, inventory]);
+  }, []);
 
   const getCharacter = async () => {
-    console.log('getCharacter');
-    db.collection('characters').doc(character.uid || characterIdUrl).get()
-      .then(doc => {
-        updateCharacter({
-          ...character,
-          ...doc.data()
-        });
-        getCharacteristics(doc.data().uid)
-        getSkills(doc.data().uid)
-        getInventory(doc.data().uid)
-    })
-    .catch(err => {
-      console.log(err.messsage)
-    })
+    const savedCharacter = getValueOnLocalStorage('character');
+    if(!savedCharacter || savedCharacter.uid !== characterIdUrl) {
+      console.log('getCharacterOnline');
+      db.collection('characters').doc(character.uid || characterIdUrl).get()
+        .then(doc => {
+          updateCharacter({
+            ...doc.data(),
+          });
+          setValueOnLocalStorage('character',{...doc.data()});
+      })
+      .catch(err => {
+        console.log(err.messsage)
+      })
+    } else {
+      updateCharacter({
+        ...savedCharacter,
+      });
+    }
   }
 
-  const getCharacteristics = async (idCharacter) => {
-    const listCharacteristics = [];
-    console.log('getCharacteristics');
-    db.collection('characteristics').where('characterId', '==', idCharacter).get()
-      .then(doc => {
-        doc.forEach( doc => {      
-          listCharacteristics.push(doc.data())
-        });
-        listCharacteristics.sort(dynamicSortWithTraduction("name", 'characteristics'));
-        setCharacteristics(listCharacteristics)
-    })
-    .catch(err => {
-      console.log(err.messsage)
-    })
-  }
+  // const getCharacteristics = async (idCharacter) => {
+  //   const listCharacteristics = [];
+  //   console.log('getCharacteristics');
+  //   db.collection('characteristics').where('characterId', '==', idCharacter).get()
+  //     .then(doc => {
+  //       doc.forEach( doc => {      
+  //         listCharacteristics.push(doc.data())
+  //       });
+  //       listCharacteristics.sort(dynamicSortWithTraduction("name", 'characteristics'));
+  //       setCharacteristics(listCharacteristics)
+  //   })
+  //   .catch(err => {
+  //     console.log(err.messsage)
+  //   })
+  // }
 
-  const getSkills = async (idCharacter) => {
-    const listSkills = [];
-    console.log('getSkills');
-    db.collection('skills').where('characterId', '==', idCharacter).get()
-      .then(doc => {
-        doc.forEach( doc => {      
-          listSkills.push(doc.data())
-        });
-        listSkills.sort(dynamicSortWithTraduction("name", 'skills'));
-        setSkills(listSkills)
-    })
-    .catch(err => {
-      console.log(err.messsage)
-    })
-  }
+  // const getSkills = async (idCharacter) => {
+  //   const listSkills = [];
+  //   console.log('getSkills');
+  //   db.collection('skills').where('characterId', '==', idCharacter).get()
+  //     .then(doc => {
+  //       doc.forEach( doc => {      
+  //         listSkills.push(doc.data())
+  //       });
+  //       listSkills.sort(dynamicSortWithTraduction("name", 'skills'));
+  //       setSkills(listSkills)
+  //   })
+  //   .catch(err => {
+  //     console.log(err.messsage)
+  //   })
+  // }
 
-  const getInventory = async (idCharacter) => {
-    const listItems = [];
-    console.log('getInventory');
-    db.collection('items').where('characterId', '==', idCharacter).get()
-      .then(doc => {
-        doc.forEach( doc => {
-          listItems.push(doc.data())
-        });
-        listItems.sort(dynamicSortWithTraduction("name"));
-        setInventory(listItems)
-    })
-    .catch(err => {
-      console.log(err.messsage)
-    })
-  }
-
-  if(character && characteristics.length > 0 && skills.length > 0) {
+  // const getInventory = async (idCharacter) => {
+  //   const listItems = [];
+  //   console.log('getInventory');
+  //   db.collection('items').where('characterId', '==', idCharacter).get()
+  //     .then(doc => {
+  //       doc.forEach( doc => {
+  //         listItems.push(doc.data())
+  //       });
+  //       listItems.sort(dynamicSortWithTraduction("name"));
+  //       setInventory(listItems)
+  //   })
+  //   .catch(err => {
+  //     console.log(err.messsage)
+  //   })
+  // }
+  if(character) {
     return (
       <Switch>
         <Route path={`${match.url}/chat`}>
@@ -193,10 +188,10 @@ const Character = (props) => {
                   <p className='titleSection'><b>{i18next.t('characteristic')}</b></p>
                   <ul>
                     {
-                      characteristics.map((charac) => (
-                        <li key={charac.uid}>
+                      character.characteristics.sort(dynamicSortWithTraduction("name", 'characteristics')).map((charac, i) => (
+                        <li key={i}>
                           <span className='title'>
-                            {i18next.t(`characteristics.${charac.name}`)}
+                            {i18next.t(`characteristics.${charac.label}`)}
                           </span>
                           <span className='value'>
                             {charac.value * 5}
@@ -206,15 +201,14 @@ const Character = (props) => {
                     }
                   </ul>
                 </div>
-                
                 <div className='skillsDetail'>
                   <p className='titleSection'><b>{i18next.t('skill')}</b></p>
                   <ul>
                     {
-                    skills.map((skill) => (
-                      <li key={skill.uid}>
+                    character.skills.sort(dynamicSortWithTraduction("name", 'skills')).map((skill,i) => (
+                      <li key={i}>
                         <span>
-                          {skill.isCustom ? skill.name : i18next.t(`skills.${skill.name}`)}
+                          {skill.isCustom ? skill.name : i18next.t(`skills.${skill.label}`)}
                         </span>
                         <span>
                           {skill.value}

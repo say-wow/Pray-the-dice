@@ -31,7 +31,7 @@ const Inventory = () => {
     };
     console.log('Inventory');
     db.collection('items').doc(itemUid).set(newItem).then(res => {
-      getInventory(character.uid)
+      // getInventory(character.uid)
     }).catch(e => {
       console.log(e)
     });
@@ -44,7 +44,7 @@ const Inventory = () => {
     }
     console.log('updateItemNumber')
     await db.collection('items').doc(item.uid).set(updatedItem).then(res => {
-      getInventory(character.uid)
+      // getInventory(character.uid)
     }).catch(e => {
       console.log(e)
     });
@@ -54,32 +54,31 @@ const Inventory = () => {
   const removeItem = (itemUid) => {
     console.log('removeItem');
     db.collection('items').doc(itemUid).delete().then(res => {
-      getInventory(character.uid)
+      // getInventory(character.uid)
     }).catch(e => {
       console.log(e)
     });
   }
 
-  const getInventory = async (idCharacter) => {
-    const listItems = [];
-    console.log('getInventory');
-    db.collection('items').where('characterId', '==', idCharacter).get()
-      .then(doc => {
-        doc.forEach( doc => {
-          listItems.push(doc.data())
-        });
-        setLineToUpdateInv(null);
-        listItems.sort(dynamicSortWithTraduction("name"));
-        updateCharacter({
-          ...character,
-          inventory: listItems,
-        });
-    })
-    .catch(err => {
-      console.log(err.messsage)
-    })
-  }
-
+  // const getInventory = async (idCharacter) => {
+  //   const listItems = [];
+  //   console.log('getInventory');
+  //   db.collection('items').where('characterId', '==', idCharacter).get()
+  //     .then(doc => {
+  //       doc.forEach( doc => {
+  //         listItems.push(doc.data())
+  //       });
+  //       setLineToUpdateInv(null);
+  //       listItems.sort(dynamicSortWithTraduction("name"));
+  //       updateCharacter({
+  //         ...character,
+  //         inventory: listItems,
+  //       });
+  //   })
+  //   .catch(err => {
+  //     console.log(err.messsage)
+  //   })
+  // }
   return (
     <div>
       <p className='titleSection'><b>{i18next.t('inventory')}</b></p>
@@ -109,7 +108,7 @@ const Inventory = () => {
                     placeholder={item.number}
                     value={numberOfnewItem}
                     onChange={(e) => {
-                      setUpdateItem(e.target.value ? JSON.parse(e.target.value) : '');
+                      // setUpdateItem(e.target.value ? JSON.parse(e.target.value) : '');
                     }}
                   />
                 )}
@@ -122,7 +121,7 @@ const Inventory = () => {
                   <button
                     className='optionBtnInv'
                     onClick={() => {
-                      updateItemNumber(item)
+                      // updateItemNumber(item)
                     }}
                   >
                     <RefreshIcon className="iconInv"/>
@@ -132,7 +131,7 @@ const Inventory = () => {
                   <button
                     className='optionBtnInv'
                     onClick={() => {
-                      setLineToUpdateInv(i);
+                      // setLineToUpdateInv(i);
                     }}
                   >
                     <PencilIcon className="iconInv"/> 
@@ -141,7 +140,7 @@ const Inventory = () => {
                 <button
                   className='optionBtnInv'
                   onClick={() => {
-                    removeItem(item.uid);
+                    // removeItem(item.uid);
                   }}
                 >
                   <TrashIcon className="iconInv" />
@@ -151,8 +150,8 @@ const Inventory = () => {
           ))
         }
         </div>
-        <form className='formNewInv' onSubmit={(e) => {
-          createItem();
+        {/* <form className='formNewInv' onSubmit={(e) => {
+          // createItem();
           setItemName('');
           setNumberOfnewItem('');
           e.preventDefault();
@@ -176,7 +175,7 @@ const Inventory = () => {
             }}
           />
           <input type="submit" value={i18next.t('create')} />
-        </form>
+        </form> */}
     </div>
   )
 }

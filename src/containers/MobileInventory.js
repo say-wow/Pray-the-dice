@@ -30,9 +30,9 @@ const MobileInventory = () => {
   const {campaign} = useContext(CampaignContext);
 
 
-  useEffect( () => {
+  // useEffect( () => {
   
-  }, [character]);
+  // }, [character]);
 
 
 

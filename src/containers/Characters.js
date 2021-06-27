@@ -21,6 +21,8 @@ import '../styles/characters.css';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import i18next from 'i18next';
+import {setValueOnLocalStorage, getValueOnLocalStorage} from "../utils/localStorage";
+
 init();
 const db = firebase.firestore();
 
@@ -52,48 +54,58 @@ const Characters = (props) => {
 
   useEffect( () => {
     if(user.uid){
-      if(!campaign.uid) {
-        getCampaign();
-      }
-      else if(campaignIdUrl && user) {
-        getCharactersVisibleForUser(campaign);
-      }
-      getCharacterForUser();
-      getDiceForThisCampaign();
+      getCampaign();
+
+      // if(!campaign.uid) {
+      //   getCampaign();
+      // }
+      // else if(campaignIdUrl && user) {
+      //   // getCharactersVisibleForUser(campaign);
+      // }
+      // getCharacterForUser();
+      // getDiceForThisCampaign();
     }
-  }, [user]);
+  }, []);
 
 
   const getCharactersVisibleForUser = async (currentCampaign) => {
-    try {
-      const listCharacters = [];
-      if (currentCampaign.idUserDm !== user.uid) {
-        console.log('getCharactersVisibleForUser, 1');
-        db.collection('characters').where('idUser', '==', user.uid).where('idCampaign', '==', campaignIdUsed).get()
-          .then(querySnapshot => {
-            querySnapshot.forEach(doc => {
-              listCharacters.push(doc.data())
-            });
-            setCharacters(listCharacters);
-          })
-          .catch(err => {
-            console.log(err.messsage)
-          })
-      } else {
-        console.log('getCharactersVisibleForUser, 2');
-        db.collection('characters').where('idCampaign', '==', campaignIdUsed).get()
-          .then(querySnapshot => {
-            querySnapshot.forEach(doc => {
-              listCharacters.push(doc.data())
-            });
-            setCharacters(listCharacters);
-          })
-          .catch(err => {
-            console.log(err.messsage)
-          })
+    const savedCaractersList = getValueOnLocalStorage('characters');
+    if(!savedCaractersList || campaignIdUrl !== currentCampaign.uid) {
+      try {
+        const listCharacters = [];
+        if (currentCampaign.idUserDm !== user.uid) {
+          console.log('getCharactersVisibleForUser, 1');
+          db.collection('characters').where('idUser', '==', user.uid).where('idCampaign', '==', campaignIdUsed).get()
+            .then(querySnapshot => {
+              querySnapshot.forEach(doc => {
+                listCharacters.push(doc.data())
+              });
+              setCharacters(listCharacters);
+              setValueOnLocalStorage('characters',listCharacters);
+            })
+            .catch(err => {
+              console.log(err.messsage)
+            })
+        } else {
+          console.log('getCharactersVisibleForUser, 2');
+          db.collection('characters').where('idCampaign', '==', campaignIdUsed).get()
+            .then(querySnapshot => {
+              querySnapshot.forEach(doc => {
+                listCharacters.push(doc.data())
+              });
+              setCharacters(listCharacters);
+              setValueOnLocalStorage('characters',listCharacters);
+
+            })
+            .catch(err => {
+              console.log(err.messsage)
+            })
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
+    } else {
+      setCharacters(savedCaractersList);
     }
   }
 
@@ -109,15 +121,22 @@ const Characters = (props) => {
   }
 
   const getCampaign = async () => {
-    console.log('getCampaign');
-    db.collection('campaigns').doc(campaignIdUsed).get()
-      .then(doc => {
-        updateCampaign(doc.data());
-        getCharactersVisibleForUser(doc.data());
-    })
-    .catch(err => {
-      console.log(err.messsage)
-    })
+    const savedCampaign = getValueOnLocalStorage('currentCampaign');
+    if(!savedCampaign || campaignIdUrl !== savedCampaign.uid) {
+      console.log('getCampaign');
+      db.collection('campaigns').doc(campaignIdUsed).get()
+        .then(doc => {
+          updateCampaign(doc.data());
+          setValueOnLocalStorage('currentCampaign',{...doc.data()});
+          getCharactersVisibleForUser(doc.data());
+      })
+      .catch(err => {
+        console.log(err.messsage)
+      })
+    } else {
+      updateCampaign({...savedCampaign});
+      getCharactersVisibleForUser({...savedCampaign});
+    }
   }
 
   const createCharacter = async (characterData) => {
@@ -130,11 +149,15 @@ const Characters = (props) => {
       currentHp: characterData.hp,
       maxHp: characterData.hp,
       description: characterData.description,
+      skills: [...characterData.skills],
+      characteristics: [...characterData.characteristics],
+      inventory: [],
     };
     console.log('createCharacter');
     await db.collection('characters').doc(characterUid).set(data).then(res => {
-      createCharacteristics(characterData.characteristics, characterUid)
-      createSkills(characterData.skills, characterUid)
+      const charactersList = getValueOnLocalStorage('characters');
+      charactersList.push(data);
+      setValueOnLocalStorage('characters',charactersList);
       getCharactersVisibleForUser(campaignIdUsed);
 
       toast.success(`${characterData.name} ${i18next.t('was created with success')}`, {
@@ -168,41 +191,6 @@ const Characters = (props) => {
     })
   }
   
-  const createCharacteristics = async (characteristics, characterUid) => {
-    for(let i=0; i < characteristics.length; i+=1) {
-      const uidChara = uid();
-      const dataChara = {
-        uid: uidChara,
-        name: characteristics[i].label,
-        value: characteristics[i].value,
-        characterId: characterUid
-      }
-      console.log('createCharacteristics');
-      await db.collection('characteristics').doc(uidChara).set(dataChara).then(res => {
-      }).catch(e => {
-        console.log(e)
-      });
-    }
-  }
-
-  const createSkills = async (skills, characterUid) => {
-    for(let i=0; i < skills.length; i+=1) {
-      const uidSkill = uid();
-      const dataSkill = {
-        uid: uidSkill,
-        name: skills[i].label,
-        value: skills[i].value,
-        characterId: characterUid,
-        isCustom: false,
-      }
-      console.log('createSkills');
-      await db.collection('skills').doc(uidSkill).set(dataSkill).then(res => {
-      }).catch(e => {
-        console.log(e)
-      });
-    }
-  }
-
   return (
     <div className='containerCharacters'>
       <CharacterContext.Provider value={contextValue}>
@@ -223,14 +211,14 @@ const Characters = (props) => {
                   </p>
                   {campaign.createdAt && (
                     <p>
-                      {`${i18next.t('created at')} : ${campaign.createdAt.toDate().toLocaleDateString()}`}
+                      {/* {`${i18next.t('created at')} : ${campaign.createdAt.toDate().toLocaleDateString()}`} */}
                     </p>
                   )}
                   <p>
-                    {`${i18next.t('number of dice roll')} : ${campaignRolls || 0}`}
+                    {/* {`${i18next.t('number of dice roll')} : ${campaignRolls || 0}`} */}
                   </p>
                   <p>
-                    {`${i18next.t('number of user')} : ${playersOnThisCampaign || 0}`}
+                    {/* {`${i18next.t('number of user')} : ${playersOnThisCampaign || 0}`} */}
                   </p>
                   {user.uid === campaign.idUserDm && (
                     <p>
