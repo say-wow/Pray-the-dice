@@ -9,8 +9,7 @@ import CharacterContext from '../context/CharacterContext';
 import UserContext from '../context/UserContext';
 import CampaignContext from '../context/CampaignContext';
 import '../styles/diceRoll.css'
-init();
-const db = firebase.firestore();
+
 
 const DiceRoll = (props) => {
   const {character} = useContext(CharacterContext);
@@ -23,22 +22,18 @@ const DiceRoll = (props) => {
     const randomValue = Math.floor(Math.random() * max) + 1;
     const rollUid = uid();
     const dataRoll = {
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      createdAt: new Date(Date.now()).toLocaleDateString("fr-FR"),
       userName: !isDm ? character.name : "DM",
       characterId: character.uid,
       value: randomValue,
-      campaignId: character.idCampaign,
+      // campaignId: character.idCampaign,
       uid: rollUid,
       isDmRoll: isDm,
       diceType: max,
       pictureUserSendRoll: user.photoURL,
     }
     console.log('roll');
-    await db.collection('dice').doc(rollUid).set(dataRoll).then(res => {
-    
-    }).catch(e => {
-      console.log(e)
-    });
+    props.setNewDice(dataRoll);
   }
 
   return (

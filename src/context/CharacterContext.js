@@ -8,7 +8,8 @@ export default React.createContext({
       idUser: undefined,
       currentHp: undefined,
       maxHp: undefined,
-      description: ''
+      description: '',
+      inventory:[],
   },
   updateCharacter: newCharacter => {}
 });

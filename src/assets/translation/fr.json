@@ -44,6 +44,7 @@
   "character generation type": "Génération des personnages",
   "classique": "Classique",
   "custom": "Personnaliser",
+  "no roll": "Aucun dès encore lancé",
   "characteristics": {
     "strength": "Force",
     "dexterity": "Dextérité",

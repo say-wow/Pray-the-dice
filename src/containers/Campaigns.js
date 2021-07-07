@@ -10,7 +10,6 @@ import {
   useRouteMatch,
 } from "react-router-dom";
 import { uid } from 'uid';
-// import { FirebaseDatabaseProvider } from "@react-firebase/database";
 import i18next from 'i18next';
 import UserContext from '../context/UserContext';
 import CampaignContext from '../context/CampaignContext';
@@ -19,6 +18,7 @@ import NewCampaignForm from '../components/NewCampaignForm';
 import {init} from '../utils/initFirebase'
 import '../styles/campaigns.css';
 import { ToastContainer, toast } from 'react-toastify';
+import {setValueOnLocalStorage, getValueOnLocalStorage} from "../utils/localStorage";
 import 'react-toastify/dist/ReactToastify.css';
 init();
 const db = firebase.firestore();
@@ -51,10 +51,10 @@ const Campaigns = (props) => {
   }, []);
 
   useEffect( () => {
-    let listCleanUidToSearch = campaignListToSearch.filter((data,index)=>{
-      return campaignListToSearch.indexOf(data) === index;
-    })
-    getCampaignForCharacter(listCleanUidToSearch)
+    // let listCleanUidToSearch = campaignListToSearch.filter((data,index)=>{
+    //   return campaignListToSearch.indexOf(data) === index;
+    // })
+    // getCampaignForCharacter(listCleanUidToSearch)
   }, [campaignListToSearch]);
 
 
@@ -97,9 +97,9 @@ const Campaigns = (props) => {
   }
 
 
-  const joinCampaignByInvitationCode = () => {
+  const joinCampaignByInvitationCode = async () => {
     console.log('joinCampaignByInvitationCode');
-    db.collection('campaigns').where('invitationCode', '==', invitationJoinCode).get()
+    await db.collection('campaigns').where('invitationCode', '==', invitationJoinCode).get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
           setCampaignToJoin(doc.data());
@@ -112,26 +112,35 @@ const Campaigns = (props) => {
 
   const getCampaigns = () => {
     const listCampaigns = [];
-    // setCampaigns(listCampaigns);
-    console.log('getCampaigns');
-    db.collection('campaigns').where('idUserDm', '==', user.uid).get()
-      .then(querySnapshot => {
-        querySnapshot.forEach( doc => {
-          listCampaigns.push(doc.data())
-        });
-        console.log(listCampaigns)
-        setCampaigns(listCampaigns);
-        getCharacterForUser()
+    const savedCampaignsList = getValueOnLocalStorage('campaignsList');
+    const savedUserUid = getValueOnLocalStorage('userUid');
+
+    if(!savedCampaignsList || savedUserUid !== user.uid) {
+      console.log('getCampaigns');
+      db.collection('campaigns').where('idUserDm', '==', user.uid).get()
+        .then(querySnapshot => {
+          querySnapshot.forEach( doc => {
+            listCampaigns.push(doc.data())
+          });
+          console.log(listCampaigns)
+          setCampaigns(listCampaigns);
+          setValueOnLocalStorage('campaignsList',listCampaigns);
+          setValueOnLocalStorage('userUid',user.uid);
+          // getCharacterForUser()
+        })
+      .catch(err => {
+        console.log(err.message)
       })
-    .catch(err => {
-      console.log(err.message)
-    })
+    } else {
+      setCampaigns(savedCampaignsList);
+    }
+
   }
 
-  const getCharacterForUser = () => {
+  const getCharacterForUser = async () => {
     const listUidToSearch = [];
     console.log('getCharacterForUser');
-    db.collection('characters').where('idUser', '==', user.uid).get()
+    await db.collection('characters').where('idUser', '==', user.uid).get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
           listUidToSearch.push(doc.data().idCampaign)
@@ -151,11 +160,11 @@ const Campaigns = (props) => {
     })
   }
 
-  const getCampaignForCharacter = (uidList) => {
+  const getCampaignForCharacter = async (uidList) => {
     const campaignByCharacter = [...campaigns];
-    uidList.map((uid) => {
+    uidList.map(async (uid) => {
       console.log('getCampaignForCharacter');
-      db.collection('campaigns').doc(uid).get()
+      await db.collection('campaigns').doc(uid).get()
         .then(queryCampaign => {
           campaignByCharacter.push(queryCampaign.data())
           setCampaigns(campaignByCharacter);

@@ -3,6 +3,7 @@ import firebase from "firebase/app";
 import "firebase/analytics";
 import "firebase/auth";
 import "firebase/firestore";
+import "firebase/database";
 import {
   Switch,
   Route,
@@ -40,12 +41,11 @@ const Character = (props) => {
   const {campaign} = useContext(CampaignContext);
   const {character, updateCharacter} = useContext(CharacterContext);
   let { characterIdUrl } = useParams();
-  const [characteristics, setCharacteristics] = useState([])
-  const [skills, setSkills] = useState([])
   const [inventory, setInventory] = useState([])
   const [itemName, setItemName] = useState()
   const [numberOfnewItem, setNumberOfnewItem] = useState()
   const [descriptionIsDisplay, setDescriptionIsDisplay] = useState(false)
+  const [rollList, setRollList] = useState([]);
 
   useEffect( () => {
     if(user.uid) {
@@ -53,78 +53,44 @@ const Character = (props) => {
     }
   }, []);
 
-  const getCharacter = async () => {
-    const savedCharacter = getValueOnLocalStorage('character');
-    if(!savedCharacter || savedCharacter.uid !== characterIdUrl) {
-      console.log('getCharacterOnline');
-      db.collection('characters').doc(character.uid || characterIdUrl).get()
-        .then(doc => {
-          updateCharacter({
-            ...doc.data(),
-          });
-          setValueOnLocalStorage('character',{...doc.data()});
-      })
-      .catch(err => {
-        console.log(err.messsage)
-      })
-    } else {
-      updateCharacter({
-        ...savedCharacter,
+  useEffect(() => {
+    if(character.uid) {
+      console.log(character.idCampaign);
+      const dbRefObject = firebase.database().ref().child(`${character.idCampaign}`);
+      dbRefObject.on('value', snap => {
+        console.log(snap.val());
+        setRollList(Object.values(snap.val() || {}));
       });
     }
+  },[character])
+
+  const getCharacter = async () => {
+    console.log('getCharacter');
+    await db.collection('characters').doc(character.uid || characterIdUrl).get()
+      .then(doc => {
+        updateCharacter({
+          ...doc.data(),
+        });
+        setValueOnLocalStorage('character',{...doc.data()});
+    })
+    .catch(err => {
+      console.log(err.messsage)
+    })
   }
 
-  // const getCharacteristics = async (idCharacter) => {
-  //   const listCharacteristics = [];
-  //   console.log('getCharacteristics');
-  //   db.collection('characteristics').where('characterId', '==', idCharacter).get()
-  //     .then(doc => {
-  //       doc.forEach( doc => {      
-  //         listCharacteristics.push(doc.data())
-  //       });
-  //       listCharacteristics.sort(dynamicSortWithTraduction("name", 'characteristics'));
-  //       setCharacteristics(listCharacteristics)
-  //   })
-  //   .catch(err => {
-  //     console.log(err.messsage)
-  //   })
-  // }
-
-  // const getSkills = async (idCharacter) => {
-  //   const listSkills = [];
-  //   console.log('getSkills');
-  //   db.collection('skills').where('characterId', '==', idCharacter).get()
-  //     .then(doc => {
-  //       doc.forEach( doc => {      
-  //         listSkills.push(doc.data())
-  //       });
-  //       listSkills.sort(dynamicSortWithTraduction("name", 'skills'));
-  //       setSkills(listSkills)
-  //   })
-  //   .catch(err => {
-  //     console.log(err.messsage)
-  //   })
-  // }
-
-  // const getInventory = async (idCharacter) => {
-  //   const listItems = [];
-  //   console.log('getInventory');
-  //   db.collection('items').where('characterId', '==', idCharacter).get()
-  //     .then(doc => {
-  //       doc.forEach( doc => {
-  //         listItems.push(doc.data())
-  //       });
-  //       listItems.sort(dynamicSortWithTraduction("name"));
-  //       setInventory(listItems)
-  //   })
-  //   .catch(err => {
-  //     console.log(err.messsage)
-  //   })
-  // }
+  const sendNewRoll = (newRoll) => {
+    const newList = [
+      ...rollList
+    ];
+    newList.push(newRoll);
+    console.log(newList)
+    firebase.database().ref().child(`${character.idCampaign}`).update(newList);
+  }
+  
   if(character) {
     return (
       <Switch>
-        <Route path={`${match.url}/chat`}>
+        {/* <Route path={`${match.url}/chat`}>
           <DiceChat/>
         </Route>
         <Route path={`${match.url}/edit`}>
@@ -132,7 +98,7 @@ const Character = (props) => {
         </Route>
         <Route path={`${match.url}/inventory`}>
           <MobileInventory/>
-        </Route>
+        </Route> */}
         <Route path={match.path}>
           <div className='containerCharacterView'>
             {(character.idUser === user.uid || campaign.idUserDm === user.uid) && (
@@ -228,13 +194,20 @@ const Character = (props) => {
                   </Link>
                 </MobileView>
                 <BrowserView className='containerHisto'>
-                  <DiceHistorical/>
+                  <DiceHistorical
+                    list={rollList}
+                  />
                 </BrowserView>
                 <div className='inventory'>
-                  <Inventory/>
+                  {/* <Inventory/> */}
                 </div>
                 <BrowserView>
-                  <DiceRoll chat={false}/>
+                  <DiceRoll
+                    chat={false}
+                    setNewDice={(newRoll) => {
+                      sendNewRoll(newRoll);
+                    }}
+                  />
                 </BrowserView>
               </div>
             )}

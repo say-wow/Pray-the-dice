@@ -70,12 +70,12 @@ const Characters = (props) => {
 
   const getCharactersVisibleForUser = async (currentCampaign) => {
     const savedCaractersList = getValueOnLocalStorage('characters');
-    if(!savedCaractersList || campaignIdUrl !== currentCampaign.uid) {
+    if(!savedCaractersList || savedCaractersList.length === 0 || campaignIdUrl !== currentCampaign.uid || (savedCaractersList.length > 0 && savedCaractersList[0].idCampaign !== campaignIdUrl)) {
       try {
         const listCharacters = [];
         if (currentCampaign.idUserDm !== user.uid) {
           console.log('getCharactersVisibleForUser, 1');
-          db.collection('characters').where('idUser', '==', user.uid).where('idCampaign', '==', campaignIdUsed).get()
+          await db.collection('characters').where('idUser', '==', user.uid).where('idCampaign', '==', campaignIdUsed).get()
             .then(querySnapshot => {
               querySnapshot.forEach(doc => {
                 listCharacters.push(doc.data())
@@ -88,7 +88,7 @@ const Characters = (props) => {
             })
         } else {
           console.log('getCharactersVisibleForUser, 2');
-          db.collection('characters').where('idCampaign', '==', campaignIdUsed).get()
+          await db.collection('characters').where('idCampaign', '==', campaignIdUsed).get()
             .then(querySnapshot => {
               querySnapshot.forEach(doc => {
                 listCharacters.push(doc.data())
@@ -111,7 +111,7 @@ const Characters = (props) => {
 
   const getDiceForThisCampaign = async () => {
     console.log('getDiceForThisCampaign');
-    db.collection('dice').where('campaignId', '==', campaign.uid).get()
+    await db.collection('dice').where('campaignId', '==', campaign.uid).get()
     .then(querySnapshot => {
       setCampaignRolls(querySnapshot.size || 0);
     })
@@ -121,12 +121,13 @@ const Characters = (props) => {
   }
 
   const getCampaign = async () => {
-    const savedCampaign = getValueOnLocalStorage('currentCampaign');
+    const savedCampaign = await getValueOnLocalStorage('currentCampaign');
     if(!savedCampaign || campaignIdUrl !== savedCampaign.uid) {
       console.log('getCampaign');
-      db.collection('campaigns').doc(campaignIdUsed).get()
+      await db.collection('campaigns').doc(campaignIdUsed).get()
         .then(doc => {
           updateCampaign(doc.data());
+          console.log(doc.data());
           setValueOnLocalStorage('currentCampaign',{...doc.data()});
           getCharactersVisibleForUser(doc.data());
       })
@@ -177,7 +178,7 @@ const Characters = (props) => {
   const getCharacterForUser = async () => {
     const listUser = [];
     console.log('getCharacterForUser');
-    db.collection('characters').where('idCampaign', '==', campaign.uid).get()
+    await db.collection('characters').where('idCampaign', '==', campaign.uid).get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
           if(listUser.indexOf(doc.data().idUser) === -1) {
@@ -225,12 +226,12 @@ const Characters = (props) => {
                       {i18next.t('character generation type')}
                       <select
                         value={campaign.characterGenerationClassic}
-                        onChange={(e) => {
+                        onChange={async (e) => {
                           const campaignUpdate = {
                             ...campaign,
                             characterGenerationClassic: JSON.parse(e.target.value),
                           }
-                          db.collection('campaigns').doc(campaign.uid).set(campaignUpdate).then(res => {
+                          await db.collection('campaigns').doc(campaign.uid).set(campaignUpdate).then(res => {
                             updateCampaign(campaignUpdate);
                           }).catch(e => {
                             console.log(e)

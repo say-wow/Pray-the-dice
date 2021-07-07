@@ -79,105 +79,108 @@ const Inventory = () => {
   //     console.log(err.messsage)
   //   })
   // }
-  return (
-    <div>
-      <p className='titleSection'><b>{i18next.t('inventory')}</b></p>
-        <div>
-          <div className={'tableInvHeader tableInvRow'}>
-            <div>
-              <span>{i18next.t('name')}</span>
+
+  if(character.uid) {
+    return (
+      <div>
+        <p className='titleSection'><b>{i18next.t('inventory')}</b></p>
+          <div>
+            <div className={'tableInvHeader tableInvRow'}>
+              <div>
+                <span>{i18next.t('name')}</span>
+              </div>
+              <div>
+                <span>{i18next.t('number')}</span>
+              </div>
+              <div>
+                <span>{i18next.t('option')}</span>
+              </div>
             </div>
-            <div>
-              <span>{i18next.t('number')}</span>
-            </div>
-            <div>
-              <span>{i18next.t('option')}</span>
-            </div>
+          {
+            character.inventory.map((item, i) => (
+              <div key={item.uid} className='tableInvRow'>
+                <div>
+                  <span>{item.name}</span>
+                </div>
+                <div>
+                  {lineToUpdateInv === i && (
+                    <input
+                      name="update number item"
+                      type="number"
+                      placeholder={item.number}
+                      value={numberOfnewItem}
+                      onChange={(e) => {
+                        // setUpdateItem(e.target.value ? JSON.parse(e.target.value) : '');
+                      }}
+                    />
+                  )}
+                  {lineToUpdateInv !== i && (
+                    <span>{`x ${item.number}`}</span>
+                  )}
+                </div>
+                <div>
+                  {lineToUpdateInv === i && (
+                    <button
+                      className='optionBtnInv'
+                      onClick={() => {
+                        // updateItemNumber(item)
+                      }}
+                    >
+                      <RefreshIcon className="iconInv"/>
+                    </button>
+                  )}
+                  {lineToUpdateInv !== i && (
+                    <button
+                      className='optionBtnInv'
+                      onClick={() => {
+                        // setLineToUpdateInv(i);
+                      }}
+                    >
+                      <PencilIcon className="iconInv"/> 
+                    </button>
+                  )}
+                  <button
+                    className='optionBtnInv'
+                    onClick={() => {
+                      // removeItem(item.uid);
+                    }}
+                  >
+                    <TrashIcon className="iconInv" />
+                  </button>
+                </div>
+              </div>
+            ))
+          }
           </div>
-        {
-          character.inventory.map((item, i) => (
-            <div key={item.uid} className='tableInvRow'>
-              <div>
-                <span>{item.name}</span>
-              </div>
-              <div>
-                {lineToUpdateInv === i && (
-                  <input
-                    name="update number item"
-                    type="number"
-                    placeholder={item.number}
-                    value={numberOfnewItem}
-                    onChange={(e) => {
-                      // setUpdateItem(e.target.value ? JSON.parse(e.target.value) : '');
-                    }}
-                  />
-                )}
-                {lineToUpdateInv !== i && (
-                  <span>{`x ${item.number}`}</span>
-                )}
-              </div>
-              <div>
-                {lineToUpdateInv === i && (
-                  <button
-                    className='optionBtnInv'
-                    onClick={() => {
-                      // updateItemNumber(item)
-                    }}
-                  >
-                    <RefreshIcon className="iconInv"/>
-                  </button>
-                )}
-                {lineToUpdateInv !== i && (
-                  <button
-                    className='optionBtnInv'
-                    onClick={() => {
-                      // setLineToUpdateInv(i);
-                    }}
-                  >
-                    <PencilIcon className="iconInv"/> 
-                  </button>
-                )}
-                <button
-                  className='optionBtnInv'
-                  onClick={() => {
-                    // removeItem(item.uid);
-                  }}
-                >
-                  <TrashIcon className="iconInv" />
-                </button>
-              </div>
-            </div>
-          ))
-        }
-        </div>
-        {/* <form className='formNewInv' onSubmit={(e) => {
-          // createItem();
-          setItemName('');
-          setNumberOfnewItem('');
-          e.preventDefault();
-        }}>
-          <input
-            name="newItemInventory"
-            type="text"
-            placeholder={i18next.t('item name')}
-            value={itemName}
-            onChange={(e) => {
-              setItemName(e.target.value);
-            }}
-          />
-          <input
-            name="numberOfNewItem"
-            type="number"
-            placeholder={i18next.t('number of item')}
-            value={numberOfnewItem}
-            onChange={(e) => {
-              setNumberOfnewItem(e.target.value ? JSON.parse(e.target.value) : '');
-            }}
-          />
-          <input type="submit" value={i18next.t('create')} />
-        </form> */}
-    </div>
-  )
+          {/* <form className='formNewInv' onSubmit={(e) => {
+            // createItem();
+            setItemName('');
+            setNumberOfnewItem('');
+            e.preventDefault();
+          }}>
+            <input
+              name="newItemInventory"
+              type="text"
+              placeholder={i18next.t('item name')}
+              value={itemName}
+              onChange={(e) => {
+                setItemName(e.target.value);
+              }}
+            />
+            <input
+              name="numberOfNewItem"
+              type="number"
+              placeholder={i18next.t('number of item')}
+              value={numberOfnewItem}
+              onChange={(e) => {
+                setNumberOfnewItem(e.target.value ? JSON.parse(e.target.value) : '');
+              }}
+            />
+            <input type="submit" value={i18next.t('create')} />
+          </form> */}
+      </div>
+    )
+  }
 }
 
 export default Inventory

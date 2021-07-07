@@ -8,21 +8,18 @@ import CharacterContext from '../context/CharacterContext';
 import CampaignContext from '../context/CampaignContext';
 import UserContext from '../context/UserContext';
 import '../styles/diceHisto.css';
-import {
-  isMobile
-} from "react-device-detect";
 import i18next from 'i18next';
 
-init();
 
 const cleanDuplicate = (arrayRoll, userUid, campaignUserUidDm) => {
+
   let savedDate = null;
   let savedPictureUrl = null;
   const newArrayRollList = [];
   arrayRoll.map((roll,i) => {
     roll.displayPicture = true;
-    if(roll.createdAt && savedDate !== roll.createdAt.toDate().toLocaleDateString()) {
-      savedDate = roll.createdAt.toDate().toLocaleDateString();
+    if(roll.createdAt && savedDate !== roll.createdAt) {
+      savedDate = roll.createdAt;
     } else {
       roll.createdAt = null;
     }
@@ -41,46 +38,27 @@ const cleanDuplicate = (arrayRoll, userUid, campaignUserUidDm) => {
   return newArrayRollList;
 };
 
-
 const DiceHistorical = (props) => {
+  const {list} = props;
   const {character} = useContext(CharacterContext);
   const {user} = useContext(UserContext);
   const {campaign} = useContext(CampaignContext);
   const [limitHisto, setLimitHisto] = useState(15);
   const [diceHistorical, setDiceHistorical] = useState([]);
-  const db = firebase.firestore();
   const histoView = useRef(null)
-
-  // const getDice = (numberOfDiceToAdd = 0) => {
-  //   const limit = limitHisto + numberOfDiceToAdd;
-  //   setLimitHisto(limit)
-  //   console.log('getDice');
-  //   const query = db.collection('dice').where("campaignId", "==", campaign.uid).orderBy('createdAt', 'desc').limit(limit);
-  //   const unsubscribe = query.onSnapshot(querySnapshot => {
-  //     const data = querySnapshot.docs.map(doc => ({
-  //       ...doc.data(),
-  //     }));
-  //     setDiceHistorical(cleanDuplicate(data.reverse(), user.uid, campaign.idUserDm).reverse());
-  //   });
-  //   return unsubscribe;
-  // }
-
-  useEffect(() => {
-    if(user.uid){
-      // getDice();
-    }
-  }, [user]);
-
 
   useEffect(() => {
     if(document.getElementById("last") && props.chat) {
       setTimeout(function(){
         document.getElementById("last").scrollIntoView({ behavior: 'smooth'});
       }, 250);
-
     }
   });
 
+  useEffect(() => {
+    const rolls = cleanDuplicate(list, user.uid, campaign.idUserDm);
+    setDiceHistorical(rolls.reverse());
+  }, [list]);
 
   const isMyRoll = (roll) => {
     if(character.uid === roll.characterId) {
@@ -96,9 +74,7 @@ const DiceHistorical = (props) => {
       { diceHistorical.length >= limitHisto && (
         <button
           className='empty'
-          onClick={() => {
-            // getDice(10);
-          }}
+          onClick={() => {}}
         >
           {i18next.t('load more')}
         </button>
@@ -110,7 +86,7 @@ const DiceHistorical = (props) => {
               <div key={histo.uid}>
                 {histo.createdAt && (
                   <span className='date'>
-                    {histo.createdAt.toDate().toLocaleDateString()}
+                    {histo.createdAt}
                   </span>
                 )}
                 <div className={`${isMyRoll(histo) ? "containerRowReverse" : "containerRow"}`}>
@@ -121,12 +97,10 @@ const DiceHistorical = (props) => {
                       src={histo.pictureUserSendRoll}
                     />
                   )}
-                    
                   <li
                     id={i === 0 ? 'last' : `dice${i+1}`}
                     className={`${isMyRoll(histo) ? "myhistoRow" : "histoRow"} bubbleHisto`}
                     style={!isMyRoll(histo) ? {margin: '5px 35px'} : null}
-                    
                   >
                     <div className='histoLeftSide'>
                       <span>
@@ -147,7 +121,7 @@ const DiceHistorical = (props) => {
         )}
         {diceHistorical.length === 0 && (
           <p className='noDiceMessage'>
-            {i18next.t('load more')}
+            {i18next.t('no roll')}
           </p>
         )}
       </ul>
