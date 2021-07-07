@@ -15,10 +15,12 @@ const NewCharacterForm = (props) => {
   const [description, setDescription] = useState('');
   const [hp, setHp] = useState(null);
   const {createCharacter} = props;
-  const skillsRef = useRef(null)
+  const skillsRef = useRef(null);
+  const [generationCharacterClassic, setGenerationCharacterClassic] = useState(true)
 
-  const calculStat = (stat1, stat2, generationClassic) => {
-    if(generationClassic) {
+  const calculStat = (stat1, stat2) => {
+    console.log(generationCharacterClassic);
+    if(generationCharacterClassic) {
       return Math.floor((stat1+stat2)/2)*5 
     }
     return (stat1 + stat2) * 2
@@ -34,12 +36,12 @@ const NewCharacterForm = (props) => {
     if(dexterity && intelligence && strength && charisma && endurance) {
       setCharacComplete(true);
     }
-    const dexInt = calculStat(dexterity,intelligence, campaign.characterGenerationClassic);
-    const strDex = calculStat(strength,dexterity, campaign.characterGenerationClassic);
-    const intCha = calculStat(intelligence,charisma, campaign.characterGenerationClassic);
-    const dexEnd = calculStat(dexterity,endurance, campaign.characterGenerationClassic);
-    const strCha = calculStat(strength,charisma, campaign.characterGenerationClassic);
-    const endInt = calculStat(endurance,intelligence, campaign.characterGenerationClassic);
+    const dexInt = calculStat(dexterity,intelligence);
+    const strDex = calculStat(strength,dexterity);
+    const intCha = calculStat(intelligence,charisma);
+    const dexEnd = calculStat(dexterity,endurance);
+    const strCha = calculStat(strength,charisma);
+    const endInt = calculStat(endurance,intelligence);
 
     skills[skills.findIndex((skill) => skill.label === 'psychology')].value = endInt
     skills[skills.findIndex((skill) => skill.label === 'survive')].value = endInt
@@ -149,6 +151,24 @@ const NewCharacterForm = (props) => {
               />
             </label>
           </p>
+          <p>
+            <b>{i18next.t('character generation type')}</b>
+          </p>
+            <p>
+            <select
+              value={generationCharacterClassic}
+              onChange={async (e) => {
+                setGenerationCharacterClassic(JSON.parse(e.target.value))
+              }}
+            >
+              <option value={true}>
+                {i18next.t('classique')}
+              </option>
+              <option value={false}>
+                {i18next.t('custom')}
+              </option>
+            </select>
+          </p>
         </div>
           <div className='characteristics'>
             <p>
@@ -193,7 +213,7 @@ const NewCharacterForm = (props) => {
           <div className='skillsContainer'>
             <div ref={skillsRef} className='skills'>
               <p>
-                <b>{i18next.t('skill')} {!campaign.characterGenerationClassic ? `(${additionalSkillPoint})` : null}</b>
+                <b>{i18next.t('skill')} {!generationCharacterClassic ? `(${additionalSkillPoint})` : null}</b>
               </p>
               {listSkills.map((skill, i) => (
                 <div className='skillRow'>
@@ -204,12 +224,12 @@ const NewCharacterForm = (props) => {
                     <span>
                       {`${skill.value}`}
                     </span>
-                    {!campaign.characterGenerationClassic && (
+                    {!generationCharacterClassic && (
                       <span>
                         +
                       </span>
                     )}
-                    {!campaign.characterGenerationClassic && (
+                    {!generationCharacterClassic && (
                       <input
                         name={skill.label}
                         max={50}
@@ -230,7 +250,7 @@ const NewCharacterForm = (props) => {
               ))}
             </div>
             <div className='createCharacterButton'>
-              {(additionalSkillPoint === 0 || campaign.characterGenerationClassic)&& (
+              {(additionalSkillPoint === 0 || generationCharacterClassic)&& (
                 <div>
                   <input type="submit" value={i18next.t('create')} />
                 </div>
