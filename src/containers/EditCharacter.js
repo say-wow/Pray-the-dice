@@ -9,7 +9,8 @@ import {init} from '../utils/initFirebase';
 import '../styles/EditCharacter.css';
 import {
   useRouteMatch,
-  useHistory
+  useHistory,
+  Link
 } from "react-router-dom";
 import CharacterContext from '../context/CharacterContext';
 import CampaignContext from '../context/CampaignContext';
@@ -38,9 +39,8 @@ const EditCharacter = () => {
 
   const createSkill = async () => {
     const dataSkill = {
-      name: nameNewSkill,
+      label: nameNewSkill,
       value: valueNewSkill,
-      characterId: character.uid,
       isCustom: true,
     }
     character.skills.push(dataSkill)
@@ -177,6 +177,9 @@ const EditCharacter = () => {
         </form>
       </div>
       <div className='editBlock'>
+        {character.skills.map(skill => (
+          <p>{skill.isCustom ? skill.label : i18next.t(`skills.${skill.label}`)}</p>          
+        ))}
         {/* <h3>{i18next.t('skill')}</h3>
         <form
           className='formUpdateCharacter'

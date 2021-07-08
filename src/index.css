@@ -21,7 +21,7 @@ body {
     background-image: url('./assets/Images/Beyond-back.png');
     background-repeat: no-repeat;
     background-size: cover;
-    /* background-position: 50% 0; */
+    background-position: 50% 50%;
     background-attachment: fixed;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

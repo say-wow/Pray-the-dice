@@ -38,6 +38,7 @@
 }
 .myhistoRow {
   border-radius: .75rem .75rem 0 .75rem;
+  /* background-color: #284B63; */
   background-color: #3C6E71;
   align-self: flex-end;
   margin: 5px 5px;

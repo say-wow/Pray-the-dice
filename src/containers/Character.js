@@ -71,7 +71,6 @@ const Character = (props) => {
         updateCharacter({
           ...doc.data(),
         });
-        setValueOnLocalStorage('character',{...doc.data()});
     })
     .catch(err => {
       console.log(err.messsage)
@@ -171,10 +170,10 @@ const Character = (props) => {
                   <p className='titleSection'><b>{i18next.t('skill')}</b></p>
                   <ul>
                     {
-                    character.skills.sort(dynamicSortWithTraduction("name", 'skills')).map((skill,i) => (
+                    character.skills.sort(dynamicSortWithTraduction("label", 'skills')).map((skill,i) => (
                       <li key={i}>
                         <span>
-                          {skill.isCustom ? skill.name : i18next.t(`skills.${skill.label}`)}
+                          {skill.isCustom ? skill.label : i18next.t(`skills.${skill.label}`)}
                         </span>
                         <span>
                           {skill.value}
