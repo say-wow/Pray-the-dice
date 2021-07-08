@@ -20,7 +20,6 @@ init();
 const db = firebase.firestore();
 
 const EditCharacter = () => {
-
   const {character, updateCharacter} = useContext(CharacterContext);
   const {campaign} = useContext(CampaignContext);
   const [nameNewSkill, setNameNewSkill] = useState('');
@@ -30,7 +29,6 @@ const EditCharacter = () => {
   const [hp, setHp] = useState(character.currentHp);
   const [description, setDescription] = useState(character.description);
 
-
   useEffect( () => {
     if(character && skillToUpdate && !skillToUpdate.uid) {
       setSkillToUpdate(character.skills[0]);
@@ -39,34 +37,14 @@ const EditCharacter = () => {
 
 
   const createSkill = async () => {
-    const uidSkill = uid();
-      const dataSkill = {
-        uid: uidSkill,
-        name: nameNewSkill,
-        value: valueNewSkill,
-        characterId: character.uid,
-        isCustom: true,
-      }
-      const listSkills = [...character.skills];
-      listSkills.push(dataSkill);
-      console.log('createSkill');
-      await db.collection('skills').doc(uidSkill).set(dataSkill).then(() => {
-        updateCharacter({
-          ...character,
-          skills: [...listSkills],
-        })
-        toast.success(i18next.t('new skill created with success'), {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
-      }).catch(e => {
-        console.log(e)
-      });
+    const dataSkill = {
+      name: nameNewSkill,
+      value: valueNewSkill,
+      characterId: character.uid,
+      isCustom: true,
+    }
+    character.skills.push(dataSkill)
+    updateCharacterData();
   }
 
   const updateCharacterData = async () => {
@@ -76,19 +54,9 @@ const EditCharacter = () => {
       currentHp: hp,
       description,
     }
-    updateCharacter({
-      ...character,
-      ...newDataCharacter,
-    });
-    delete newDataCharacter.characteristics
-    delete newDataCharacter.skills
-    delete newDataCharacter.inventory
-    console.log('updateCharacterData');
     await db.collection('characters').doc(newDataCharacter.uid).set(newDataCharacter).then(res => {
       updateCharacter({
         ...character,
-        maxHp: maxHp,
-        currentHp: hp,
         description
       })
       console.log('log toast')
@@ -115,38 +83,44 @@ const EditCharacter = () => {
   }
 
   const updateSkill = async () => {
-    const listSkills = character.skills;
-    console.log('updateSkill');
-    await db.collection('skills').doc(skillToUpdate.uid).set(skillToUpdate).then(() => {
-      listSkills.find((skill) => (
-        skill.uid === skillToUpdate.uid
-      )).value = skillToUpdate.value;
-      updateCharacter({
-        ...character,
-        skills: [...listSkills],
-      })
-      toast.success(i18next.t('update succed'), {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-    }).catch(e => {
-      toast.error(i18next.t('an error is appeare'), {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        });
-      console.log(e)
-    });
-  }
+    const newDataCharacter = {
+      ...character,
+    }
+    newDataCharacter.skills.find((skill) => ( skill.label === skillToUpdate.label)).value = skillToUpdate.value
+    console.log(newDataCharacter);
+    // const listSkills = character.skills;
+    // console.log('updateSkill');
+    // await db.collection('skills').doc(skillToUpdate.uid).set(skillToUpdate).then(() => {
+    //   listSkills.find((skill) => (
+    //     skill.uid === skillToUpdate.uid
+    //   )).value = skillToUpdate.value;
+    //   updateCharacter({
+    //     ...character,
+    //     skills: [...listSkills],
+    //   })
+    //   toast.success(i18next.t('update succed'), {
+    //     position: "top-right",
+    //     autoClose: 5000,
+    //     hideProgressBar: true,
+    //     closeOnClick: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //     progress: undefined,
+    //   });
+    // }).catch(e => {
+    //   toast.error(i18next.t('an error is appeare'), {
+    //     position: "top-right",
+    //     autoClose: 5000,
+    //     hideProgressBar: true,
+    //     closeOnClick: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //     progress: undefined,
+    //     });
+    //   console.log(e)
+    // });
+  }  
+
   return (
     <div className='editContainer'>
       {/* <Link className='link' onClick={() => {history.goBack()}}>
@@ -203,7 +177,7 @@ const EditCharacter = () => {
         </form>
       </div>
       <div className='editBlock'>
-        <h3>{i18next.t('skill')}</h3>
+        {/* <h3>{i18next.t('skill')}</h3>
         <form
           className='formUpdateCharacter'
           onSubmit={(e) => {
@@ -214,6 +188,7 @@ const EditCharacter = () => {
           <div className='row'>
             <select
               onChange={(e) => {
+                console.log(JSON.parse(e.target.value))
                 setSkillToUpdate(JSON.parse(e.target.value))
               }}
             >
@@ -223,7 +198,7 @@ const EditCharacter = () => {
                     value={JSON.stringify(skill)}>
                       {skill.isCustom ?
                         skill.name :
-                        i18next.t(`skills.${skill.name}`)}
+                        i18next.t(`skills.${skill.label}`)}
                   </option>
                 )
               )}
@@ -238,12 +213,13 @@ const EditCharacter = () => {
               onChange={(e) => {
                 const skillUpdated = {...skillToUpdate};
                 skillUpdated.value = e.target.value ? JSON.parse(e.target.value) : '';
+                console.log(skillUpdated);
                 setSkillToUpdate(skillUpdated)
               }}
             />
           </div>
           <input type="submit" value={i18next.t('validate')} />
-        </form>
+        </form> */}
         <form
           className='formUpdateCharacter'
           onSubmit={(e) => {
@@ -265,7 +241,7 @@ const EditCharacter = () => {
               name="valueNewSkill"
               type="number"
               min={0}
-              max={90}
+              max={99}
               className=''
               value={valueNewSkill}
               onChange={(e) => {setValueNewSkill(e.target.value)}}

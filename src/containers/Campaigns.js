@@ -51,10 +51,10 @@ const Campaigns = (props) => {
   }, []);
 
   useEffect( () => {
-    // let listCleanUidToSearch = campaignListToSearch.filter((data,index)=>{
-    //   return campaignListToSearch.indexOf(data) === index;
-    // })
-    // getCampaignForCharacter(listCleanUidToSearch)
+    let listCleanUidToSearch = campaignListToSearch.filter((data,index)=>{
+      return campaignListToSearch.indexOf(data) === index;
+    })
+    getCampaignForCharacter(listCleanUidToSearch)
   }, [campaignListToSearch]);
 
 
@@ -126,7 +126,6 @@ const Campaigns = (props) => {
           setCampaigns(listCampaigns);
           setValueOnLocalStorage('campaignsList',listCampaigns);
           setValueOnLocalStorage('userUid',user.uid);
-          // getCharacterForUser()
         })
       .catch(err => {
         console.log(err.message)
@@ -134,7 +133,7 @@ const Campaigns = (props) => {
     } else {
       setCampaigns(savedCampaignsList);
     }
-
+    getCharacterForUser() // WIP
   }
 
   const getCharacterForUser = async () => {

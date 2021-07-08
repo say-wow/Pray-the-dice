@@ -92,11 +92,11 @@ const Character = (props) => {
       <Switch>
         {/* <Route path={`${match.url}/chat`}>
           <DiceChat/>
-        </Route>
+        </Route> */}
         <Route path={`${match.url}/edit`}>
           <EditCharacter/>
         </Route>
-        <Route path={`${match.url}/inventory`}>
+        {/* <Route path={`${match.url}/inventory`}>
           <MobileInventory/>
         </Route> */}
         <Route path={match.path}>

@@ -18,10 +18,11 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
-    background-image: url('./assets/Images/ariaWallpaper2.png');
+    background-image: url('./assets/Images/Beyond-back.png');
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: 50% 0;
+    /* background-position: 50% 0; */
+    background-attachment: fixed;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     /* background-color: #202122; */
