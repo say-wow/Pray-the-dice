@@ -55,10 +55,8 @@ const Character = (props) => {
 
   useEffect(() => {
     if(character.uid) {
-      console.log(character.idCampaign);
       const dbRefObject = firebase.database().ref().child(`${character.idCampaign}`);
       dbRefObject.on('value', snap => {
-        console.log(snap.val());
         setRollList(Object.values(snap.val() || {}));
       });
     }
@@ -82,16 +80,20 @@ const Character = (props) => {
       ...rollList
     ];
     newList.push(newRoll);
-    console.log(newList)
     firebase.database().ref().child(`${character.idCampaign}`).update(newList);
   }
   
   if(character) {
     return (
       <Switch>
-        {/* <Route path={`${match.url}/chat`}>
-          <DiceChat/>
-        </Route> */}
+        <Route path={`${match.url}/chat`}>
+          <DiceChat
+            list={rollList}
+            setNewDice={(newRoll) => {
+              sendNewRoll(newRoll);
+            }}
+          />
+        </Route>
         <Route path={`${match.url}/edit`}>
           <EditCharacter/>
         </Route>

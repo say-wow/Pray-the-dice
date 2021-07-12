@@ -73,5 +73,6 @@
     "heal": "Soigner",
     "survive": "Survie",
     "steal": "Voler"
-  }
+  },
+  "logout": "Déconnexion"
 }

@@ -1,7 +1,7 @@
 header {
   background-color: #284B63;
   height: 60px;
-  color: #D9D9D9;
+  color: #fff;
   display: grid;
   align-items: space-between;
 }
@@ -50,8 +50,45 @@ header {
   padding: 7px 14px;
 }
 .homeLinkIcon {
-  color: #D9D9D9;
+  color: #fff;
 }
+.dropbtn {
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  margin-top: 2px;
+}
+
+.dropdown-content .btnDrop {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  background: none;
+  width: 100%;
+  text-align: start;
+}
+
+.dropdown-content .btnDrop:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+/* .dropdown:hover .dropbtn {background-color: #3e8e41;} */
 @media (min-width: 700px) {
   .header {
     width: 85%;

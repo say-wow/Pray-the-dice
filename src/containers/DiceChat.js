@@ -13,13 +13,19 @@ init();
 
 const DiceChat = (props) => {
   const heightContainer = window.innerHeight - 110;
-
+  const {list, setNewDice} = props;
   return (
     <div className='diceChatContainer' style={{height: heightContainer}}>
       <DiceHistorical 
         chat
+        list={list}
       />
-      <DiceRoll chat/>
+      <DiceRoll
+        chat
+        setNewDice={(newRoll) => {
+          setNewDice(newRoll);
+        }}
+      />
     </div>
   );
   

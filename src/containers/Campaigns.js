@@ -69,6 +69,7 @@ const Campaigns = (props) => {
   }
 
   const sendGame = async (name) => {
+    const savedCampaignsList = getValueOnLocalStorage('campaignsList');
     const invitationCode = getInvitationCodeGame();
     const gameUid = uid();
     const data = {
@@ -77,8 +78,8 @@ const Campaigns = (props) => {
       invitationCode: invitationCode,
       name: name,
       uid: gameUid,
-      characterGenerationClassic: true
     };
+    savedCampaignsList.push(data)
     console.log('sendGame');
     await db.collection('campaigns').doc(gameUid).set(data).then(res => {
       getCampaigns();
@@ -91,6 +92,8 @@ const Campaigns = (props) => {
         draggable: true,
         progress: undefined,
       });
+      setCampaigns(savedCampaignsList);
+      setValueOnLocalStorage('campaignsList',savedCampaignsList);
     }).catch(e => {
       console.log(e)
     });

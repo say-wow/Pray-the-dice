@@ -71,14 +71,6 @@ const DiceHistorical = (props) => {
 
   return (
     <div ref={histoView} className='histoView'>
-      { diceHistorical.length >= limitHisto && (
-        <button
-          className='empty'
-          onClick={() => {}}
-        >
-          {i18next.t('load more')}
-        </button>
-      )}
       <ul className="listHisto">
         {diceHistorical.length > 0 && (
           diceHistorical.map((histo, i) => {

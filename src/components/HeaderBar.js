@@ -7,7 +7,7 @@ import UserContext from "../context/UserContext";
 import '../styles/headerbar.css';
 import {Link} from "react-router-dom";
 import { LogoutIcon, HomeIcon } from '@heroicons/react/outline'
-
+import i18next from 'i18next';
 
 const HeaderBar = (props) => {
   const {user, updateUser} = useContext(UserContext)
@@ -20,24 +20,23 @@ const HeaderBar = (props) => {
             <HomeIcon className='homeLinkIcon' />
           </Link>
         </div>
-        {/* <div className='name'>
-          {user.displayName}
-        </div> */}
         <div className='log'>
-          <button
-            onClick={() => {
-              updateUser({
-                uid: null,
-                displayName: null,
-              });
-              firebase.auth().signOut();
-            }}
-          >
-            <span>
+          <div class="dropdown">
+            <button class="dropbtn">
               {user.displayName}
-            </span>
-            <LogoutIcon className="" style={{height : 30}}/>
-          </button>
+            </button>
+            <div class="dropdown-content">
+              <button className="btnDrop" onClick={() => {
+                updateUser({
+                  uid: null,
+                  displayName: null,
+                });
+                firebase.auth().signOut();
+              }}>
+                {i18next.t('logout')}
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </header>
