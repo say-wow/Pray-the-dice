@@ -11,74 +11,40 @@ import '../styles/inventory.css'
 import { PencilIcon, TrashIcon, RefreshIcon } from '@heroicons/react/solid'
 import i18next from 'i18next';
 
-init();
-const db = firebase.firestore();
-
-const Inventory = () => {
+const Inventory = (props) => {
   const {character, updateCharacter} = useContext(CharacterContext);
   const [itemName, setItemName] = useState()
   const [numberOfnewItem, setNumberOfnewItem] = useState()
   const [lineToUpdateInv, setLineToUpdateInv] = useState(null)
   const [updateItem, setUpdateItem] = useState(null)
 
+
   const createItem = () => {
-    const itemUid = uid();
     const newItem = {
-      uid: itemUid,
       name: itemName,
       number: numberOfnewItem,
-      characterId: character.uid,
     };
     console.log('Inventory');
-    db.collection('items').doc(itemUid).set(newItem).then(res => {
-      // getInventory(character.uid)
-    }).catch(e => {
-      console.log(e)
-    });
+    character.inventory.push(newItem);
+    props.updateInventory(character);
   }
   
-  const updateItemNumber = async (item) => {
+  const updateItemNumber = async (item, index) => {
     const updatedItem = {
       ...item,
       number: updateItem
     }
+    setLineToUpdateInv(null)
     console.log('updateItemNumber')
-    await db.collection('items').doc(item.uid).set(updatedItem).then(res => {
-      // getInventory(character.uid)
-    }).catch(e => {
-      console.log(e)
-    });
-    
+    character.inventory[index] = updatedItem;
+    props.updateInventory(character);
   } 
 
-  const removeItem = (itemUid) => {
+  const removeItem = (itemIndex) => {
     console.log('removeItem');
-    db.collection('items').doc(itemUid).delete().then(res => {
-      // getInventory(character.uid)
-    }).catch(e => {
-      console.log(e)
-    });
+    character.inventory.splice(itemIndex, 1);
+    props.updateInventory(character);
   }
-
-  // const getInventory = async (idCharacter) => {
-  //   const listItems = [];
-  //   console.log('getInventory');
-  //   db.collection('items').where('characterId', '==', idCharacter).get()
-  //     .then(doc => {
-  //       doc.forEach( doc => {
-  //         listItems.push(doc.data())
-  //       });
-  //       setLineToUpdateInv(null);
-  //       listItems.sort(dynamicSortWithTraduction("name"));
-  //       updateCharacter({
-  //         ...character,
-  //         inventory: listItems,
-  //       });
-  //   })
-  //   .catch(err => {
-  //     console.log(err.messsage)
-  //   })
-  // }
 
   if(character.uid) {
     return (
@@ -110,7 +76,7 @@ const Inventory = () => {
                       placeholder={item.number}
                       value={numberOfnewItem}
                       onChange={(e) => {
-                        // setUpdateItem(e.target.value ? JSON.parse(e.target.value) : '');
+                        setUpdateItem(e.target.value ? JSON.parse(e.target.value) : '');
                       }}
                     />
                   )}
@@ -123,7 +89,7 @@ const Inventory = () => {
                     <button
                       className='optionBtnInv'
                       onClick={() => {
-                        // updateItemNumber(item)
+                        updateItemNumber(item, i)
                       }}
                     >
                       <RefreshIcon className="iconInv"/>
@@ -133,7 +99,7 @@ const Inventory = () => {
                     <button
                       className='optionBtnInv'
                       onClick={() => {
-                        // setLineToUpdateInv(i);
+                        setLineToUpdateInv(i);
                       }}
                     >
                       <PencilIcon className="iconInv"/> 
@@ -142,7 +108,7 @@ const Inventory = () => {
                   <button
                     className='optionBtnInv'
                     onClick={() => {
-                      // removeItem(item.uid);
+                      removeItem(i);
                     }}
                   >
                     <TrashIcon className="iconInv" />
@@ -152,8 +118,8 @@ const Inventory = () => {
             ))
           }
           </div>
-          {/* <form className='formNewInv' onSubmit={(e) => {
-            // createItem();
+          <form className='formNewInv' onSubmit={(e) => {
+            createItem();
             setItemName('');
             setNumberOfnewItem('');
             e.preventDefault();
@@ -177,10 +143,11 @@ const Inventory = () => {
               }}
             />
             <input type="submit" value={i18next.t('create')} />
-          </form> */}
+          </form>
       </div>
     )
   }
+  return null;
 }
 
 export default Inventory

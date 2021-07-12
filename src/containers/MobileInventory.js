@@ -20,25 +20,15 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Inventory from '../components/Inventory';
 
-init();
-const db = firebase.firestore();
-
-const MobileInventory = () => {
-  let match = useRouteMatch();
-
-  const {character, updateCharacter} = useContext(CharacterContext);
-  const {campaign} = useContext(CampaignContext);
-
-
-  // useEffect( () => {
-  
-  // }, [character]);
-
-
+const MobileInventory = (props) => {
 
   return (
     <div className=''>
-      <Inventory />
+      <Inventory
+        updateInventory={(characterWithNewInventory) => {
+          props.updateInventory(characterWithNewInventory)
+        }}
+      />
     </div>
   );
   

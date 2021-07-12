@@ -82,6 +82,14 @@ const Character = (props) => {
     newList.push(newRoll);
     firebase.database().ref().child(`${character.idCampaign}`).update(newList);
   }
+
+  const updateFirestoreCharacter = async (newData) => {
+    await db.collection('characters').doc(newData.uid).set(newData).then(res => {
+
+    }).catch(e => {
+      console.log(e)
+    });
+  }
   
   if(character) {
     return (
@@ -97,9 +105,16 @@ const Character = (props) => {
         <Route path={`${match.url}/edit`}>
           <EditCharacter/>
         </Route>
-        {/* <Route path={`${match.url}/inventory`}>
-          <MobileInventory/>
-        </Route> */}
+        <Route path={`${match.url}/inventory`}>
+          <MobileInventory
+            updateInventory={(characterWithNewInventory) => {
+              updateCharacter({
+                ...characterWithNewInventory,
+              });
+              updateFirestoreCharacter(characterWithNewInventory);
+            }}
+          />
+        </Route>
         <Route path={match.path}>
           <div className='containerCharacterView'>
             {(character.idUser === user.uid || campaign.idUserDm === user.uid) && (
@@ -200,7 +215,14 @@ const Character = (props) => {
                   />
                 </BrowserView>
                 <div className='inventory'>
-                  {/* <Inventory/> */}
+                  <Inventory
+                    updateInventory={(characterWithNewInventory) => {
+                      updateCharacter({
+                        ...characterWithNewInventory,
+                      });
+                      updateFirestoreCharacter(characterWithNewInventory);
+                    }}
+                  />
                 </div>
                 <BrowserView>
                   <DiceRoll
