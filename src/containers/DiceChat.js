@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import "firebase/analytics";
 import "firebase/auth";
 import "firebase/firestore";

@@ -26,7 +26,6 @@ import EditCharacter from './EditCharacter';
 import MobileInventory from './MobileInventory';
 import { ChatIcon, PencilAltIcon, ChevronDownIcon, ChevronUpIcon, CollectionIcon, ArchiveIcon } from '@heroicons/react/outline'
 import {dynamicSortWithTraduction} from '../utils/sort';
-import {setValueOnLocalStorage, getValueOnLocalStorage} from "../utils/localStorage";
 import {
   BrowserView,
   MobileView,
@@ -41,13 +40,12 @@ const Character = (props) => {
   const {campaign} = useContext(CampaignContext);
   const {character, updateCharacter} = useContext(CharacterContext);
   let { characterIdUrl } = useParams();
-  const [inventory, setInventory] = useState([])
-  const [itemName, setItemName] = useState()
-  const [numberOfnewItem, setNumberOfnewItem] = useState()
   const [descriptionIsDisplay, setDescriptionIsDisplay] = useState(false)
   const [rollList, setRollList] = useState([]);
+  const [characteristics,setCharacteristics] = useState([]);
+  const [skills,setSkills] = useState([]);
 
-  useEffect( () => {
+  useEffect(() => {
     if(user.uid) {
       getCharacter();
     }
@@ -59,6 +57,8 @@ const Character = (props) => {
       dbRefObject.on('value', snap => {
         setRollList(Object.values(snap.val() || {}));
       });
+      setCharacteristics(character.characteristics.sort(dynamicSortWithTraduction("label", 'characteristics')));
+      setSkills(character.skills.sort(dynamicSortWithTraduction("label", 'skills')));
     }
   },[character])
 
@@ -69,9 +69,11 @@ const Character = (props) => {
         updateCharacter({
           ...doc.data(),
         });
+        setCharacteristics(doc.data().characteristics.sort(dynamicSortWithTraduction("label", 'characteristics')));
+        setSkills(doc.data().skills.sort(dynamicSortWithTraduction("label", 'skills')));
     })
     .catch(err => {
-      console.log(err.messsage)
+      console.log(err)
     })
   }
 
@@ -84,13 +86,14 @@ const Character = (props) => {
   }
 
   const updateFirestoreCharacter = async (newData) => {
+    // need notification to validate the update
     await db.collection('characters').doc(newData.uid).set(newData).then(res => {
 
     }).catch(e => {
       console.log(e)
     });
   }
-  
+
   if(character) {
     return (
       <Switch>
@@ -103,7 +106,14 @@ const Character = (props) => {
           />
         </Route>
         <Route path={`${match.url}/edit`}>
-          <EditCharacter/>
+          <EditCharacter
+            updateDataCharacter={(characterUpdated) => {
+              updateCharacter({
+                ...characterUpdated,
+              });
+              updateFirestoreCharacter(characterUpdated);
+            }}
+          />
         </Route>
         <Route path={`${match.url}/inventory`}>
           <MobileInventory
@@ -170,10 +180,13 @@ const Character = (props) => {
                   <p className='titleSection'><b>{i18next.t('characteristic')}</b></p>
                   <ul>
                     {
-                      character.characteristics.sort(dynamicSortWithTraduction("name", 'characteristics')).map((charac, i) => (
+                      characteristics.map((charac, i) => (
                         <li key={i}>
                           <span className='title'>
                             {i18next.t(`characteristics.${charac.label}`)}
+                          </span>
+                          <span className='subtitle'>
+                            ({charac.value})
                           </span>
                           <span className='value'>
                             {charac.value * 5}
@@ -187,7 +200,7 @@ const Character = (props) => {
                   <p className='titleSection'><b>{i18next.t('skill')}</b></p>
                   <ul>
                     {
-                    character.skills.sort(dynamicSortWithTraduction("label", 'skills')).map((skill,i) => (
+                    skills.sort(dynamicSortWithTraduction("label", 'skills')).map((skill,i) => (
                       <li key={i}>
                         <span>
                           {skill.isCustom ? skill.label : i18next.t(`skills.${skill.label}`)}

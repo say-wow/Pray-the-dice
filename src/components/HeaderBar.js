@@ -5,13 +5,13 @@ import "firebase/auth";
 import "firebase/firestore";
 import UserContext from "../context/UserContext";
 import '../styles/headerbar.css';
-import {Link} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import { LogoutIcon, HomeIcon } from '@heroicons/react/outline'
 import i18next from 'i18next';
 
 const HeaderBar = (props) => {
   const {user, updateUser} = useContext(UserContext)
-
+  console.log(useParams());
   return (
     <header>
       <div className='header'>

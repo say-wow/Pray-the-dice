@@ -1,11 +1,7 @@
-import React, {useEffect, useState, useContext, useRef} from 'react';
-import firebase from "firebase/app";
+import React, {useState, useContext} from 'react';
 import "firebase/analytics";
 import "firebase/auth";
 import "firebase/firestore";
-import {init} from '../utils/initFirebase'
-import { uid } from 'uid';
-import {dynamicSortWithTraduction} from '../utils/sort';
 import CharacterContext from '../context/CharacterContext';
 import '../styles/inventory.css'
 import { PencilIcon, TrashIcon, RefreshIcon } from '@heroicons/react/solid'

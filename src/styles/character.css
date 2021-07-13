@@ -70,8 +70,8 @@
   margin: 10px 5px;
   color: white;
   border-radius: 5px 5px 50px 50px;
-  width: 80px;
-  height: 100px;
+  width: 90px;
+  height: 105px;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -80,6 +80,10 @@
 }
 .characteristicsDetail ul li span.title {
   font-size: 12px;
+}
+.characteristicsDetail ul li span.subtitle {
+  font-size: 12px;
+  margin-top: -20px;
 }
 .characteristicsDetail ul li span.value {
   font-size: 40px;
