@@ -2,21 +2,23 @@ import i18next from 'i18next';
 
 export const dynamicSortWithTraduction = (property, prefixTrad) => {
     var sortOrder = 1;
+    let tradA = '';
+    let tradB = '';
     return function (a,b) {
       if(!a.isCustom && prefixTrad) {
-        a.tradLabel = i18next.t(`${prefixTrad}.${a[property]}`)
+        tradA = i18next.t(`${prefixTrad}.${a[property]}`)
       } else {
-        a.tradLabel = a[property];
+        tradA = a[property];
       }
       if(!b.isCustom && prefixTrad) {
-        b.tradLabel = i18next.t(`${prefixTrad}.${b[property]}`)
+        tradB = i18next.t(`${prefixTrad}.${b[property]}`)
       } else {
-        b.tradLabel = b[property];
+        tradB = b[property];
       }
       if(sortOrder === -1){
-        return b.tradLabel.localeCompare(a.tradLabel);
+        return tradB.localeCompare(tradA);
       }else{
-        return a.tradLabel.localeCompare(b.tradLabel);
+        return tradA.localeCompare(tradB);
       }        
     }
 }

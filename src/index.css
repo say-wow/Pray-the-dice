@@ -103,7 +103,7 @@ ul {
   padding-inline-start: 0;
   list-style-type: none;
 }
-@media (min-width: 500px) {
+@media (min-width: 800px) {
   .compactPage {
     width: 70%;
     margin: auto

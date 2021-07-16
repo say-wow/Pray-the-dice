@@ -26,7 +26,6 @@ input[type="submit"] {
 .row {
   display: flex;
   flex-direction: row;
-
 }
 label{
   display: flex;
@@ -36,7 +35,32 @@ label{
 input[type='number'] {
   flex: 1
 }
+input[type=text].editNameSkill {
+  margin: 5px 0;
+  padding: 1px 0px;
+  flex: 3
+}
+input[type=text].editValueSkill {
+  text-align:right;
+  flex: 1;
+}
+span.labelSkillUneditable {
+  align-self: center;
+  flex: 3
+}
 @media (min-width: 1000px) {
+  .containerEditSkill {
+    width: 50%;
+  }
+  input[type=text].editNameSkill {
+    flex: 1
+  }
+  input[type=text].editValueSkill {
+    flex: 1
+  }
+  span.labelSkillUneditable {
+    flex: 1
+  }
   input[type="submit"] {
     align-self: flex-end;
     border-radius: 4px !important;

@@ -190,7 +190,7 @@ table tr td:last-child {
 .fullButton span {
   margin: 0 5px;
 }
-@media (min-width: 700px) {
+@media (min-width: 800px) {
   .inventory {
     display: block;
   }

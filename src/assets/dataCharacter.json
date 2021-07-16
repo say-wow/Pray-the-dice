@@ -25,102 +25,142 @@
     {
       "label": "craft",
       "value": null,
-      "isCustom": false
+      "isCustom": false,
+      "stat1": "dexterity",
+      "stat2": "intelligence"
     },
     {
       "label": "cac",
       "value": null,
-      "isCustom": false
+      "isCustom": false,
+      "stat1": "strength",
+      "stat2": "dexterity"
     },
     {
       "label": "dist",
       "value": null,
-      "isCustom": false
+      "isCustom": false,
+      "stat1": "dexterity",
+      "stat2": "intelligence"
     },
     {
       "label": "nature",
       "value": null,
-      "isCustom": false
+      "isCustom": false,
+      "stat1": "dexterity",
+      "stat2": "intelligence"
     },
     {
       "label": "secret",
       "value": null,
-      "isCustom": false
+      "isCustom": false,
+      "stat1": "intelligence",
+      "stat2": "charisma"
     },
     {
       "label": "run",
       "value": null,
-      "isCustom": false
+      "isCustom": false,
+      "stat1": "dexterity",
+      "stat2": "endurance"
     },
     {
       "label": "stealth",
       "value": null,
-      "isCustom": false
+      "isCustom": false,
+      "stat1": "dexterity",
+      "stat2": "charisma"
     },
     {
       "label": "law",
       "value": null,
-      "isCustom": false
+      "isCustom": false,
+      "stat1": "intelligence",
+      "stat2": "charisma"
     },
     {
       "label": "dodge",
       "value": null,
-      "isCustom": false
+      "isCustom": false,
+      "stat1": "dexterity",
+      "stat2": "intelligence"
     },
     {
       "label": "intimidate",
       "value": null,
-      "isCustom": false
+      "isCustom": false,
+      "stat1": "strength",
+      "stat2": "charisma"
     },
     {
       "label": "read",
       "value": null,
-      "isCustom": false
+      "isCustom": false,
+      "stat1": "intelligence",
+      "stat2": "charisma"
     },
     {
       "label": "lie",
       "value": null,
-      "isCustom": false
+      "isCustom": false,
+      "stat1": "intelligence",
+      "stat2": "charisma"
     },
     {
       "label": "perception",
       "value": null,
-      "isCustom": false
+      "isCustom": false,
+      "stat1": "intelligence",
+      "stat2": "charisma"
     },
     {
       "label": "pilot",
       "value": null,
-      "isCustom": false
+      "isCustom": false,
+      "stat1": "dexterity",
+      "stat2": "endurance"
     },
     {
       "label": "psychology",
       "value": null,
-      "isCustom": false
+      "isCustom": false,
+      "stat1": "endurance",
+      "stat2": "intelligence"
     },
     {
       "label": "reflexes",
       "value": null,
-      "isCustom": false
+      "isCustom": false,
+      "stat1": "dexterity",
+      "stat2": "intelligence"
     },
     {
       "label": "lock",
       "value": null,
-      "isCustom": false
+      "isCustom": false,
+      "stat1": "dexterity",
+      "stat2": "endurance"
     },
     {
       "label": "heal",
       "value": null,
-      "isCustom": false
+      "isCustom": false,
+      "stat1": "intelligence",
+      "stat2": "charisma"
     },
     {
       "label": "survive",
       "value": null,
-      "isCustom": false
+      "isCustom": false,
+      "stat1": "endurance",
+      "stat2": "intelligence"
     },
     {
       "label": "steal",
       "value": null,
-      "isCustom": false
+      "isCustom": false,
+      "stat1": "intelligence",
+      "stat2": "charisma"
     }
   ],
   "skillsBonus": [

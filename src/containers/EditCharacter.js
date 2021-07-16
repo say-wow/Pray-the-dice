@@ -88,7 +88,7 @@ const EditCharacter = (props) => {
             />
           </label>
           <h3>{i18next.t('skill')}</h3>
-          <div>
+          <div className='containerEditSkill'>
             {
               duplicateCharacter.skills.map((skill, i) => (
                 <label key={i}>
@@ -96,6 +96,7 @@ const EditCharacter = (props) => {
                     <input
                       name="skill name"
                       type="text"
+                      className='editNameSkill'
                       placeholder={i18next.t('name of skill')}
                       value={skill.label}
                       onChange={(e) => {
@@ -103,13 +104,13 @@ const EditCharacter = (props) => {
                         setDuplicateCharacter({...duplicateCharacter});
                       }}
                     />
-                    : i18next.t(`skills.${skill.label}`)}
+                    : <span className='labelSkillUneditable'>{i18next.t(`skills.${skill.label}`)}</span>}
                   <input
                     name="maxHp"
                     type="number"
                     min={0}
                     max={90}
-                    className=''
+                    className='editValueSkill'
                     placeholder={i18next.t('value of skill')}
                     value={skill.value}
                     onChange={(e) => {

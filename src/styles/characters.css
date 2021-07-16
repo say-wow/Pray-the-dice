@@ -118,7 +118,7 @@ input[type=text].nameNewCharacter {
     min-width: 80%;
   }
 }
-@media (min-width: 700px) {
+@media (min-width: 800px) {
   .containerCharacters {
     grid-gap: 20px;
     grid-template-areas:

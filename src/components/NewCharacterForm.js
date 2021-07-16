@@ -3,6 +3,7 @@ import i18next from 'i18next';
 import dataCharacter from '../assets/dataCharacter.json';
 import CampaignContext from '../context/CampaignContext';
 import '../styles/characters.css';
+import {getAllStats} from '../utils/characterGeneration';
 
 const NewCharacterForm = (props) => {
   const {campaign} = useContext(CampaignContext)
@@ -18,16 +19,8 @@ const NewCharacterForm = (props) => {
   const skillsRef = useRef(null);
   const [generationCharacterClassic, setGenerationCharacterClassic] = useState(true)
 
-  const calculStat = (stat1, stat2) => {
-    console.log(generationCharacterClassic);
-    if(generationCharacterClassic) {
-      return Math.floor((stat1+stat2)/2)*5 
-    }
-    return (stat1 + stat2) * 2
-  }
 
   useEffect( () => {
-    const skills = [...listSkills];
     const dexterity = listCharac.find((chara) => ( chara.label === 'dexterity')).value
     const intelligence = listCharac.find((chara) => ( chara.label === 'intelligence')).value
     const strength = listCharac.find((chara) => ( chara.label === 'strength')).value
@@ -35,37 +28,10 @@ const NewCharacterForm = (props) => {
     const endurance = listCharac.find((chara) => ( chara.label === 'endurance')).value
     if(dexterity && intelligence && strength && charisma && endurance) {
       setCharacComplete(true);
+      setListSkills(getAllStats(listCharac, generationCharacterClassic));
     }
-    const dexInt = calculStat(dexterity,intelligence);
-    const strDex = calculStat(strength,dexterity);
-    const intCha = calculStat(intelligence,charisma);
-    const dexEnd = calculStat(dexterity,endurance);
-    const strCha = calculStat(strength,charisma);
-    const endInt = calculStat(endurance,intelligence);
 
-    skills[skills.findIndex((skill) => skill.label === 'psychology')].value = endInt
-    skills[skills.findIndex((skill) => skill.label === 'survive')].value = endInt
-    skills[skills.findIndex((skill) => skill.label === 'intimidate')].value = strCha
-    skills[skills.findIndex((skill) => skill.label === 'run')].value = dexEnd
-    skills[skills.findIndex((skill) => skill.label === 'stealth')].value = dexEnd
-    skills[skills.findIndex((skill) => skill.label === 'pilot')].value = dexEnd
-    skills[skills.findIndex((skill) => skill.label === 'secret')].value = intCha
-    skills[skills.findIndex((skill) => skill.label === 'law')].value = intCha
-    skills[skills.findIndex((skill) => skill.label === 'read')].value = intCha
-    skills[skills.findIndex((skill) => skill.label === 'lie')].value = intCha
-    skills[skills.findIndex((skill) => skill.label === 'perception')].value = intCha
-    skills[skills.findIndex((skill) => skill.label === 'heal')].value = intCha
-    skills[skills.findIndex((skill) => skill.label === 'steal')].value = intCha
-    skills[skills.findIndex((skill) => skill.label === 'cac')].value = strDex
-    skills[skills.findIndex((skill) => skill.label === 'lock')].value = strDex
-    skills[skills.findIndex((skill) => skill.label === 'craft')].value = dexInt
-    skills[skills.findIndex((skill) => skill.label === 'dist')].value = dexInt
-    skills[skills.findIndex((skill) => skill.label === 'nature')].value = dexInt
-    skills[skills.findIndex((skill) => skill.label === 'reflexes')].value = dexInt
-    skills[skills.findIndex((skill) => skill.label === 'dodge')].value = dexInt
-
-    setListSkills(skills);
-  }, [listCharac, campaign]);
+  }, [listCharac, campaign, generationCharacterClassic]);
 
   useEffect(() => {
     let bonusUsed = 0;
@@ -198,12 +164,11 @@ const NewCharacterForm = (props) => {
             <button
               className='autoGeneration'
               onClick={(e) => {
-                listCharac.map((chara) => {
-                  e.preventDefault();
-                  const newList = [...listCharac]
-                  newList[newList.findIndex((charac) => charac.label === chara.label)].value = diceRollForNewStat();
-                  setListCharac(newList);
-                });
+                setListCharac(listCharac.map(chara => {
+                  chara.value = diceRollForNewStat()
+                  return chara
+                }));
+                e.preventDefault();
               }}
             >
               {i18next.t('auto generation')}

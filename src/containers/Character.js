@@ -24,7 +24,7 @@ import '../styles/modal.css';
 import DiceChat from './DiceChat';
 import EditCharacter from './EditCharacter';
 import MobileInventory from './MobileInventory';
-import { ChatIcon, PencilAltIcon, ChevronDownIcon, ChevronUpIcon, CollectionIcon, ArchiveIcon } from '@heroicons/react/outline'
+import { ChatIcon, PencilAltIcon, ChevronDownIcon, ChevronUpIcon, ArchiveIcon } from '@heroicons/react/outline'
 import {dynamicSortWithTraduction} from '../utils/sort';
 import {
   BrowserView,
@@ -227,16 +227,18 @@ const Character = (props) => {
                     list={rollList}
                   />
                 </BrowserView>
-                <div className='inventory'>
-                  <Inventory
-                    updateInventory={(characterWithNewInventory) => {
-                      updateCharacter({
-                        ...characterWithNewInventory,
-                      });
-                      updateFirestoreCharacter(characterWithNewInventory);
-                    }}
-                  />
-                </div>
+                <BrowserView>
+                  <div className='inventory'>
+                    <Inventory
+                      updateInventory={(characterWithNewInventory) => {
+                        updateCharacter({
+                          ...characterWithNewInventory,
+                        });
+                        updateFirestoreCharacter(characterWithNewInventory);
+                      }}
+                    />
+                  </div>
+                </BrowserView>
                 <BrowserView>
                   <DiceRoll
                     chat={false}

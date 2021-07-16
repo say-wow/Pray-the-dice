@@ -54,7 +54,7 @@ header {
 }
 .dropbtn {
   color: white;
-  padding: 16px;
+  padding: 18px;
   font-size: 16px;
   border: none;
 }
@@ -71,7 +71,6 @@ header {
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
-  margin-top: 2px;
 }
 
 .dropdown-content .btnDrop {
@@ -89,7 +88,7 @@ header {
 .dropdown:hover .dropdown-content {display: block;}
 
 /* .dropdown:hover .dropbtn {background-color: #3e8e41;} */
-@media (min-width: 700px) {
+@media (min-width: 800px) {
   .header {
     width: 85%;
   }

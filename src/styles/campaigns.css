@@ -43,7 +43,7 @@
     width: 220px;
   }
 }
-@media (min-width: 700px) {
+@media (min-width: 800px) {
   .containerCampaigns {
     grid-gap: 20px;
     grid-template-columns: 5fr 4fr;
