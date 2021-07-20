@@ -12,7 +12,7 @@ init();
 
 
 const DiceChat = (props) => {
-  const heightContainer = window.innerHeight - 110;
+  const heightContainer = window.innerHeight - 130;
   const {list, setNewDice} = props;
   return (
     <div className='diceChatContainer' style={{height: heightContainer}}>

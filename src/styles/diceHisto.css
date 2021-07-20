@@ -19,7 +19,7 @@
   align-items: center;
   border-radius: .75rem .75rem .75rem 0;
   min-height: 70px;
-  width: 200px;
+  width: 210px;
   margin: 5px 37px;
   padding: 0 8px;
   justify-content: space-between;
@@ -58,12 +58,15 @@
   /* white-space: nowrap; */
   /* overflow: hidden; */
 }
-.histoLeftSide span:first-child {
-  font-size: 16px;
-}
-.histoLeftSide span:last-child {
+.histoLeftSide span {
   font-size: 10px;
   font-style: italic;
+  font-weight: normal;
+}
+.histoLeftSide span:first-child {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: bold;
 }
 .histoView {
   display: flex;
@@ -129,12 +132,10 @@
   from {
     width: 0;
     height: 0;
-    /* margin-top: 195px; */
   }
   to {
     width: 250px;
     height: 120px;
-    /* margin-top: 5px; */
   }
 }
 

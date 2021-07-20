@@ -26,6 +26,7 @@ import EditCharacter from './EditCharacter';
 import MobileInventory from './MobileInventory';
 import { ChatIcon, PencilAltIcon, ChevronDownIcon, ChevronUpIcon, ArchiveIcon } from '@heroicons/react/outline'
 import {dynamicSortWithTraduction} from '../utils/sort';
+import {getRoll} from '../utils/dice';
 import {
   BrowserView,
   MobileView,
@@ -100,8 +101,8 @@ const Character = (props) => {
         <Route path={`${match.url}/chat`}>
           <DiceChat
             list={rollList}
-            setNewDice={(newRoll) => {
-              sendNewRoll(newRoll);
+            setNewDice={(valMaxRoll) => {
+              sendNewRoll(getRoll(valMaxRoll,campaign.idUserDm, character, user, null));
             }}
           />
         </Route>
@@ -201,7 +202,9 @@ const Character = (props) => {
                   <ul>
                     {
                     skills.sort(dynamicSortWithTraduction("label", 'skills')).map((skill,i) => (
-                      <li key={i}>
+                      <li key={i} onClick={() => {
+                        sendNewRoll(getRoll(100,campaign.idUserDm, character, user, skill))
+                      }}>
                         <span>
                           {skill.isCustom ? skill.label : i18next.t(`skills.${skill.label}`)}
                         </span>
@@ -242,8 +245,8 @@ const Character = (props) => {
                 <BrowserView>
                   <DiceRoll
                     chat={false}
-                    setNewDice={(newRoll) => {
-                      sendNewRoll(newRoll);
+                    setNewDice={(valMaxRoll) => {
+                      sendNewRoll(getRoll(valMaxRoll,campaign.idUserDm, character, user, null))
                     }}
                   />
                 </BrowserView>

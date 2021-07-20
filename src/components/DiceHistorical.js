@@ -99,7 +99,7 @@ const DiceHistorical = (props) => {
                         {histo.userName}
                       </span>
                       <span>
-                        d{histo.diceType}
+                          {histo.stat ? `${histo.stat.isCustom ? histo.stat.label : i18next.t(`skills.${histo.stat.label}`)} (${histo.stat.value})` : `Custom d${histo.diceType}`}
                       </span>
                     </div>
                     <span className='histoRightSide'>
