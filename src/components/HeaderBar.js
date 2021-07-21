@@ -21,11 +21,11 @@ const HeaderBar = (props) => {
           </Link>
         </div>
         <div className='log'>
-          <div class="dropdown">
-            <button class="dropbtn">
+          <div className="dropdown">
+            <button className={'dropbtn main'}>
               {user.displayName}
             </button>
-            <div class="dropdown-content">
+            <div className="dropdown-content">
               <button className="btnDrop" onClick={() => {
                 updateUser({
                   uid: null,

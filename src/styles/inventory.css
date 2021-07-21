@@ -70,7 +70,7 @@
   .tableInvHeader {
     display: flex;
     flex-wrap: nowrap;
-    background-color: #353535;
+    background-color: #1b1d29;
     border-radius: 8px 8px 0 0;
     padding: 3px 10px;
   }

@@ -30,7 +30,9 @@ import {getRoll} from '../utils/dice';
 import {
   BrowserView,
   MobileView,
+  isMobile
 } from "react-device-detect";
+import { toast } from 'react-toastify';
 
 init();
 const db = firebase.firestore();
@@ -45,6 +47,7 @@ const Character = (props) => {
   const [rollList, setRollList] = useState([]);
   const [characteristics,setCharacteristics] = useState([]);
   const [skills,setSkills] = useState([]);
+  const [hideRollSwitch,setHideRollSwitch] = useState(false);
 
   useEffect(() => {
     if(user.uid) {
@@ -84,6 +87,11 @@ const Character = (props) => {
     ];
     newList.push(newRoll);
     firebase.database().ref().child(`${character.idCampaign}`).update(newList);
+    if(isMobile) {
+      toast.info(`${newRoll.stat.isCustom ? newRoll.stat.label : i18next.t(`skills.${newRoll.stat.label}`)} - ${newRoll.value} / ${newRoll.stat.value}`, {
+
+      });
+    }
   }
 
   const updateFirestoreCharacter = async (newData) => {
@@ -102,8 +110,12 @@ const Character = (props) => {
           <DiceChat
             list={rollList}
             setNewDice={(valMaxRoll) => {
-              sendNewRoll(getRoll(valMaxRoll,campaign.idUserDm, character, user, null));
+              sendNewRoll(getRoll(valMaxRoll,campaign.idUserDm, character, user, null, hideRollSwitch));
             }}
+            hideRollSwitch={hideRollSwitch}
+            setHideRoll={(val) => {
+              setHideRollSwitch(val)
+             }}
           />
         </Route>
         <Route path={`${match.url}/edit`}>
@@ -203,7 +215,7 @@ const Character = (props) => {
                     {
                     skills.sort(dynamicSortWithTraduction("label", 'skills')).map((skill,i) => (
                       <li key={i} onClick={() => {
-                        sendNewRoll(getRoll(100,campaign.idUserDm, character, user, skill))
+                        sendNewRoll(getRoll(100,campaign.idUserDm, character, user, skill, hideRollSwitch))
                       }}>
                         <span>
                           {skill.isCustom ? skill.label : i18next.t(`skills.${skill.label}`)}
@@ -228,6 +240,10 @@ const Character = (props) => {
                 <BrowserView className='containerHisto'>
                   <DiceHistorical
                     list={rollList}
+                    hideRollSwitch={hideRollSwitch}
+                    setHideRoll={(val) => {
+                      setHideRollSwitch(val)
+                    }}
                   />
                 </BrowserView>
                 <BrowserView>
@@ -246,7 +262,7 @@ const Character = (props) => {
                   <DiceRoll
                     chat={false}
                     setNewDice={(valMaxRoll) => {
-                      sendNewRoll(getRoll(valMaxRoll,campaign.idUserDm, character, user, null))
+                      sendNewRoll(getRoll(valMaxRoll,campaign.idUserDm, character, user, null, hideRollSwitch))
                     }}
                   />
                 </BrowserView>

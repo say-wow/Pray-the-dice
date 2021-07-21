@@ -66,7 +66,7 @@
   justify-content: space-around;
 }
 .characteristicsDetail ul li {
-  background-color: #353535;
+  background-color: #1b1d29;
   margin: 10px 5px;
   color: white;
   border-radius: 5px 5px 50px 50px;
@@ -103,17 +103,19 @@
     /* border: 1px solid #353535; */
 }
 .skillsDetail ul li {
-  border-bottom: 1px solid #353535;
+  border-bottom: 1px solid #1b1d29;
   margin-bottom: 7px;
   padding-bottom: 7px;
   display: flex;
   justify-content: space-between;
+  cursor: pointer;
 }
 .skillsDetail ul li:last-child {
-  border-bottom: 0px solid #353535;
+  border-bottom: 0px solid #1b1d29;
 }
 .skillsDetail ul li span {
   font-size: 14px;
+  color: #1b1d29
 }
 .inventory {
   grid-area: inventory;
@@ -143,7 +145,7 @@
 .openChat {
   background-color: transparent;
   padding: 0;
-  color: #284B63;
+  color: #1b1d29;
   box-shadow: none;
 }
 .iconChat {
@@ -168,7 +170,7 @@
 }
 .containerHisto {
   grid-area: containerHisto;
-  height: 400px;
+  height: 100%;
 }
 
 table tr td {
@@ -179,7 +181,7 @@ table tr td:last-child {
 }
 .infoDmView {
   margin-left: 10px;
-  color:#353535;
+  color:#FFAD23;
   font-size: 20px;
 }
 .mobileInv {

@@ -15,10 +15,14 @@ const DiceChat = (props) => {
   const heightContainer = window.innerHeight - 130;
   const {list, setNewDice} = props;
   return (
-    <div className='diceChatContainer' style={{height: heightContainer}}>
+    <div className='diceChatContainer' style={{height: heightContainer, marginHorizontal: -15}}>
       <DiceHistorical 
         chat
         list={list}
+        hideRollSwitch={props.hideRollSwitch}
+        setHideRoll={(val) => {
+          props.setHideRoll(val)
+        }}
       />
       <DiceRoll
         chat

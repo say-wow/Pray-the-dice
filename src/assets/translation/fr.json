@@ -5,7 +5,7 @@
   "description" : "Description",
   "dm" : "Maître du jeu",
   "dm initial" : "MJ",
-  "load more": "Charger plus de dès ...",
+  "load more": "Charger plus de dès",
   "invitation code": "Code d'invitation",
   "campaign name": "Nom de la nouvelle campagne",
   "create": "Créer",
@@ -74,5 +74,6 @@
     "survive": "Survie",
     "steal": "Voler"
   },
-  "logout": "Déconnexion"
+  "logout": "Déconnexion",
+  "hide roll": "Cacher mes jets"
 }

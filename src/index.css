@@ -1,7 +1,6 @@
 /*
-#353535
-#D9D9D9
-#284B63
+#FFAD23
+#1b1d29
 */
 html {
   margin: 0;
@@ -50,10 +49,10 @@ input:focus, textarea:focus {
   outline: none;
 }
 input[type=submit], button {
-  background-color: #284B63;
-  box-shadow: rgb(50 50 93 / 11%) 0px 4px 6px, rgb(0 0 0 / 8%) 0px 1px 3px;
+  background-color: #FFAD23;
+  /* box-shadow: rgb(50 50 93 / 11%) 0px 4px 6px, rgb(0 0 0 / 8%) 0px 1px 3px; */
   padding: 7px 14px;
-  color: #D9D9D9;
+  color: #fff;
   font-size: 14px;
   border: none;
   font-size: 0.875rem;
@@ -64,11 +63,15 @@ input[type=submit], button {
   border-radius: 4px;
   letter-spacing: 0.02857em;
   font-weight: bold;
+  cursor: pointer;
   /* text-transform: uppercase; */
+}
+input[type=submit].main, button.main {
+  background-color: #1b1d29;
 }
 button.empty {
   background-color: transparent;
-  color: #284B63;
+  color: #1b1d29;
   box-shadow: none;
 }
 
@@ -76,17 +79,17 @@ input[type=submit].black, button.black {
   background-color: #0A0A0A;
 }
 .link {
-  color :#284B63;
+  color :#1b1d29;
   text-decoration: none;
 }
 .link:hover {
-  color :#284B63;
+  color :#1b1d29;
   text-decoration: underline;
 }
 .fullButton {
   width: 100%;
   padding: 5px;
-  background-color: #284B63;
+  background-color: #1b1d29;
   color: #fff;
   text-decoration: none;
   display: flex;
@@ -102,6 +105,56 @@ input[type=submit].black, button.black {
 ul {
   padding-inline-start: 0;
   list-style-type: none;
+}
+input[type=checkbox] {
+  display: none;
+}
+.switch label {
+  cursor: pointer;
+}
+.switch label input[type=checkbox]:checked + .lever {
+  background-color: #FFAD23;
+}
+.switch label .lever {
+  content: "";
+  display: inline-block;
+  position: relative;
+  width: 36px;
+  height: 20px;
+  background-color: rgba(0, 0, 0, 0.20);
+  border-radius: 15px;
+  margin-right: 10px;
+  transition: background 0.3s ease;
+  vertical-align: middle;
+  /* margin: 0 16px; */
+}
+.switch label .lever:before {
+  /* background-color: rgba(38, 166, 154, 0.15); */
+}
+.switch label input[type=checkbox]:checked + .lever:after {
+  background-color: #fff;
+}
+.switch label .lever:before,
+.switch label .lever:after {
+  content: "";
+  position: absolute;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  left: 2px;
+  top: 2px;
+  transition: left 0.3s ease, background 0.3s ease, box-shadow 0.1s ease, -webkit-transform 0.1s ease;
+  transition: left 0.3s ease, background 0.3s ease, box-shadow 0.1s ease, transform 0.1s ease;
+  transition: left 0.3s ease, background 0.3s ease, box-shadow 0.1s ease, transform 0.1s ease, -webkit-transform 0.1s ease;
+}
+.switch label .lever:after {
+  background-color: #f1f1f1;
+  /* box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12); */
+}
+.switch label input[type=checkbox]:checked + .lever:before,
+.switch label input[type=checkbox]:checked + .lever:after {
+  left: 18px;
 }
 @media (min-width: 800px) {
   .compactPage {

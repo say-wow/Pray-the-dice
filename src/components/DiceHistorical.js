@@ -9,14 +9,22 @@ import CampaignContext from '../context/CampaignContext';
 import UserContext from '../context/UserContext';
 import '../styles/diceHisto.css';
 import i18next from 'i18next';
+import { EyeOffIcon } from '@heroicons/react/outline'
 
 
-const cleanDuplicate = (arrayRoll, userUid, campaignUserUidDm) => {
+const cleanDuplicate = (arrayRoll, userUid, campaignUserUidDm, characterUid, diceLoaded = 10) => {
 
   let savedDate = null;
   let savedPictureUrl = null;
-  const newArrayRollList = [];
-  arrayRoll.map((roll,i) => {
+
+  let arrayVisible = [];
+  for (let i = 0; i < arrayRoll.length; i+= 1) {
+    if(!arrayRoll[i].isHided || (arrayRoll[i].isHided && arrayRoll[i].characterId === characterUid) || (arrayRoll[i].isHided && campaignUserUidDm === userUid)) {
+      arrayVisible.push(arrayRoll[i]);
+    }
+  }
+  arrayVisible.splice(0, arrayVisible.length - diceLoaded);
+  arrayVisible.map((roll,i) => {
     roll.displayPicture = true;
     if(roll.createdAt && savedDate !== roll.createdAt) {
       savedDate = roll.createdAt;
@@ -26,16 +34,11 @@ const cleanDuplicate = (arrayRoll, userUid, campaignUserUidDm) => {
     if(roll.pictureUserSendRoll && savedPictureUrl !== roll.pictureUserSendRoll) {
       savedPictureUrl = roll.pictureUserSendRoll;
     } else if(i >= 1){
-      arrayRoll[i-1].displayPicture = false;
+      arrayVisible[i-1].displayPicture = false;
     }
   });
 
-  arrayRoll.map(roll => {
-    if(!roll.isDmRoll || (roll.isDmRoll && campaignUserUidDm === userUid)) {
-      newArrayRollList.push(roll);
-    }
-  })
-  return newArrayRollList;
+  return arrayVisible;
 };
 
 const DiceHistorical = (props) => {
@@ -56,9 +59,9 @@ const DiceHistorical = (props) => {
   });
 
   useEffect(() => {
-    const rolls = cleanDuplicate(list, user.uid, campaign.idUserDm);
+    const rolls = cleanDuplicate(list, user.uid, campaign.idUserDm, character.uid, limitHisto);
     setDiceHistorical(rolls.reverse());
-  }, [list]);
+  }, [list, limitHisto]);
 
   const isMyRoll = (roll) => {
     if(character.uid === roll.characterId) {
@@ -71,6 +74,33 @@ const DiceHistorical = (props) => {
 
   return (
     <div ref={histoView} className='histoView'>
+      <div className='headerHisto'>
+        <div>
+          {limitHisto <= diceHistorical.length && (
+            <button
+              className="empty"
+              onClick={() => {
+                setLimitHisto(limitHisto + 10);
+              }}
+            >
+              {i18next.t('load more')}
+            </button>
+          )}
+        </div>
+        <div class="switch">
+          <label>
+            <input
+              type="checkbox"
+              value={props.hideRollSwitch || false}
+              onChange={(e) => {
+                props.setHideRoll(e.target.checked)
+              }}
+            />
+            <span class="lever"></span>
+            {i18next.t('hide roll')}
+          </label>
+        </div>
+      </div>
       <ul className="listHisto">
         {diceHistorical.length > 0 && (
           diceHistorical.map((histo, i) => {
@@ -90,7 +120,7 @@ const DiceHistorical = (props) => {
                     />
                   )}
                   <li
-                    id={i === 0 ? 'last' : `dice${i+1}`}
+                    id={i === 0 ? 'last' : null}
                     className={`${isMyRoll(histo) ? "myhistoRow" : "histoRow"} bubbleHisto`}
                     style={!isMyRoll(histo) ? {margin: '5px 35px'} : null}
                   >
@@ -101,6 +131,9 @@ const DiceHistorical = (props) => {
                       <span>
                           {histo.stat ? `${histo.stat.isCustom ? histo.stat.label : i18next.t(`skills.${histo.stat.label}`)} (${histo.stat.value})` : `Custom d${histo.diceType}`}
                       </span>
+                      {histo.isHided && (
+                        <EyeOffIcon className="iconHide"/>
+                      )}
                     </div>
                     <span className='histoRightSide'>
                       {histo.value}
