@@ -4,14 +4,7 @@ import "firebase/analytics";
 import "firebase/auth";
 import "firebase/firestore";
 import i18next from 'i18next';
-import { uid } from 'uid';
-import {init} from '../utils/initFirebase';
 import '../styles/EditCharacter.css';
-import {
-  useRouteMatch,
-  useHistory,
-  Link
-} from "react-router-dom";
 import CharacterContext from '../context/CharacterContext';
 import CampaignContext from '../context/CampaignContext';
 import { toast } from 'react-toastify';
@@ -39,8 +32,10 @@ const EditCharacter = (props) => {
         <form
           className={'formUpdateCharacter columnForm'}
           onSubmit={(e) => {
-            props.updateDataCharacter(duplicateCharacter);
-            console.log('submit');
+            if(duplicateCharacter.maxHp.length > 0 && duplicateCharacter.currentHp.length > 0) {              
+              props.updateDataCharacter(duplicateCharacter);
+              console.log('submit');
+            }
             e.preventDefault();
           }}
         >
@@ -55,7 +50,7 @@ const EditCharacter = (props) => {
               className=''
               value={duplicateCharacter.currentHp}
               onChange={(e) => {
-                duplicateCharacter.currentHp = parseInt(e.target.value);
+                duplicateCharacter.currentHp = e.target.value ? parseInt(e.target.value) : "";
                 setDuplicateCharacter({...duplicateCharacter});
               }}
             />
@@ -70,7 +65,7 @@ const EditCharacter = (props) => {
               className=''
               value={duplicateCharacter.maxHp}
               onChange={(e) => {
-                duplicateCharacter.maxHp = parseInt(e.target.value);
+                duplicateCharacter.maxHp = e.target.value ? parseInt(e.target.value) : "";
                 setDuplicateCharacter({...duplicateCharacter});
               }}
             />

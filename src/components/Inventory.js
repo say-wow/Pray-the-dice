@@ -18,9 +18,8 @@ const Inventory = (props) => {
   const createItem = () => {
     const newItem = {
       name: itemName,
-      number: numberOfnewItem,
+      number: numberOfnewItem || 1,
     };
-    console.log('Inventory');
     character.inventory.push(newItem);
     props.updateInventory(character);
   }
@@ -28,16 +27,14 @@ const Inventory = (props) => {
   const updateItemNumber = async (item, index) => {
     const updatedItem = {
       ...item,
-      number: updateItem
+      number: updateItem || 1
     }
     setLineToUpdateInv(null)
-    console.log('updateItemNumber')
     character.inventory[index] = updatedItem;
     props.updateInventory(character);
   } 
 
   const removeItem = (itemIndex) => {
-    console.log('removeItem');
     character.inventory.splice(itemIndex, 1);
     props.updateInventory(character);
   }
@@ -70,8 +67,9 @@ const Inventory = (props) => {
                       name="update number item"
                       type="number"
                       placeholder={item.number}
-                      value={numberOfnewItem}
+                      value={updateItem}
                       onChange={(e) => {
+                        console.log(e.target.value);
                         setUpdateItem(e.target.value ? JSON.parse(e.target.value) : '');
                       }}
                     />

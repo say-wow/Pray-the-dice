@@ -62,7 +62,7 @@ input[type=text].nameNewCharacter {
 .skillRow {
   display: flex;
   justify-content: space-between;
-  margin: 5px 0;
+  margin: 8px 0;
 }
 .skillRow div {
   /* margin-left: 10px; */
@@ -93,6 +93,28 @@ input[type=text].nameNewCharacter {
 .inputCharacteristics, .inputSkills {
   width: 50px;
 }
+
+.tutoCreation ul {
+  list-style-type: circle;
+  padding-inline-start: 20px;
+}
+.tutoCreation ul li {
+  margin-bottom: 5px;
+}
+.tutoCreation {
+  background-color: #62a3b9;
+  padding: 10px;
+  margin-left: -20px;
+  margin-right: -20px;
+}
+.tutoCreation p {
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+.tutoCreation span, .tutoCreation p, .tutoCreation ul li{
+  color: #fff
+}
+
 @media (min-width: 500px) {
   .containerCharacters {
     grid-template-areas:
@@ -117,6 +139,11 @@ input[type=text].nameNewCharacter {
     max-width: 80%;
     min-width: 80%;
   }
+  .tutoCreation {
+    margin-left: 0px;
+    margin-right: 0px;
+    border-radius: 4px;
+  }
 }
 @media (min-width: 800px) {
   .containerCharacters {
@@ -127,7 +154,7 @@ input[type=text].nameNewCharacter {
    }
    .formNewCharacter {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 0fr;
     grid-gap: 20px;
   }
   input[type=text].nameNewCharacter {
@@ -142,7 +169,7 @@ input[type=text].nameNewCharacter {
   }
   .characteristics {
     grid-area: characteristics;
-    max-width: 215px;
+    max-width: auto;
   }
 }
 @media (min-width: 1300px) {

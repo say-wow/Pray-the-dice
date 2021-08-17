@@ -11,7 +11,6 @@ import i18next from 'i18next';
 
 const HeaderBar = (props) => {
   const {user, updateUser} = useContext(UserContext)
-  console.log(useParams());
   return (
     <header>
       <div className='header'>
@@ -26,13 +25,25 @@ const HeaderBar = (props) => {
               {user.displayName}
             </button>
             <div className="dropdown-content">
-              <button className="btnDrop" onClick={() => {
-                updateUser({
-                  uid: null,
-                  displayName: null,
-                });
-                firebase.auth().signOut();
-              }}>
+              <button
+                className="btnDrop" 
+                onClick={() => {
+                  localStorage.clear();
+                  document.location.reload();
+                }}
+              >
+                {i18next.t('clear cache')}
+              </button>
+              <button
+                className="btnDrop"
+                onClick={() => {
+                  updateUser({
+                    uid: null,
+                    displayName: null,
+                  });
+                  firebase.auth().signOut();
+                }}
+              >
                 {i18next.t('logout')}
               </button>
             </div>

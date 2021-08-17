@@ -71,7 +71,7 @@ const NewCharacterForm = (props) => {
               }
               createCharacter({
                 name,
-                hp: dataCharacter.characteristics.find((chara) => ( chara.label === 'endurance')).value <= 15 ? dataCharacter.characteristics.find((chara) => ( chara.label === 'endurance')).value : 15,
+                hp: dataCharacter.characteristics.find((chara) => ( chara.label === 'endurance')).value <= 14 ? dataCharacter.characteristics.find((chara) => ( chara.label === 'endurance')).value : 14,
                 description,
                 alive: true,
                 characteristics: listCharac,
@@ -117,28 +117,18 @@ const NewCharacterForm = (props) => {
               />
             </label>
           </p>
-          <p>
-            <b>{i18next.t('character generation type')}</b>
-          </p>
-            <p>
-            <select
-              value={generationCharacterClassic}
-              onChange={async (e) => {
-                setGenerationCharacterClassic(JSON.parse(e.target.value))
-              }}
-            >
-              <option value={true}>
-                {i18next.t('classique')}
-              </option>
-              <option value={false}>
-                {i18next.t('custom')}
-              </option>
-            </select>
-          </p>
         </div>
           <div className='characteristics'>
             <p>
               <b>{i18next.t('characteristic')}</b>
+            </p>
+            <p className="tutoCreation">
+              <span>{i18next.t('creationHelp.characteristicsHead')}</span>
+              <ul>
+                <li>{i18next.t('creationHelp.chara1')}</li>
+                <li>{i18next.t('creationHelp.chara2')}</li>
+              </ul>
+              <span>{i18next.t('creationHelp.charaFoot')}</span>
             </p>
             {listCharac.map((chara, i) => (
               <div key={i}>
@@ -176,15 +166,49 @@ const NewCharacterForm = (props) => {
           </div>
         {characComplete && (
           <div className='skillsContainer'>
+            <div>
+              <p>
+                <b>{i18next.t('character generation type')}</b>
+              </p>
+              <p>
+                <select
+                  value={generationCharacterClassic}
+                  onChange={async (e) => {
+                    setGenerationCharacterClassic(JSON.parse(e.target.value))
+                  }}
+                >
+                  <option value={true}>
+                    {i18next.t('classique')}
+                  </option>
+                  <option value={false}>
+                    {i18next.t('custom')}
+                  </option>
+                </select>
+              </p>
+              {generationCharacterClassic && (
+                <p className="tutoCreation">
+                  <span>{i18next.t('creationHelp.skillsHeadClassic')}</span>
+                </p>
+              )}
+              {!generationCharacterClassic && (
+                <p className="tutoCreation">
+                  <p>{i18next.t('creationHelp.skillsHeadCustom')}</p>
+                  <p>{i18next.t('creationHelp.skillsFootCustom')}</p>
+                </p>
+              )}
+            </div>
             <div ref={skillsRef} className='skills'>
               <p>
                 <b>{i18next.t('skill')} {!generationCharacterClassic ? `(${additionalSkillPoint})` : null}</b>
               </p>
               {listSkills.map((skill, i) => (
                 <div className='skillRow'>
-                  <span>
-                    {i18next.t(`skills.${skill.label}`)}
-                  </span>
+                  <div className="tooltip">
+                    <span>
+                      {i18next.t(`skills.${skill.label}`)}
+                    </span>
+                    <span className="tooltiptext">{i18next.t(`skillsHelp.${skill.label}`)}</span>
+                  </div>
                   <div>
                     <span>
                       {`${skill.value}`}
@@ -215,7 +239,7 @@ const NewCharacterForm = (props) => {
               ))}
             </div>
             <div className='createCharacterButton'>
-              {(additionalSkillPoint === 0 || generationCharacterClassic)&& (
+              {(additionalSkillPoint === 0 || generationCharacterClassic) && name.length > 0 && (
                 <div>
                   <input type="submit" value={i18next.t('create')} />
                 </div>

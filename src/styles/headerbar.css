@@ -68,7 +68,7 @@ header {
   display: none;
   position: absolute;
   background-color: #f1f1f1;
-  min-width: 160px;
+  min-width: 200px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
 }
@@ -85,11 +85,19 @@ header {
 
 .dropdown-content .btnDrop:hover {background-color: #ddd;}
 
-.dropdown:hover .dropdown-content {display: block;}
+.dropdown:hover .dropdown-content {
+  display: block;
+  right: 0;
+}
 
 /* .dropdown:hover .dropbtn {background-color: #3e8e41;} */
 @media (min-width: 800px) {
   .header {
     width: 85%;
+  }
+}
+@media (min-width: 1500px) {
+  .dropdown:hover .dropdown-content {
+    right:auto;
   }
 }

@@ -104,7 +104,9 @@
 }
 .skillsDetail ul li {
   border-bottom: 1px solid #1b1d29;
-  margin-bottom: 7px;
+  /* margin-bottom: 7px; */
+  /* padding-bottom: 7px; */
+  padding-top: 7px;
   padding-bottom: 7px;
   display: flex;
   justify-content: space-between;
@@ -181,7 +183,7 @@ table tr td:last-child {
 }
 .infoDmView {
   margin-left: 10px;
-  color:#FFAD23;
+  color:#ea9010;
   font-size: 20px;
 }
 .mobileInv {
@@ -191,6 +193,9 @@ table tr td:last-child {
 }
 .fullButton span {
   margin: 0 5px;
+}
+.list a.link {
+  text-decoration: underline;
 }
 @media (min-width: 800px) {
   .inventory {

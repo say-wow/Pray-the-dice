@@ -51,9 +51,14 @@ const Campaigns = (props) => {
   }, []);
 
   useEffect( () => {
-    let listCleanUidToSearch = campaignListToSearch.filter((data,index)=>{
-      return campaignListToSearch.indexOf(data) === index;
-    })
+    let listCleanUidToSearch = campaignListToSearch.filter((idCampaign)=> {
+      for(let i = 0; i < campaigns.length; i += 1) {
+        if(idCampaign === campaigns[i].uid) {
+          return false;
+        }
+        return true;
+      }
+    });
     getCampaignForCharacter(listCleanUidToSearch)
   }, [campaignListToSearch]);
 
@@ -80,7 +85,6 @@ const Campaigns = (props) => {
       uid: gameUid,
     };
     savedCampaignsList.push(data)
-    console.log('sendGame');
     await db.collection('campaigns').doc(gameUid).set(data).then(res => {
       getCampaigns();
       toast.success(`${name} ${i18next.t('was created with success')}`, {
@@ -101,7 +105,6 @@ const Campaigns = (props) => {
 
 
   const joinCampaignByInvitationCode = async () => {
-    console.log('joinCampaignByInvitationCode');
     await db.collection('campaigns').where('invitationCode', '==', invitationJoinCode).get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
@@ -117,9 +120,7 @@ const Campaigns = (props) => {
     const listCampaigns = [];
     const savedCampaignsList = getValueOnLocalStorage('campaignsList');
     const savedUserUid = getValueOnLocalStorage('userUid');
-
     if(!savedCampaignsList || savedUserUid !== user.uid) {
-      console.log('getCampaigns');
       db.collection('campaigns').where('idUserDm', '==', user.uid).get()
         .then(querySnapshot => {
           querySnapshot.forEach( doc => {
@@ -141,7 +142,6 @@ const Campaigns = (props) => {
 
   const getCharacterForUser = async () => {
     const listUidToSearch = [];
-    console.log('getCharacterForUser');
     await db.collection('characters').where('idUser', '==', user.uid).get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
@@ -164,17 +164,18 @@ const Campaigns = (props) => {
 
   const getCampaignForCharacter = async (uidList) => {
     const campaignByCharacter = [...campaigns];
-    uidList.map(async (uid) => {
-      console.log('getCampaignForCharacter');
-      await db.collection('campaigns').doc(uid).get()
-        .then(queryCampaign => {
-          campaignByCharacter.push(queryCampaign.data())
-          setCampaigns(campaignByCharacter);
+    if(uidList.length > 0) {
+      uidList.map(async (uid) => {
+        await db.collection('campaigns').doc(uid).get()
+          .then(queryCampaign => {
+            campaignByCharacter.push(queryCampaign.data())
+            setCampaigns(campaignByCharacter);
+          })
+        .catch(err => {
+          console.log(err.message)
         })
-      .catch(err => {
-        console.log(err.message)
-      })
-    });
+      });
+    }
   }
 
   return (

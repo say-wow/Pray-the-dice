@@ -84,7 +84,7 @@
 #last {
   width: 250px;
   height: 120px;
-  /* background-color: #FFAD23; */
+  /* background-color: #ea9010; */
     /* -webkit-transition: all 0.25s ease-in-out;
   -moz-transition: all 0.25s ease-in-out;
   -o-transition: all 0.25s ease-in-out;
@@ -178,7 +178,7 @@
 }
 .iconHide {
   height: 20px;
-  width: 15px;
+  width: 20px;
 }
 .myhistoRow .iconHide {
   color : #eaeaea;

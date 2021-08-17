@@ -172,6 +172,7 @@ const Character = (props) => {
                   </div>
                   <div className='descriptionDetails'>
                     <p
+                      className="click"
                       onClick={() => {
                         setDescriptionIsDisplay(!descriptionIsDisplay)
                       }}
