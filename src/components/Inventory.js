@@ -9,7 +9,7 @@ import i18next from 'i18next';
 
 const Inventory = (props) => {
   const {character, updateCharacter} = useContext(CharacterContext);
-  const [itemName, setItemName] = useState()
+  const [itemName, setItemName] = useState("")
   const [numberOfnewItem, setNumberOfnewItem] = useState()
   const [lineToUpdateInv, setLineToUpdateInv] = useState(null)
   const [updateItem, setUpdateItem] = useState(null)
@@ -27,7 +27,7 @@ const Inventory = (props) => {
   const updateItemNumber = async (item, index) => {
     const updatedItem = {
       ...item,
-      number: updateItem || 1
+      number: updateItem || item.number
     }
     setLineToUpdateInv(null)
     character.inventory[index] = updatedItem;
@@ -69,7 +69,6 @@ const Inventory = (props) => {
                       placeholder={item.number}
                       value={updateItem}
                       onChange={(e) => {
-                        console.log(e.target.value);
                         setUpdateItem(e.target.value ? JSON.parse(e.target.value) : '');
                       }}
                     />
@@ -113,7 +112,9 @@ const Inventory = (props) => {
           }
           </div>
           <form className='formNewInv' onSubmit={(e) => {
-            createItem();
+            if(itemName) {
+              createItem();
+            }
             setItemName('');
             setNumberOfnewItem('');
             e.preventDefault();
@@ -136,7 +137,7 @@ const Inventory = (props) => {
                 setNumberOfnewItem(e.target.value ? JSON.parse(e.target.value) : '');
               }}
             />
-            <input type="submit" value={i18next.t('create')} />
+            <input className={itemName === "" ? 'disabled' : ''} type="submit" value={i18next.t('create')} />
           </form>
       </div>
     )

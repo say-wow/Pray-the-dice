@@ -35,7 +35,6 @@ const Campaigns = (props) => {
   });
   const [invitationJoinCode, setInvitationJoinCode] = useState(undefined);
   const [campaignToJoin, setCampaignToJoin] = useState(undefined);
-  const [campaignListToSearch, setCampaignListToSearch] = useState([]);
   let match = useRouteMatch();
 
   const {user} = useContext(UserContext)
@@ -46,22 +45,65 @@ const Campaigns = (props) => {
 
   useEffect( () => {
     if(user.uid && campaigns.length === 0) {
-      getCampaigns();
+      // getCampaigns();
+      const savedCampaignsList = getValueOnLocalStorage('campaignsList');
+      const savedUserUid = getValueOnLocalStorage('userUid');
+      if(!savedCampaignsList || savedUserUid !== user.uid) {
+        getCampaignByCharacter();
+      } else {
+        setCampaigns(savedCampaignsList);
+      }
     }
   }, []);
 
-  useEffect( () => {
-    let listCleanUidToSearch = campaignListToSearch.filter((idCampaign)=> {
-      for(let i = 0; i < campaigns.length; i += 1) {
-        if(idCampaign === campaigns[i].uid) {
-          return false;
-        }
-        return true;
-      }
-    });
-    getCampaignForCharacter(listCleanUidToSearch)
-  }, [campaignListToSearch]);
+  const getCampaignByCharacter = async () => {
+    const listUidCampaignByCharacter = [];
+    await db.collection('characters').where('idUser', '==', user.uid).get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          if(!listUidCampaignByCharacter.some(element => (doc.data().idCampaign === element))) {
+            listUidCampaignByCharacter.push(doc.data().idCampaign)
+          }
+      });
+      getCampaignForCharacter(listUidCampaignByCharacter)
+    })
+    .catch(err => {
+      console.log(err.message)
+    })
+  }
 
+  const getCampaignForCharacter = async (uidList) => {
+    const campaignsByCharacter = [];
+    for( let i = 0; i < uidList.length; i +=1) {
+      await db.collection('campaigns').doc(uidList[i]).get()
+        .then(queryCampaign => {
+          campaignsByCharacter.push(queryCampaign.data())
+        })
+      .catch(err => {
+        console.log(err.message)
+      })
+    }
+    getCampaigns(campaignsByCharacter)
+  }
+
+  const getCampaigns = (campaignsByCharacter) => {
+    const listCampaigns = [...campaignsByCharacter];
+    db.collection('campaigns').where('idUserDm', '==', user.uid).get()
+      .then(querySnapshot => {
+        querySnapshot.forEach( doc => {
+          // console.log(doc.data());
+          if(!campaignsByCharacter.some(element => (doc.data().uid === element.uid))) {
+            listCampaigns.push(doc.data())
+          }
+        });
+      setCampaigns(listCampaigns);
+      setValueOnLocalStorage('campaignsList',listCampaigns);
+      setValueOnLocalStorage('userUid',user.uid);
+    })
+    .catch(err => {
+      console.log(err.message)
+    })
+  }
 
   const getInvitationCodeGame = () => {
     var result = '';
@@ -78,6 +120,7 @@ const Campaigns = (props) => {
     const invitationCode = getInvitationCodeGame();
     const gameUid = uid();
     const data = {
+      createdBy: user.displayName,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       idUserDm: user.uid,
       invitationCode: invitationCode,
@@ -103,7 +146,6 @@ const Campaigns = (props) => {
     });
   }
 
-
   const joinCampaignByInvitationCode = async () => {
     await db.collection('campaigns').where('invitationCode', '==', invitationJoinCode).get()
       .then(querySnapshot => {
@@ -114,68 +156,6 @@ const Campaigns = (props) => {
       .catch(err => {
         console.log(err.message)
       })
-  }
-
-  const getCampaigns = () => {
-    const listCampaigns = [];
-    const savedCampaignsList = getValueOnLocalStorage('campaignsList');
-    const savedUserUid = getValueOnLocalStorage('userUid');
-    if(!savedCampaignsList || savedUserUid !== user.uid) {
-      db.collection('campaigns').where('idUserDm', '==', user.uid).get()
-        .then(querySnapshot => {
-          querySnapshot.forEach( doc => {
-            listCampaigns.push(doc.data())
-          });
-          console.log(listCampaigns)
-          setCampaigns(listCampaigns);
-          setValueOnLocalStorage('campaignsList',listCampaigns);
-          setValueOnLocalStorage('userUid',user.uid);
-        })
-      .catch(err => {
-        console.log(err.message)
-      })
-    } else {
-      setCampaigns(savedCampaignsList);
-    }
-    getCharacterForUser() // WIP
-  }
-
-  const getCharacterForUser = async () => {
-    const listUidToSearch = [];
-    await db.collection('characters').where('idUser', '==', user.uid).get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-          listUidToSearch.push(doc.data().idCampaign)
-      });
-      const cleanListUid = listUidToSearch.filter((currentUid) => {
-        for(let i = 0; i < campaigns.length; i+=1) {
-          if(currentUid === campaigns[i].uid) {
-            return false;
-          }
-        }
-        return true;
-      });
-      setCampaignListToSearch(cleanListUid)
-    })
-    .catch(err => {
-      console.log(err.message)
-    })
-  }
-
-  const getCampaignForCharacter = async (uidList) => {
-    const campaignByCharacter = [...campaigns];
-    if(uidList.length > 0) {
-      uidList.map(async (uid) => {
-        await db.collection('campaigns').doc(uid).get()
-          .then(queryCampaign => {
-            campaignByCharacter.push(queryCampaign.data())
-            setCampaigns(campaignByCharacter);
-          })
-        .catch(err => {
-          console.log(err.message)
-        })
-      });
-    }
   }
 
   return (
@@ -247,10 +227,12 @@ const Campaigns = (props) => {
         </Switch>
       </CampaignContext.Provider>
       <ToastContainer
+        progressClassName="toastProgress"
+        bodyClassName="toastBody"
         position="top-right"
         autoClose={5000}
-        hideProgressBar={true}
-        newestOnTop={false}
+        hideProgressBar
+        newestOnTop
         closeOnClick
         rtl={false}
         pauseOnFocusLoss

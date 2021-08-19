@@ -88,7 +88,7 @@ const Character = (props) => {
     newList.push(newRoll);
     firebase.database().ref().child(`${character.idCampaign}`).update(newList);
     if(isMobile) {
-      toast.info(`${newRoll.stat.isCustom ? newRoll.stat.label : i18next.t(`skills.${newRoll.stat.label}`)} - ${newRoll.value} / ${newRoll.stat.value}`, {
+      toast.success(`${newRoll.stat.isCustom ? newRoll.stat.label : i18next.t(`skills.${newRoll.stat.label}`)} (${newRoll.stat.value}) : ${newRoll.value}`, {
 
       });
     }
@@ -144,12 +144,14 @@ const Character = (props) => {
               <div className='characterContainer'>
                 <div className='characterDetails'>
                   <div className='headDetails'>
+                    <div className='DMContainer'>
+                      {campaign.idUserDm === user.uid && (
+                          <h1 className='infoDmView'>{i18next.t('dm')}</h1>
+                        )}
+                    </div>
                     <div className='nameContainer'>
                       <h2>
                         <span>{character.name}</span>
-                        {campaign.idUserDm === user.uid && (
-                          <span className='infoDmView'>({i18next.t('dm')})</span>
-                        )}
                       </h2>
                       <Link
                         className={'link editLink'}
@@ -170,25 +172,27 @@ const Character = (props) => {
                   <div className='healthDetails'>
                     <span>{`${i18next.t('hp')} : ${character.currentHp} / ${character.maxHp}`}</span>
                   </div>
-                  <div className='descriptionDetails'>
-                    <p
-                      className="click"
-                      onClick={() => {
-                        setDescriptionIsDisplay(!descriptionIsDisplay)
-                      }}
-                    >
-                      {`${i18next.t('description')}`}
+                  {character.description && (
+                    <div className='descriptionDetails'>
+                      <p
+                        className="click"
+                        onClick={() => {
+                          setDescriptionIsDisplay(!descriptionIsDisplay)
+                        }}
+                      >
+                        {`${i18next.t('description')}`}
+                        {descriptionIsDisplay && (
+                          <ChevronUpIcon className='iconDescriptionOpen' />
+                        )}
+                        {!descriptionIsDisplay && (
+                          <ChevronDownIcon className='iconDescriptionOpen' />
+                        )}
+                      </p>
                       {descriptionIsDisplay && (
-                        <ChevronUpIcon className='iconDescriptionOpen' />
+                        <p>{character.description}</p>
                       )}
-                      {!descriptionIsDisplay && (
-                        <ChevronDownIcon className='iconDescriptionOpen' />
-                      )}
-                    </p>
-                    {descriptionIsDisplay && (
-                      <p>{character.description}</p>
-                    )}
-                  </div>
+                    </div>
+                  )}
                 </div>
                 <div className='characteristicsDetail'>
                   <p className='titleSection'><b>{i18next.t('characteristic')}</b></p>

@@ -32,7 +32,8 @@ const EditCharacter = (props) => {
         <form
           className={'formUpdateCharacter columnForm'}
           onSubmit={(e) => {
-            if(duplicateCharacter.maxHp.length > 0 && duplicateCharacter.currentHp.length > 0) {              
+            console.log(duplicateCharacter.maxHp !== '' && duplicateCharacter.currentHp !== '');
+            if(duplicateCharacter.maxHp !== '' && duplicateCharacter.currentHp !== '') {              
               props.updateDataCharacter(duplicateCharacter);
               console.log('submit');
             }
@@ -47,7 +48,7 @@ const EditCharacter = (props) => {
               type="number"
               min={0}
               max={90}
-              className=''
+              placeholder={duplicateCharacter.currentHp}
               value={duplicateCharacter.currentHp}
               onChange={(e) => {
                 duplicateCharacter.currentHp = e.target.value ? parseInt(e.target.value) : "";
@@ -62,7 +63,7 @@ const EditCharacter = (props) => {
               type="number"
               min={0}
               max={90}
-              className=''
+              placeholder={duplicateCharacter.maxHp}
               value={duplicateCharacter.maxHp}
               onChange={(e) => {
                 duplicateCharacter.maxHp = e.target.value ? parseInt(e.target.value) : "";
@@ -71,8 +72,8 @@ const EditCharacter = (props) => {
             />
           </label>
           <label>
-            <span>{i18next.t('description')} :</span>
             <textarea
+              placeholder={i18next.t('description')}
               className='textAreaDescription'
               name="description"
               value={duplicateCharacter.description}
@@ -104,20 +105,20 @@ const EditCharacter = (props) => {
                     name="maxHp"
                     type="number"
                     min={0}
-                    max={90}
+                    max={100}
                     className='editValueSkill'
                     placeholder={i18next.t('value of skill')}
                     value={skill.value}
                     onChange={(e) => {
                       duplicateCharacter.skills[i].value = parseInt(e.target.value);
                       setDuplicateCharacter({...duplicateCharacter});
+                      console.log(duplicateCharacter);
                     }}
                   />
                 </label>
               ))
             }
             <button
-              className="empty"
               onClick={(e) => {
                 duplicateCharacter.skills.push({
                   isCustom: true,
@@ -129,7 +130,7 @@ const EditCharacter = (props) => {
                 e.preventDefault()
               }}
             >
-              {i18next.t('ADD')}
+              {i18next.t('create skill')}
             </button>
           </div>
           <input type="submit" value={i18next.t('update')} />

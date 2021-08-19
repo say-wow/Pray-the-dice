@@ -1,5 +1,6 @@
 {
   "name": "Nom",
+  "character name": "Nom du personnage",
   "hp": "Point de vie",
   "hp max": "Point de vie maximum",
   "description": "Description",
@@ -94,20 +95,24 @@
     "lock": "Vous permet de crocheter ou verrouiller tout type de serrure non magique et de fabriquer ou désamorcer tout type de piège mécanique.",
     "heal": "Vous permet de soigner les blessés, pour peu que vous ayez le minimum d’outils nécessaires. Un jet réussi guérit 1d6 points de vie mais un jet raté en fait perdre 1d3 de plus à la cible. Cette compétence est également utilisée pour diagnostiquer et soigner les maladies, parfois couplée avec Connaissance de la nature pour créer soi-même le remède.",
     "survive": "Mélange de sens de l’orientation, de repérage aux étoiles et de débrouillardise, cette compétence vous permet de vous accommoder des lieux que vous ne connaissez pas. Elle est notamment employée pour déterminer si vous trouvez de quoi subvenir à vos besoins en milieu sauvage.",
-    "steal": "compétence préférée des roublards et autre tire-laine, Voler permet au personnage de soulager un propriétaire de ses menues possessions, qu’il s’agisse d’une bourse pleine de pièces, d’une bague ou autres objets. Le MJ peut imposer un malus si l’objet à dérober est particulièrement imposant. La victime du larcin a droit à un jet sous Perception pour prendre le voleur sur le fait."
+    "steal": "Compétence préférée des roublards et autre tire-laine, Voler permet au personnage de soulager un propriétaire de ses menues possessions, qu’il s’agisse d’une bourse pleine de pièces, d’une bague ou autres objets. Le MJ peut imposer un malus si l’objet à dérober est particulièrement imposant. La victime du larcin a droit à un jet sous Perception pour prendre le voleur sur le fait."
   },
-  "clear cache": "Recharger les donées",
+  "clear cache": "Recharger les données",
   "logout": "Déconnexion",
   "hide roll": "Cacher mes jets",
   "creationHelp": {
-    "characteristicsHead": "Vous disposez de deux méthodes pour déterminer les différentes characteristiques:",
+    "characteristicsHead": "Vous disposez de deux méthodes pour déterminer les différentes caractéristiques :",
     "chara1": "Lancez 3 dés à 6 faces (abrégés en 3 d6) et additionnez le résultat pour chacune d'entre elle.",
     "chara2": "Répartissez 60 points dans les 5 caractéristiques avec un minimum de 4 et un maximum de 18.",
     "charaFoot": "Vous pouvez également utiliser la première méthode et effectuer trois tirages de caractéristiques. vous choisirez alors le meilleur des trois lots de chiffres (et non le meilleur chiffre à chaque fois).",
-    "skillsHeadClassic": "Cette méthode, dispose d’un double avantage: des scores initiaux plus élevés et un personnage directement prêt à l’emploi directement.",
+    "skillsHeadClassic": "Cette méthode, dispose d’un double avantage : des scores initiaux plus élevés et un personnage directement prêt à l’emploi directement.",
     "skillsHeadCustom": "Cette méthode permet de personnaliser son héros en développant davantage certaines compétences. En revanche, les compétences non personnalisées seront plus faibles qu’avec la première méthode.",
-    "skillsFootCustom": "Vous disposez de 50 points à répartir comme bon vous semble, sur la base de 1 pour 1. À la création, aucun personnage ne peut disposer d’une compétence supérieure à 90 %."
+    "skillsFootCustom": "Vous disposez de 50 points à répartir comme bon vous semble, sur la base de 1 pour 1. À la création, aucun personnage ne peut disposer d’une compétence supérieure à 90."
   },
   "name of skill": "Nom de la compétence",
-  "value of skill": "Valeur"
+  "value of skill": "Valeur",
+  "create skill": "Créer une compétences",
+  "error": {
+    "chara90": "Erreur : L'une des compétences dépasse la valeur maximale de 90"
+  }
 }

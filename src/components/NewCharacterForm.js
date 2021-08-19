@@ -4,6 +4,8 @@ import dataCharacter from '../assets/dataCharacter.json';
 import CampaignContext from '../context/CampaignContext';
 import '../styles/characters.css';
 import {getAllStats} from '../utils/characterGeneration';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const NewCharacterForm = (props) => {
   const {campaign} = useContext(CampaignContext)
@@ -49,6 +51,7 @@ const NewCharacterForm = (props) => {
     return result;
   }
 
+  const creationCharacterIsEnable = (additionalSkillPoint === 0 || generationCharacterClassic) && name.length > 0 && characComplete;
   return (
     <div>
       <h3>{i18next.t('new character')}</h3>
@@ -56,19 +59,17 @@ const NewCharacterForm = (props) => {
         className='formNewCharacter'
         onSubmit={(e) => {
           let valid = true;
-          if(additionalSkillPoint >= 0) {
+          if(creationCharacterIsEnable) {
             let skillsCalculated = [...listSkills];
             for(let i=0; i < skillsCalculated.length; i+=1) {
+                if(listBonusSkills[i].value) {
+                  skillsCalculated[i].value += listBonusSkills[i].value;
+                }
               if(skillsCalculated[i].value > 90) {
                 valid = false;
               }
             }
             if(valid) {
-              for(let i=0; i < skillsCalculated.length; i+=1) {
-                if(listBonusSkills[i].value) {
-                  skillsCalculated[i].value += listBonusSkills[i].value;
-                }
-              }
               createCharacter({
                 name,
                 hp: dataCharacter.characteristics.find((chara) => ( chara.label === 'endurance')).value <= 14 ? dataCharacter.characteristics.find((chara) => ( chara.label === 'endurance')).value : 14,
@@ -87,7 +88,15 @@ const NewCharacterForm = (props) => {
               setListBonusSkills([...dataCharacter.skillsBonus]);
               setHp(null);
             } else {
-              alert('ERROR')
+              toast.error(`${i18next.t('error.chara90')}`, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+              });
             }
           }
           e.preventDefault();
@@ -96,9 +105,9 @@ const NewCharacterForm = (props) => {
         <div className='defaultInformation'>
           <p>
             <label className='column'>
-              {i18next.t('name')} :
               <input
-                name="name"
+                placeholder={i18next.t('character name')}
+                name="character name"
                 type="text"
                 className='nameNewCharacter'
                 value={name}
@@ -108,8 +117,8 @@ const NewCharacterForm = (props) => {
           </p>
           <p>
             <label className='column'>
-              {i18next.t('description')} :
               <textarea
+                placeholder={i18next.t('description')}
                 className='textAreaDescription'
                 name="description"
                 value={description}
@@ -133,13 +142,15 @@ const NewCharacterForm = (props) => {
             {listCharac.map((chara, i) => (
               <div key={i}>
                 <label>
-                  {i18next.t(`characteristics.${chara.label}`)}
+                  <span>
+                    {i18next.t(`characteristics.${chara.label}`)}
+                  </span>
                   <input
                     name={chara.label}
                     type="number"
                     className='inputCharacteristics'
                     max={18}
-                    min={3}
+                    min={4}
                     value={chara.value}
                     onChange={(e) => {
                       const newValue = e.target.value !== '' ? JSON.parse(e.target.value) : null;
@@ -170,21 +181,24 @@ const NewCharacterForm = (props) => {
               <p>
                 <b>{i18next.t('character generation type')}</b>
               </p>
-              <p>
-                <select
-                  value={generationCharacterClassic}
-                  onChange={async (e) => {
-                    setGenerationCharacterClassic(JSON.parse(e.target.value))
-                  }}
+              <ul className='tabsContainer'>
+                <li
+                  className={`tab ${generationCharacterClassic ? 'active' : ''}`}
+                  onClick={() => {
+                    setGenerationCharacterClassic(true);  
+                  }}  
                 >
-                  <option value={true}>
-                    {i18next.t('classique')}
-                  </option>
-                  <option value={false}>
-                    {i18next.t('custom')}
-                  </option>
-                </select>
-              </p>
+                  {i18next.t('classique')}
+                </li>
+                <li
+                  className={`tab ${!generationCharacterClassic ? 'active' : ''}`}
+                  onClick={() => {
+                    setGenerationCharacterClassic(false);  
+                  }}  
+                >
+                  {i18next.t('custom')}
+                </li>
+              </ul>
               {generationCharacterClassic && (
                 <p className="tutoCreation">
                   <span>{i18next.t('creationHelp.skillsHeadClassic')}</span>
@@ -203,13 +217,15 @@ const NewCharacterForm = (props) => {
               </p>
               {listSkills.map((skill, i) => (
                 <div className='skillRow'>
-                  <div className="tooltip">
-                    <span>
-                      {i18next.t(`skills.${skill.label}`)}
-                    </span>
-                    <span className="tooltiptext">{i18next.t(`skillsHelp.${skill.label}`)}</span>
+                  <div className='skillName'>
+                    <div className="tooltip">
+                      <span>
+                        {i18next.t(`skills.${skill.label}`)}
+                      </span>
+                      <span className="tooltiptext">{i18next.t(`skillsHelp.${skill.label}`)}</span>
+                    </div>
                   </div>
-                  <div>
+                  <div className='bonusSkills'>
                     <span>
                       {`${skill.value}`}
                     </span>
@@ -238,15 +254,17 @@ const NewCharacterForm = (props) => {
                 </div>
               ))}
             </div>
-            <div className='createCharacterButton'>
-              {(additionalSkillPoint === 0 || generationCharacterClassic) && name.length > 0 && (
-                <div>
-                  <input type="submit" value={i18next.t('create')} />
-                </div>
-              )}
-            </div>
           </div>
         )}
+        <div className='createCharacterButton'>
+          <div>
+              <input 
+                className={!creationCharacterIsEnable ? 'disabled' : ''}
+                type="submit"
+                value={i18next.t('create')}
+              />
+            </div>
+        </div>
       </form>
     </div>
   );

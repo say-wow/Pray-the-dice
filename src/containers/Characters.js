@@ -109,17 +109,6 @@ const Characters = (props) => {
     }
   }
 
-  const getDiceForThisCampaign = async () => {
-    console.log('getDiceForThisCampaign');
-    await db.collection('dice').where('campaignId', '==', campaign.uid).get()
-    .then(querySnapshot => {
-      setCampaignRolls(querySnapshot.size || 0);
-    })
-    .catch(err => {
-      console.log(err.messsage)
-    })
-  }
-
   const getCampaign = async () => {
     const savedCampaign = await getValueOnLocalStorage('currentCampaign');
     if(!savedCampaign || campaignIdUrl !== savedCampaign.uid) {
@@ -175,23 +164,6 @@ const Characters = (props) => {
     });
   }
 
-  const getCharacterForUser = async () => {
-    const listUser = [];
-    console.log('getCharacterForUser');
-    await db.collection('characters').where('idCampaign', '==', campaign.uid).get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-          if(listUser.indexOf(doc.data().idUser) === -1) {
-            listUser.push(doc.data().idUser);
-          }
-      });
-      setPlayersOnThisCampaign(listUser.length || 0);
-    })
-    .catch(err => {
-      console.log(err.message)
-    })
-  }
-  
   return (
     <div className='containerCharacters'>
       <CharacterContext.Provider value={contextValue}>
@@ -203,24 +175,27 @@ const Characters = (props) => {
             <div className="compactPage">
               <div className='listCharacters'>
                 <h3>{i18next.t('campaign information')}</h3>
-                <div>
-                  <p>
-                    {`${i18next.t('name')} : ${campaign.name}`}
-                  </p>
-                  <p>
-                    {`${i18next.t('invitation code')} : ${campaign.invitationCode}`}
-                  </p>
-                  {campaign.createdAt && (
+                <div className='campaignInformation'>
+                  <div>
                     <p>
-                      {/* {`${i18next.t('created at')} : ${campaign.createdAt.toDate().toLocaleDateString()}`} */}
+                      {`${i18next.t('name')} : ${campaign.name}`}
                     </p>
-                  )}
-                  <p>
-                    {/* {`${i18next.t('number of dice roll')} : ${campaignRolls || 0}`} */}
-                  </p>
-                  <p>
-                    {/* {`${i18next.t('number of user')} : ${playersOnThisCampaign || 0}`} */}
-                  </p>
+                    {campaign.createdBy && (
+                      <p>
+                        {`${i18next.t('mj').toUpperCase()} : ${campaign.createdBy}`}
+                      </p>
+                    )}
+                  </div>
+                  <div>
+                    <p>
+                      {`${i18next.t('invitation code')} : ${campaign.invitationCode}`}
+                    </p>
+                    {campaign.createdAt && (
+                      <p>
+                        {`${i18next.t('created at')} : ${new Date(campaign.createdAt.seconds*1000).toLocaleDateString() }`}
+                      </p>
+                    )}
+                  </div>
                 </div>
                 <h3>{i18next.t('my characters')}</h3>
                 <ul className='list'>

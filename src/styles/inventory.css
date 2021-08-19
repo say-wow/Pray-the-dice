@@ -7,9 +7,6 @@
 .tableInvHeader div:first-child {
   width: 80%;
 }
-.tableInvHeader span {
-  color: #fff;
-}
 .tableInvRow {
   display: flex;
   flex-wrap: nowrap;
@@ -31,11 +28,19 @@
   width: 33%;
   margin: 0 !important;
 }
+.formNewInv input:focus {
+  z-index: 99;
+}
 .formNewInv input:first-child {
   width: 39%;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
 }
 .formNewInv input:nth-child(2) {
   width: 33%;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  margin-left: -2px !important;
 }
 .tableInvRow input[type=number] {
   margin: 0px;
@@ -71,8 +76,11 @@
     display: flex;
     flex-wrap: nowrap;
     background-color: #1b1d29;
-    border-radius: 8px 8px 0 0;
+    border-radius: 4px 4px 0 0;
     padding: 3px 10px;
+  }
+  .tableInvHeader span {
+    color: #fff;
   }
   .tableInvRow div:first-child {
     width: 50%;

@@ -5,6 +5,9 @@
   flex-wrap: wrap;
   flex-direction: column;
 }
+.formUpdateCharacter label{
+  align-items: center;
+}
 .labelFormUpdate {
   width: 300px;
   display: flex;
