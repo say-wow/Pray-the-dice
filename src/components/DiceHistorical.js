@@ -19,7 +19,7 @@ const cleanDuplicate = (arrayRoll, userUid, campaignUserUidDm, characterUid, dic
 
   let arrayVisible = [];
   for (let i = 0; i < arrayRoll.length; i+= 1) {
-    if(!arrayRoll[i].isHided || (arrayRoll[i].isHided && arrayRoll[i].characterId === characterUid) || (arrayRoll[i].isHided && campaignUserUidDm === userUid)) {
+    if(!arrayRoll[i].isHided || (arrayRoll[i].isHided && arrayRoll[i].userUid === userUid) || (arrayRoll[i].isHided && campaignUserUidDm === userUid)) {
       arrayVisible.push(arrayRoll[i]);
     }
   }
@@ -64,7 +64,7 @@ const DiceHistorical = (props) => {
   }, [list, limitHisto]);
 
   const isMyRoll = (roll) => {
-    if(character.uid === roll.characterId) {
+    if(user.uid === roll.userUid) {
       return true;
     } else if (campaign.idUserDm === user.uid && roll.isDmRoll) {
       return true;

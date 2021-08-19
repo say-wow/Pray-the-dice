@@ -14,6 +14,7 @@ export const getRoll = (max, uidUserDmCampaign, character, user ,stat, hideRollS
     const dataRoll = {
       createdAt: new Date(Date.now()).toLocaleDateString("fr-FR"),
       userName: !isDm ? character.name : i18next.t('dm'),
+      userUid: user.uid,
       characterId: character.uid,
       value: randomValue,
       diceType: max,

@@ -180,16 +180,16 @@ const Characters = (props) => {
                     <p>
                       {`${i18next.t('name')} : ${campaign.name}`}
                     </p>
-                    {campaign.createdBy && (
-                      <p>
-                        {`${i18next.t('mj').toUpperCase()} : ${campaign.createdBy}`}
-                      </p>
-                    )}
-                  </div>
-                  <div>
                     <p>
                       {`${i18next.t('invitation code')} : ${campaign.invitationCode}`}
                     </p>
+                  </div>
+                  <div>
+                    {campaign.createdBy && (
+                      <p>
+                        {`${i18next.t('dm')} : ${campaign.createdBy}`}
+                      </p>
+                    )}
                     {campaign.createdAt && (
                       <p>
                         {`${i18next.t('created at')} : ${new Date(campaign.createdAt.seconds*1000).toLocaleDateString() }`}
