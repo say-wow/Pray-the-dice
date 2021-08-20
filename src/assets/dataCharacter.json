@@ -160,7 +160,7 @@
       "value": null,
       "isCustom": false,
       "stat1": "intelligence",
-      "stat2": "charisma"
+      "stat2": "dexterity"
     }
   ],
   "skillsBonus": [

@@ -40,7 +40,7 @@ input[type='number'] {
 }
 input[type=text].editNameSkill {
   margin: 5px 0;
-  padding: 1px 0px;
+  /* padding: 1px 0px; */
   flex: 3
 }
 input[type=text].editValueSkill {

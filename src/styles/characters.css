@@ -89,7 +89,7 @@ input[type=text].nameNewCharacter {
   /* min-width: 25px; */
 }
 .skillRow .skillName {
-    min-width: 250px;
+    min-width: 220px;
 }
 .newCharacterForm {
   display: grid;
