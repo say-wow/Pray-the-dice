@@ -45,7 +45,6 @@ const Campaigns = (props) => {
 
   useEffect( () => {
     if(user.uid && campaigns.length === 0) {
-      // getCampaigns();
       const savedCampaignsList = getValueOnLocalStorage('campaignsList');
       const savedUserUid = getValueOnLocalStorage('userUid');
       if(!savedCampaignsList || savedUserUid !== user.uid) {
@@ -130,7 +129,6 @@ const Campaigns = (props) => {
     };
     savedCampaignsList.push(data)
     await db.collection('campaigns').doc(gameUid).set(data).then(res => {
-      getCampaigns();
       toast.success(`${name} ${i18next.t('was created with success')}`, {
         position: "top-right",
         autoClose: 5000,
