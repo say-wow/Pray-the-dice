@@ -33,7 +33,8 @@ const EditCharacter = (props) => {
           className={'formUpdateCharacter columnForm'}
           onSubmit={(e) => {
             console.log(duplicateCharacter.maxHp !== '' && duplicateCharacter.currentHp !== '');
-            if(duplicateCharacter.maxHp !== '' && duplicateCharacter.currentHp !== '') {              
+            if(duplicateCharacter.maxHp !== '' && duplicateCharacter.currentHp !== '') {
+              toast.success(i18next.t('update succed'), {});              
               props.updateDataCharacter(duplicateCharacter);
               console.log('submit');
             }

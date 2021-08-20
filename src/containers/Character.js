@@ -96,7 +96,7 @@ const Character = (props) => {
 
   const updateFirestoreCharacter = async (newData) => {
     await db.collection('characters').doc(newData.uid).set(newData).then(res => {
-      toast.success(i18next.t('update succed'), {});
+      // toast.success(i18next.t('update succed'), {});
     }).catch(e => {
       console.log(e)
     });
