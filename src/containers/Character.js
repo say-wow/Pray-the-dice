@@ -4,6 +4,7 @@ import "firebase/analytics";
 import "firebase/auth";
 import "firebase/firestore";
 import "firebase/database";
+import 'firebase/analytics';
 import {
   Switch,
   Route,
@@ -86,12 +87,23 @@ const Character = (props) => {
       ...rollList
     ];
     newList.push(newRoll);
-    firebase.database().ref().child(`${character.idCampaign}`).update(newList);
+    console.log(newRoll)
+    firebase.database().ref().child(`${character.idCampaign}`).set(newList);
     if(isMobile) {
-      toast.success(`${newRoll.stat.isCustom ? newRoll.stat.label : i18next.t(`skills.${newRoll.stat.label}`)} (${newRoll.stat.value}) : ${newRoll.value}`, {
-
-      });
+      const infoStat = newRoll.stat ? `${newRoll.stat.isCustom ? newRoll.stat.label : i18next.t(`skills.${newRoll.stat.label}`)} (${newRoll.stat.value})` : `Custom d${newRoll.diceType}`
+      toast.success(`${infoStat} : ${newRoll.value}`, {});
     }
+    firebase.analytics().setUserId(user.uid);
+    firebase.analytics().setUserProperties({
+      name: user.displayName,
+      uid: user.uid,
+      campaign: campaign.uid,
+    });
+    firebase.analytics().logEvent('Roll', {
+      campaign: campaign.uid,
+      stat: newRoll.stat ? newRoll.stat.label : 'Custom',
+      result: newRoll.value 
+    });
   }
 
   const updateFirestoreCharacter = async (newData) => {
@@ -237,7 +249,7 @@ const Character = (props) => {
                     className='fullButton'
                     to={`${match.url}/inventory`}
                   >
-                    <ArchiveIcon className="iconEdit"/>
+                    <ArchiveIcon className="iconInvLarge"/>
                     <span>{i18next.t('inventory')}</span>
                   </Link>
                 </MobileView>

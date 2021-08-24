@@ -3,6 +3,7 @@ import firebase from "firebase/app";
 import "firebase/analytics";
 import "firebase/auth";
 import "firebase/firestore";
+import "firebase/analytics";
 import {
   Switch,
   Route,
@@ -143,13 +144,18 @@ const Characters = (props) => {
       characteristics: [...characterData.characteristics],
       inventory: [],
     };
-    console.log('createCharacter');
     await db.collection('characters').doc(characterUid).set(data).then(res => {
       const charactersList = getValueOnLocalStorage('characters');
       charactersList.push(data);
       setValueOnLocalStorage('characters',charactersList);
       getCharactersVisibleForUser(campaignIdUsed);
 
+      firebase.analytics().logEvent('characterCreation',{
+        name: data.name,
+        idUser: data.idUser,
+        idCampaign: data.idCampaign,
+        uid: data.uid
+      });
       toast.success(`${characterData.name} ${i18next.t('was created with success')}`, {
         position: "top-right",
         autoClose: 5000,

@@ -46,11 +46,10 @@ header {
   grid-area: log;
 }
 .homeLink {
-  width: 30px;
-  padding: 7px 14px;
+  padding: 0px 14px;
 }
 .homeLinkIcon {
-  color: #fff;
+  width: 50px;
 }
 .dropbtn {
   color: white;

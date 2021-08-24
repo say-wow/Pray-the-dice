@@ -153,10 +153,10 @@ describe('getAllStats', () => {
         },
         {
           "label": "steal",
-          "value": 75,
+          "value": 65,
           "isCustom": false,
           "stat1": "intelligence",
-          "stat2": "charisma"
+          "stat2": "dexterity"
         }
       ]);
   });
@@ -302,10 +302,10 @@ describe('getAllStats', () => {
         },
         {
           "label": "steal",
-          "value": 60,
+          "value": 52,
           "isCustom": false,
           "stat1": "intelligence",
-          "stat2": "charisma"
+          "stat2": "dexterity"
         }
       ]);
   });

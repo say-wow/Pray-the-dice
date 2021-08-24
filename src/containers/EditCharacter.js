@@ -9,6 +9,7 @@ import CharacterContext from '../context/CharacterContext';
 import CampaignContext from '../context/CampaignContext';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Breadcrumb from '../components/Breadcrumb';
 
 // init();
 // const db = firebase.firestore();
@@ -22,11 +23,10 @@ const EditCharacter = (props) => {
     setDuplicateCharacter({...character})
   }, [character]);
 
+
   return (
     <div className='editContainer'>
-      {/* <Link className='link' onClick={() => {history.goBack()}}>
-        {i18next.t('back to character')}
-      </Link> */}
+      <Breadcrumb sentence={character.name}/>
       <h2>{`${i18next.t('update')} ${i18next.t('of')} ${character.name}`}</h2>
       <div className='editBlock'>
         <form

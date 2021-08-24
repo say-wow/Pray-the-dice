@@ -16,7 +16,7 @@
 }
 input[type="submit"] {
   align-self: flex-end;
-  border-radius: 0 !important;
+  /* border-radius: 0 !important; */
 }
 .editBlock {
   /* background-color: #fff; */

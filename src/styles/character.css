@@ -159,16 +159,16 @@
 .iconChat {
   height: 45px;
 }
-.iconEdit{
+.iconEdit, .iconInvLarge{
   height: 30px;
 }
 .iconDescriptionOpen{
   height: 15px;
   color: #969595;
 }
-.editLink {
-  /* align-self: flex-end; */
-}
+/* .editLink {
+  align-self: flex-end;
+} */
 .nameContainer {
   display: flex;
   align-items: center;
@@ -203,20 +203,20 @@ table tr td:last-child {
 .list a.link {
   text-decoration: underline;
 }
+.iconEdit{
+  color: #ffad23;
+}
 @media (min-width: 800px) {
   .inventory {
     display: block;
   }
-  .iconEdit{
-    color: #ffad23;
-  }
 }
 @media (min-width: 1000px) {
-  .characterDetails {
-    /* display: flex;
+  /* .characterDetails {
+    display: flex;
     flex-direction: row;
-    align-items: center; */
-  }
+    align-items: center;
+  } */
   .characterContainer {
     grid-template-columns: 1fr 3fr 2fr;
     width: 85%;

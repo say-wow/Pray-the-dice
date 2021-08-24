@@ -19,6 +19,7 @@
   "auto generation": "Génération aléatoire",
   "skill": "Compétences",
   "sign in with google": "Connexion avec Google",
+  "sign up with google": "S'inscrire avec Google",
   "new skill created with success": "Nouvelle compérence créée",
   "update succed": "Mise à jour réussi",
   "an error is appeare": "Une erreur est arrivé",
@@ -114,5 +115,6 @@
   "create skill": "Créer une compétences",
   "error": {
     "chara90": "Erreur : L'une des compétences dépasse la valeur maximale de 90"
-  }
+  },
+  "start to play now": "Commencez à jouer maintenant"
 }

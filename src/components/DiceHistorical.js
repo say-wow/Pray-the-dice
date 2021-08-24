@@ -1,9 +1,4 @@
 import React, {useEffect, useState, useContext, useRef} from 'react';
-import firebase from "firebase/app";
-import "firebase/analytics";
-import "firebase/auth";
-import "firebase/firestore";
-import {init} from '../utils/initFirebase';
 import CharacterContext from '../context/CharacterContext';
 import CampaignContext from '../context/CampaignContext';
 import UserContext from '../context/UserContext';
@@ -36,6 +31,7 @@ const cleanDuplicate = (arrayRoll, userUid, campaignUserUidDm, characterUid, dic
     } else if(i >= 1){
       arrayVisible[i-1].displayPicture = false;
     }
+    return null;
   });
 
   return arrayVisible;

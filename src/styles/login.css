@@ -1,14 +1,61 @@
-.characterPanel {
-  grid-area: chara;
+html, body {
+  height: 100%;
+  background: none;
 }
-.loginBtn {
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* button ~ button {
+  margin-left: 20px;
+} */
+.rightPanel {
+  grid-area: rightP;
+  background: url('../assets/Images/backLogin.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  flex-direction: column;
+}
+.rightPanel h2 {
+  color: #1b1d29;
+  margin-bottom: 45px;
+}
+.leftPanel {
+  display: none;
+  flex-direction: column;
+  justify-content: center ;
+  align-items: center;
+  grid-area: leftP;
+  background: url('../assets/Images/backLogin.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.leftPanel h1 {
+  color: #fff;
+  font-weight: bolder;
+  font-size: 3.7em;
+}
+.leftPanel p {
+  color: #fff;
+  font-weight: bolder;
+  font-size: 1.3em;
+}
+.leftPanel img {
+  max-width: 150px;
+}
+.rightPanel {
   display: flex;
   justify-content: center ;
   align-items: center;
-  grid-area: login;
+  grid-area: rightP;
 }
-.loginBtn button {
-  animation-duration: 1.5s;
+.leftPanel button {
+  animation-duration: 1s;
   animation-name: slideinButton;
   animation-timing-function: ease-in-out;
 }
@@ -16,23 +63,53 @@
   display: grid;
   height: 100%;
   width: 100%;
-  grid-gap: 20px;
-  grid-template-areas:"login";
-  overflow: hidden;
+  grid-template-columns: 1fr;
+  grid-template-areas: "rightP";
 }
-.characterPanel {
-  display: none;
-  position: relative;
-  overflow: hidden;
+.google-button {
+  height: 40px;
+  border-width: 0;
+  background: white;
+  color: #737373;
+  border-radius: 4px;
+  white-space: nowrap;
+  box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.1);
+  transition-property: background-color, box-shadow;
+  transition-duration: 150ms;
+  transition-timing-function: ease-in-out;
+  padding: 0;
 }
-.characterPanel img {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  max-width: 700px;
-  animation-duration: 1.5s;
-  animation-name: slideinCharacter;
-  animation-timing-function: ease-in-out;
+.google-button:focus,
+.google-button:hover {
+  box-shadow: 0px 0px 0px 1px rgba(0,0,0,0.1);
+}
+  
+.google-button:active {
+    background-color: #e5e5e5;
+    box-shadow: none;
+    transition-duration: 10ms;
+  }
+    
+.google-button__icon {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 8px 0 8px 8px;
+  width: 18px;
+  height: 18px;
+  box-sizing: border-box;
+}
+
+.google-button__icon--plus {
+  width: 27px;
+}
+
+.google-button__text {
+  display: inline-block;
+  vertical-align: middle;
+  padding: 0 24px;
+  font-size: 14px;
+  font-weight: bold;
+  font-family: 'Roboto',arial,sans-serif;
 }
 
 @keyframes slideinCharacter {
@@ -60,32 +137,18 @@
 }
 
 @media (min-width: 700px) {
-  .loginBtn {
-    justify-content: flex-end ;
-  }
-  .characterPanel {
-    display: block;
-  }
-  .wrapperLogin {
-    grid-template-columns: 1fr 2fr;
-    grid-template-areas:
-      "login  chara";
-  }
-  nav ul {
-    display: flex;
-    justify-content: space-between;
-  }
+
 }
 @media (min-width: 900px) {
-  .characterPanel {
-    display: block;
+  .leftPanel {
+    display: flex;
+  }
+  .rightPanel {
+    background: none;
   }
   .wrapperLogin {
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 1fr 1fr;
     grid-template-areas:
-      "login  chara";
-   }
-   nav ul {
-     flex-direction: column;
-   }
+      "leftP  rightP";
+  }
 }
