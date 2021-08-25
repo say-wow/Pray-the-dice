@@ -87,7 +87,6 @@ const Character = (props) => {
       ...rollList
     ];
     newList.push(newRoll);
-    console.log(newRoll)
     firebase.database().ref().child(`${character.idCampaign}`).set(newList);
     if(isMobile) {
       const infoStat = newRoll.stat ? `${newRoll.stat.isCustom ? newRoll.stat.label : i18next.t(`skills.${newRoll.stat.label}`)} (${newRoll.stat.value})` : `Custom d${newRoll.diceType}`
@@ -210,7 +209,11 @@ const Character = (props) => {
                   <ul>
                     {
                       characteristics.map((charac, i) => (
-                        <li key={i}>
+                        <li
+                          key={i}
+                          onClick={() => {
+                          sendNewRoll(getRoll(100,campaign.idUserDm, character, user, charac, hideRollSwitch, 'characteristics'))
+                        }}>
                           <span className='title'>
                             {i18next.t(`characteristics.${charac.label}`)}
                           </span>
@@ -231,7 +234,7 @@ const Character = (props) => {
                     {
                     skills.sort(dynamicSortWithTraduction("label", 'skills')).map((skill,i) => (
                       <li key={i} onClick={() => {
-                        sendNewRoll(getRoll(100,campaign.idUserDm, character, user, skill, hideRollSwitch))
+                        sendNewRoll(getRoll(100,campaign.idUserDm, character, user, skill, hideRollSwitch, 'skills'))
                       }}>
                         <span>
                           {skill.isCustom ? skill.label : i18next.t(`skills.${skill.label}`)}
@@ -278,7 +281,7 @@ const Character = (props) => {
                   <DiceRoll
                     chat={false}
                     setNewDice={(valMaxRoll) => {
-                      sendNewRoll(getRoll(valMaxRoll,campaign.idUserDm, character, user, null, hideRollSwitch))
+                      sendNewRoll(getRoll(valMaxRoll,campaign.idUserDm, character, user, null, hideRollSwitch, null))
                     }}
                   />
                 </BrowserView>

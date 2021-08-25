@@ -68,6 +68,14 @@ const DiceHistorical = (props) => {
     return false;
   }
 
+  const getLabelDice = (histo) => {
+    const {stat, prefixTradStat, } = histo;
+    if(stat) {
+      return `${stat.isCustom ? stat.label : i18next.t(`${prefixTradStat}.${stat.label}`)} (${stat.value})`
+    } 
+    return `d${histo.diceType} ${i18next.t('customized')}`
+  }
+
   return (
     <div ref={histoView} className='histoView'>
       <div className='headerHisto'>
@@ -125,7 +133,7 @@ const DiceHistorical = (props) => {
                         {histo.userName}
                       </span>
                       <span>
-                          {histo.stat ? `${histo.stat.isCustom ? histo.stat.label : i18next.t(`skills.${histo.stat.label}`)} (${histo.stat.value})` : `Custom d${histo.diceType}`}
+                        {getLabelDice(histo)}
                       </span>
                       {histo.isHided && (
                         <EyeOffIcon className="iconHide"/>
