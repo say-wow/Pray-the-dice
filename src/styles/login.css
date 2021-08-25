@@ -21,8 +21,16 @@ body {
   flex-direction: column;
 }
 .rightPanel h2 {
-  color: #1b1d29;
+  color: #ffffffa6;
   margin-bottom: 45px;
+  font-size: 1em;
+}
+.rightPanel h1 {
+  color: #fff;
+  font-size: 3em;
+}
+.rightPanel .loginLogoMobile {
+  width: 30%;
 }
 .leftPanel {
   display: none;
@@ -140,6 +148,16 @@ body {
 
 }
 @media (min-width: 900px) {
+  .rightPanel h2 {
+    color: #1b1d29;
+    margin-bottom: 45px;
+  }
+  .rightPanel h1 {
+    display: none;
+  }
+  .rightPanel .loginLogoMobile {
+    display: none;
+  }
   .leftPanel {
     display: flex;
   }

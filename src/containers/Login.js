@@ -51,6 +51,10 @@ export default function Login() {
         </p> */}
       </div>
       <div className='rightPanel'>
+        <img src={logo} className='loginLogoMobile' alt="Logo" />
+        <h1>
+          Beyond the dice
+        </h1>
         <h2>
           {i18next.t('start to play now')}
         </h2>
