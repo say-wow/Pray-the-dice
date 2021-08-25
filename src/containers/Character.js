@@ -34,6 +34,8 @@ import {
   isMobile
 } from "react-device-detect";
 import { toast } from 'react-toastify';
+import backpack from '../assets/Images/backpack.png'
+import chat from '../assets/Images/chat.png'
 
 init();
 const db = firebase.firestore();
@@ -175,7 +177,8 @@ const Character = (props) => {
                         className='link'
                         to={`${match.url}/chat`}
                       >
-                        <ChatIcon className="iconChat"/>
+                        <img className="iconChat" src={chat} alt="chat" />
+                        {/* <ChatIcon className="iconChat"/> */}
                       </Link>
                     </MobileView>
                   </div>
@@ -252,7 +255,7 @@ const Character = (props) => {
                     className='fullButton'
                     to={`${match.url}/inventory`}
                   >
-                    <ArchiveIcon className="iconInvLarge"/>
+                    <img className="iconInvLarge" src={backpack} alt="Backpack" />
                     <span>{i18next.t('inventory')}</span>
                   </Link>
                 </MobileView>

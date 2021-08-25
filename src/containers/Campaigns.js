@@ -195,7 +195,9 @@ const Campaigns = (props) => {
                 <form  
                   className='formFullWidthMobile'
                   onSubmit={(e) => {
-                  joinCampaignByInvitationCode();
+                  if(invitationJoinCode) {
+                    joinCampaignByInvitationCode();
+                  }
                   e.preventDefault();
                 }}>
                   <input

@@ -10,7 +10,9 @@ const NewCampaignForm = (props) => {
     <form
       className='formFullWidthMobile'
       onSubmit={(e) => {
-      createCampaign(campaignName);
+      if(campaignName) {
+        createCampaign(campaignName);
+      }
       e.preventDefault();
     }}>
       <input

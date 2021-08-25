@@ -160,8 +160,12 @@
 .iconChat {
   height: 45px;
 }
-.iconEdit, .iconInvLarge{
+.iconEdit{
   height: 30px;
+}
+.iconInvLarge {
+  height: 30px;
+  margin: 0px 5px;
 }
 .iconDescriptionOpen{
   height: 15px;
