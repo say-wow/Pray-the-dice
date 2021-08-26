@@ -76,6 +76,17 @@ To get a local copy up and running follow these simple example steps.
 
 1. Create a project on Firebase
 2. Get the Firebase config and create a .env file on the root
+```
+REACT_APP_API_KEY_DEV=""
+REACT_APP_AUTHDOMAIN_DEV=""
+REACT_APP_PROJECT_ID_DEV=""
+REACT_APP_STORAGEBUCKET_DEV=""
+REACT_APP_MESSAGING_SENDER_ID_DEV=""
+REACT_APP_APP_ID_DEV=""
+REACT_APP_MEASUREMENT_ID_DEV=""
+REACT_APP_DATABASE_DEV=""
+
+```
 3. Activate the Firebase auth configuration for google on "Sign-in method"
 4. Change the rules of Cloud Firestore for :
 ```
