@@ -85,7 +85,6 @@ REACT_APP_MESSAGING_SENDER_ID_DEV=""
 REACT_APP_APP_ID_DEV=""
 REACT_APP_MEASUREMENT_ID_DEV=""
 REACT_APP_DATABASE_DEV=""
-
 ```
 3. Activate the Firebase auth configuration for google on "Sign-in method"
 4. Change the rules of Cloud Firestore for :
