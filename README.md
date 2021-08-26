@@ -132,7 +132,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@Gaviil_](https://twitter.com/Gaviil_)
+Boussard Quentin - [@Gaviil_](https://twitter.com/Gaviil_)
 Project Link: [https://github.com/Qboussard/beyond-the-dice](https://github.com/Qboussard/beyond-the-dice)
 
 
