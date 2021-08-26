@@ -170,4 +170,4 @@ Project Link: [https://github.com/Qboussard/beyond-the-dice](https://github.com/
 [issues-shield]: https://img.shields.io/github/issues/Qboussard/beyond-the-dice.svg?style=for-the-badge
 [issues-url]: https://github.com/Qboussard/beyond-the-dice/issues
 [product-screenshot]:https://zupimages.net/up/21/34/5xp7.png
-[product-screenshot-phone]:https://www.zupimages.net/up/21/34/9jxi.png
+[product-screenshot-phone]:https://www.zupimages.net/up/21/34/bi6n.png
