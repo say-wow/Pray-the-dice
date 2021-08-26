@@ -162,7 +162,7 @@ body {
     display: flex;
   }
   .rightPanel {
-    background: none;
+    background: #fff;
   }
   .wrapperLogin {
     grid-template-columns: 1fr 1fr;
