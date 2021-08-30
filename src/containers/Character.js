@@ -168,8 +168,7 @@ const Character = (props) => {
                           style={{
                             backgroundImage: `url(${character.picture})`,
                           }}
-                        >
-                        </div>
+                        />
                       )}
                       <h2>
                         <span>{character.name}</span>

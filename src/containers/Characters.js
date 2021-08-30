@@ -215,6 +215,14 @@ const Characters = (props) => {
                         }}
                         to={`${match.url}/${character.uid}`}
                       >
+                        <div
+                          className='characterPicture'
+                          style={{
+                            width: character.picture ? '100px' : 0,
+                            minWidth: character.picture ? '100px' : 0,
+                            backgroundImage: `url(${character.picture})`,
+                          }}
+                        />
                         {character.name}
                       </Link>
                     </li>

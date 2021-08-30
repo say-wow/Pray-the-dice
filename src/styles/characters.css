@@ -67,8 +67,11 @@ input[type=text].nameNewCharacter {
   flex-direction: row;
   flex-wrap: wrap;
 }
-.list li {
-  margin: 10px;
+.list li a{
+  padding: 10px;
+}
+.list li a div{
+  display: none;
 }
 .skillRow {
   display: flex;
@@ -245,6 +248,16 @@ input[type=text].nameNewCharacter {
   .characteristics {
     grid-area: characteristics;
     max-width: auto;
+  }
+  .list li a div{
+    display: inline-block;
+  }
+  .list li a{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
   }
 }
 @media (min-width: 1300px) {

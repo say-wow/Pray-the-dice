@@ -37,7 +37,6 @@ const EditCharacter = (props) => {
   }, [url]);
 
   const handleChange = e => {
-    console.log('handleChange',e.target.files[0]);
     if (e.target.files[0]) {
       setImage(e.target.files[0]);
     }
@@ -112,8 +111,6 @@ const EditCharacter = (props) => {
             <label>
               <input type="file" name="file" id="file" class="inputfile" onChange={handleChange} />
               <label for="file">{image ? image.name : i18next.t('Choose a file')}</label>
-            {/* <span>{i18next.t('new picture')} :</span>
-            <input type='file' onChange={handleChange} /> */}
           </label>
           </div>
           <label>

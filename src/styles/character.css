@@ -214,17 +214,23 @@ table tr td:last-child {
 .characterPicture {
   width: 100px;
   height: 100px;
+  min-width: 100px;
+  min-height: 100px;
   overflow: hidden;
   background-position: center;
   background-size: cover;
   border-radius: 50%;
-  margin: 10px 20px;
+  margin: 5px 5px;
   background-repeat: no-repeat;
 }
 .containerPicture {
   display: flex;
   flex-direction: column;
-  margin: 10px 0px;
+  margin-bottom: 20px;
+  align-items: center; 
+}
+.containerPictureCharacter {
+  display: inline-block;
 }
 .containerPicture div:first-child {
   margin-bottom: 10px;
