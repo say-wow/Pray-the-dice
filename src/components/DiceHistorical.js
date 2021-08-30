@@ -121,16 +121,11 @@ const DiceHistorical = (props) => {
                       className={'userPictureRoll'}
                       style={{backgroundImage: `url(${histo.pictureUserSendRoll})`}}  
                     />
-                    // <img
-                    //   alt=""
-                    //   className={`${i === 0 && diceHistorical[i-1] && !diceHistorical[i-1].displayPicture ? 'pictureAnimated' : 'userPictureRoll'}`}
-                    //   src={histo.pictureUserSendRoll}
-                    // />
                   )}
                   <li
                     id={i === 0 ? 'last' : null}
                     className={`${isMyRoll(histo) ? "myhistoRow" : "histoRow"} bubbleHisto`}
-                    style={!isMyRoll(histo) ? {margin: '5px 35px'} : null}
+                    style={!isMyRoll(histo) ? {margin: '5px 40px'} : null}
                   >
                     <div className='histoLeftSide'>
                       <span>
