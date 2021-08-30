@@ -51,6 +51,37 @@ span.labelSkillUneditable {
   align-self: center;
   flex: 3
 }
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+.inputfile + label {
+  color: white;
+  display: inline-block;
+  background-color: #ffad23;
+  padding: 7px 14px;
+  font-size: 14px;
+  border: none;
+  font-size: 0.875rem;
+  box-sizing: border-box;
+  font-weight: 400;
+  line-height: 1.5;
+  border-radius: 4px;
+  letter-spacing: 0.02857em;
+  font-weight: bold;
+  cursor: pointer;
+  max-width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.inputfile + label * {
+	pointer-events: none;
+}
 @media (min-width: 1000px) {
   .containerEditSkill {
     width: 50%;
