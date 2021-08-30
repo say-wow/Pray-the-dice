@@ -91,7 +91,7 @@ const DiceHistorical = (props) => {
             </button>
           )}
         </div>
-        <div class="switch">
+        <div className="switch">
           <label>
             <input
               type="checkbox"
@@ -100,7 +100,7 @@ const DiceHistorical = (props) => {
                 props.setHideRoll(e.target.checked)
               }}
             />
-            <span class="lever"></span>
+            <span className="lever"></span>
             {i18next.t('hide roll')}
           </label>
         </div>
@@ -109,7 +109,7 @@ const DiceHistorical = (props) => {
         {diceHistorical.length > 0 && (
           diceHistorical.map((histo, i) => {
             return (
-              <div key={histo.uid}>
+              <div key={i}>
                 {histo.createdAt && (
                   <span className='date'>
                     {histo.createdAt}
@@ -117,11 +117,15 @@ const DiceHistorical = (props) => {
                 )}
                 <div className={`${isMyRoll(histo) ? "containerRowReverse" : "containerRow"}`}>
                   {histo.displayPicture && !isMyRoll(histo) && (
-                    <img
-                      alt="userPicture"
-                      className={`${i === 0 && diceHistorical[i-1] && !diceHistorical[i-1].displayPicture ? 'pictureAnimated' : 'userPictureRoll'}`}
-                      src={histo.pictureUserSendRoll}
+                    <div
+                      className={'userPictureRoll'}
+                      style={{backgroundImage: `url(${histo.pictureUserSendRoll})`}}  
                     />
+                    // <img
+                    //   alt=""
+                    //   className={`${i === 0 && diceHistorical[i-1] && !diceHistorical[i-1].displayPicture ? 'pictureAnimated' : 'userPictureRoll'}`}
+                    //   src={histo.pictureUserSendRoll}
+                    // />
                   )}
                   <li
                     id={i === 0 ? 'last' : null}

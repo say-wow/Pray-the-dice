@@ -23,7 +23,7 @@ export const getRoll = (max, uidUserDmCampaign, character, user ,stat, hideRollS
       characterId: character.uid,
       value: randomValue,
       diceType: max,
-      pictureUserSendRoll: user.photoURL,
+      pictureUserSendRoll: character.picture || user.photoURL,
       stat: statRoll,
       isHided: hideRollSwitch,
       prefixTradStat: prefixTradStat || null,

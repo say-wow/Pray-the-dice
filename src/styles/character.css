@@ -211,6 +211,24 @@ table tr td:last-child {
 .iconEdit{
   color: #ffad23;
 }
+.characterPicture {
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  background-position: center;
+  background-size: cover;
+  border-radius: 50%;
+  margin: 10px 20px;
+  background-repeat: no-repeat;
+}
+.containerPicture {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0px;
+}
+.containerPicture div:first-child {
+  margin-bottom: 10px;
+}
 @media (min-width: 800px) {
   .inventory {
     display: block;
@@ -256,6 +274,9 @@ table tr td:last-child {
   .skillsDetail ul {
     margin: 0;
     width: 500px;
-    
+  }
+  .containerPicture {
+    display: flex;
+    flex-direction: row;
   }
 }

@@ -162,6 +162,15 @@ const Character = (props) => {
                         )}
                     </div>
                     <div className='nameContainer'>
+                      {character.picture && character.picture !== '' && (
+                        <div
+                          className='characterPicture'
+                          style={{
+                            backgroundImage: `url(${character.picture})`,
+                          }}
+                        >
+                        </div>
+                      )}
                       <h2>
                         <span>{character.name}</span>
                       </h2>

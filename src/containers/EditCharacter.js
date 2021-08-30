@@ -3,6 +3,7 @@ import firebase from "firebase/app";
 import "firebase/analytics";
 import "firebase/auth";
 import "firebase/firestore";
+import "firebase/storage";
 import i18next from 'i18next';
 import '../styles/EditCharacter.css';
 import CharacterContext from '../context/CharacterContext';
@@ -18,11 +19,60 @@ const EditCharacter = (props) => {
   const {character, updateCharacter} = useContext(CharacterContext);
   const {campaign} = useContext(CampaignContext);
   const [duplicateCharacter, setDuplicateCharacter] = useState({...character});
+  const [image, setImage] = useState(null);
+  const [url, setUrl] = useState("");
+  // const [progress, setProgress] = useState(0);
 
   useEffect( () => {
     setDuplicateCharacter({...character})
   }, [character]);
 
+  useEffect( () => {
+    duplicateCharacter.picture = url;
+    //need to clean this duplicated code
+    if(duplicateCharacter.maxHp !== '' && duplicateCharacter.currentHp !== '' && url) {
+      props.updateDataCharacter(duplicateCharacter);
+      toast.success(i18next.t('update succed'), {});
+    }
+  }, [url]);
+
+  const handleChange = e => {
+    console.log('handleChange',e.target.files[0]);
+    if (e.target.files[0]) {
+      setImage(e.target.files[0]);
+    }
+  };
+
+  const handleUpload = async () => {
+    if(image.size < 1048576){
+      const uploadTask = firebase.storage().ref(`charactersPictures/${character.uid}.png`).put(image);
+      console.log(uploadTask);
+      uploadTask.on(
+        "state_changed",
+        snapshot => {
+          // const progress = Math.round(
+          //   (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          // );
+          // setProgress(progress);
+        },
+        error => {
+          console.log(error);
+        },
+        async () => {
+          await firebase.storage()
+            .ref("charactersPictures")
+            .child(`${character.uid}.png`)
+            .getDownloadURL()
+            .then(url => {
+              setUrl(url);
+            });
+        }
+      );
+    } else {
+      console.log('to big picture');
+      //error message to big
+    }
+  };
 
   return (
     <div className='editContainer'>
@@ -31,17 +81,39 @@ const EditCharacter = (props) => {
       <div className='editBlock'>
         <form
           className={'formUpdateCharacter columnForm'}
-          onSubmit={(e) => {
-            console.log(duplicateCharacter.maxHp !== '' && duplicateCharacter.currentHp !== '');
-            if(duplicateCharacter.maxHp !== '' && duplicateCharacter.currentHp !== '') {
-              toast.success(i18next.t('update succed'), {});              
-              props.updateDataCharacter(duplicateCharacter);
-              console.log('submit');
+          onSubmit={ async (e) => {
+            if(image) {
+              try {
+                await handleUpload();
+              }
+              catch (error) {
+                console.log('error',error)
+              }
+            } else {
+              if(duplicateCharacter.maxHp !== '' && duplicateCharacter.currentHp !== '') {
+                props.updateDataCharacter(duplicateCharacter);
+                toast.success(i18next.t('update succed'), {});              
+              }
             }
             e.preventDefault();
           }}
         >
           <h3>{i18next.t('character')}</h3>
+          <div className='containerPicture'>
+            {character.picture && (
+              <div
+                className='characterPicture'
+                style={{
+                  backgroundImage: `url(${character.picture})`,
+                }}
+              >
+              </div>
+            )}
+            <label>
+            <span>{i18next.t('new picture')} :</span>
+            <input type='file' onChange={handleChange} />
+          </label>
+          </div>
           <label>
             <span>{i18next.t('hp')} :</span>
             <input
