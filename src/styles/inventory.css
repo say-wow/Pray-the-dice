@@ -11,13 +11,13 @@
   display: flex;
   flex-wrap: nowrap;
   border-bottom: 1px solid #353535;
-  padding: 3px 0px;
+  padding: 0.5rem 0px;
   align-items: center;
 }
 .formNewInv {
   display: flex;
   justify-content: space-between;
-  margin-top: 15px;
+  margin-top: 1rem;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -50,7 +50,7 @@
   width: 53%;
 }
 .formNewInv input[type='text'] {
-  padding-left: 20px;
+  padding-left: 1rem;
 }
 .tableInvRow div:nth-child(2) {
   width: 13%;
@@ -68,8 +68,11 @@
   height: 37px;
   width: 40px;
   padding: 0;
-  margin-left: 5px;
-  border-radius: 4px;
+  margin-left: 0.5rem;
+  border-radius: 0.25rem;
+}
+.containerInv {
+  margin-bottom: 1.5rem;
 }
 
 @media (min-width: 800px) {
@@ -77,8 +80,8 @@
     display: flex;
     flex-wrap: nowrap;
     background-color: #1b1d29;
-    border-radius: 4px 4px 0 0;
-    padding: 3px 10px;
+    border-radius: 0.25rem 0.25rem 0 0;
+    padding: 0.25rem 0.5rem;
   }
   .tableInvHeader span {
     color: #fff;
@@ -87,7 +90,7 @@
     width: 50%;
   }
   .formNewInv input[type='text'] {
-    padding-left: 5px;
+    padding-left: 0.5rem;
   }
   .tableInvRow div:nth-child(2) {
     width: 30%;
@@ -99,8 +102,8 @@
     height: 25px;
     width: 30px;
     padding: 0;
-    margin-left: 3px;
-    border-radius: 4px;
+    margin-left: 0.5rem;
+    border-radius: 0.25rem;
   }
   .formNewInv input {
     width: 32%;
@@ -109,5 +112,8 @@
   .formNewInv {
     position: initial;
     width: auto;
+  }
+  .containerInv {
+    margin-bottom: 0;
   }
 }

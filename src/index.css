@@ -2,6 +2,7 @@
 #ffad23
 #ea9010
 #eaeaea
+#6c757d
 #007991
 #1b1d29
 #D52941
@@ -38,21 +39,14 @@ body {
 }
 select {
   background: white;
-  border-radius: 4px;
-  padding: 5px;
+  border-radius: 0.25rem;
+  padding: 0.5rem;
 }
 input[type=text], input[type=number], textarea {
   border: 2px solid #E7E7EE;
-  margin: 2px 5px;
-  padding: 8px;
-  border-radius: 6px;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
 }
-/* input[type=text], input[type=number], textarea {
-  background-color: transparent;
-  border-width: 0;
-  border-bottom: 1px solid #353535;
-  margin: 5px;
-} */
 input:focus, textarea:focus {
   outline: none;
   border: 2px solid #007991;
@@ -62,20 +56,30 @@ input:focus, textarea:focus {
 }
 input[type=submit], button {
   background-color: #ffad23;
-  padding: 7px 14px;
+  padding: 0.5rem 1rem;
   color: #fff;
-  font-size: 14px;
+  font-size: 1em;
   border: none;
   font-size: 0.875rem;
   /* min-width: 64px; */
   box-sizing: border-box;
   font-weight: 400;
   line-height: 1.5;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   letter-spacing: 0.02857em;
   font-weight: bold;
   cursor: pointer;
+  border: 1px solid transparent;
   /* text-transform: uppercase; */
+}
+input[type=submit].outline, button.outline {
+  border: 1px solid #ffad23;
+  color: #ffad23;
+  background-color: transparent;
+}
+input[type=submit].outline:hover, button.outline:hover {
+  color: #fff;
+  background: #ffad23;
 }
 input[type=submit].disabled, button.disabled {
   background-color: #D9D9D9;
@@ -99,11 +103,11 @@ input[type=submit].black, button.black {
 }
 .link:hover {
   color :#1b1d29;
-  text-decoration: underline;
+  /* text-decoration: underline; */
 }
 .fullButton {
   width: 100%;
-  padding: 5px;
+  padding: 0.5rem;
   background-color: #1b1d29;
   color: #fff;
   text-decoration: none;
@@ -112,7 +116,7 @@ input[type=submit].black, button.black {
   align-content: center;
   align-items: center;
   font-weight: bold;
-  border-radius: 4px;
+  border-radius: 0.25rem;
 }
 .fullButton:hover {
   color :#fff;
@@ -138,8 +142,8 @@ input[type=checkbox] {
   width: 36px;
   height: 20px;
   background-color: rgba(0, 0, 0, 0.20);
-  border-radius: 15px;
-  margin-right: 10px;
+  border-radius: 1rem;
+  margin-right: 0.5rem;
   transition: background 0.3s ease;
   vertical-align: middle;
   /* margin: 0 16px; */
@@ -185,8 +189,8 @@ input[type=checkbox] {
   min-width: 250px;
   background-color: #1b1d29;
   color: #fff;
-  border-radius: 4px;
-  padding: 8px 8px;
+  border-radius: 0.25rem;
+  padding: 0.5rem;
   left: 0;
   bottom: 20px;
   position: absolute;

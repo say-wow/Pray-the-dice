@@ -47,6 +47,7 @@ const Characters = (props) => {
   const campaignIdUsed = campaign.uid || campaignIdUrl;
   const [playersOnThisCampaign, setPlayersOnThisCampaign] = useState();
   const [campaignRolls, setCampaignRolls] = useState();
+  const [noPicture] = useState('https://firebasestorage.googleapis.com/v0/b/beyond-dev-4a10b.appspot.com/o/charactersPictures%2FnoPicture.png?alt=media&token=63a24d98-aaa2-4480-b01d-761e58ad721e');
   
   const contextValue = {
     character,
@@ -143,6 +144,7 @@ const Characters = (props) => {
       skills: [...characterData.skills],
       characteristics: [...characterData.characteristics],
       inventory: [],
+      picture: '',
     };
     await db.collection('characters').doc(characterUid).set(data).then(res => {
       const charactersList = getValueOnLocalStorage('characters');
@@ -184,21 +186,41 @@ const Characters = (props) => {
                 <div className='campaignInformation'>
                   <div>
                     <p>
-                      {`${i18next.t('name')} : ${campaign.name}`}
+                      <span>
+                        {`${i18next.t('name')} : `}
+                      </span>
+                      <span>
+                        {`${campaign.name}`}
+                      </span>
                     </p>
                     <p>
-                      {`${i18next.t('invitation code')} : ${campaign.invitationCode}`}
+                      <span>
+                        {`${i18next.t('invitation code')} : `}
+                      </span>
+                      <span>
+                        {`${campaign.invitationCode}`}
+                      </span>
                     </p>
                   </div>
                   <div>
                     {campaign.createdBy && (
                       <p>
-                        {`${i18next.t('dm')} : ${campaign.createdBy}`}
+                        <span>
+                          {`${i18next.t('dm')} : `}
+                        </span>
+                        <span>
+                          {`${campaign.createdBy}`}
+                        </span>
                       </p>
                     )}
                     {campaign.createdAt && (
                       <p>
-                        {`${i18next.t('created at')} : ${new Date(campaign.createdAt.seconds*1000).toLocaleDateString() }`}
+                        <span>
+                          {`${i18next.t('created at')} : `}
+                        </span>
+                        <span>
+                          {`${new Date(campaign.createdAt.seconds*1000).toLocaleDateString() }`}
+                        </span>
                       </p>
                     )}
                   </div>
@@ -218,9 +240,7 @@ const Characters = (props) => {
                         <div
                           className='characterPicture'
                           style={{
-                            width: character.picture ? '100px' : 0,
-                            minWidth: character.picture ? '100px' : 0,
-                            backgroundImage: `url(${character.picture})`,
+                            backgroundImage: `url(${character.picture || noPicture})`,
                           }}
                         />
                         {character.name}

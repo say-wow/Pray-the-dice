@@ -9,7 +9,7 @@ const Breadcrumb = (props) => {
     <div style={{
       display: 'flex',
       alignItems:'center',
-      margin: '10px 0px',
+      margin: '0.5rem 0px',
       cursor: 'pointer',
     }}>
       <ChevronLeftIcon className='iconBreadcrumb'/>

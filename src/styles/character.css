@@ -69,7 +69,7 @@
   background-color: #1b1d29;
   margin: 10px 5px;
   color: white;
-  border-radius: 4px 4px 50px 50px;
+  border-radius: 0.25rem 0.25rem 50px 50px;
   width: 90px;
   height: 105px;
   text-align: center;
@@ -80,41 +80,38 @@
   cursor: pointer;
 }
 .characteristicsDetail ul li span.title {
-  font-size: 12px;
+  font-size: 0.75em;
 }
 .characteristicsDetail ul li span.subtitle {
-  font-size: 12px;
-  margin-top: -20px;
+  font-size: 0.75em;
+  margin-top: -1rem;
 }
 .characteristicsDetail ul li span.value {
   font-size: 40px;
-  margin-top: -20px;
+  margin-top: -1rem;
 }
 .DMContainer {
   display: flex;
   align-items: center;
 }
 .DMContainer h1{
-  margin: 10px 10px 10px 0;
+  margin: 0.5rem 0;
 }
 .skillsDetail {
   grid-area: 'skillsDetail';
 }
 .skillsDetail ul {
-    border-radius: 4px;
-    font-weight: 400;
-    text-transform: uppercase;
-    font-size: 12px;
-    padding: 8px;
-    margin: 0 0 20px 0;
-    /* border: 1px solid #353535; */
+  border-radius: 0.25rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: 0.75em;
+  padding: 0.5rem;
+  margin: 0 0 20px 0;
 }
 .skillsDetail ul li {
   border-bottom: 1px solid #1b1d29;
-  /* margin-bottom: 7px; */
-  /* padding-bottom: 7px; */
-  padding-top: 7px;
-  padding-bottom: 7px;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
   display: flex;
   justify-content: space-between;
   cursor: pointer;
@@ -123,7 +120,7 @@
   border-bottom: 0px solid #1b1d29;
 }
 .skillsDetail ul li span {
-  font-size: 14px;
+  font-size: 1.25em;
   color: #1b1d29
 }
 .inventory {
@@ -165,21 +162,19 @@
 }
 .iconInvLarge {
   height: 30px;
-  margin: 0px 5px;
+  margin: 0px 0.5rem;
 }
 .iconDescriptionOpen{
   height: 15px;
   color: #969595;
 }
-/* .editLink {
-  align-self: flex-end;
-} */
 .nameContainer {
   display: flex;
   align-items: center;
 }
 .nameContainer h2{
-  margin: 10px 10px 10px 0;
+  margin: 0.5rem;
+  margin-left: 0;
 }
 .containerHisto {
   grid-area: containerHisto;
@@ -193,9 +188,8 @@ table tr td:last-child {
   text-align: right;
 }
 .infoDmView {
-  margin-left: 10px;
   color:#007991;
-  font-size: 20px;
+  font-size: 1.5em;
 }
 .mobileInv {
   display: flex;
@@ -203,10 +197,10 @@ table tr td:last-child {
   align-content: center;
 }
 .fullButton span {
-  margin: 0 5px;
+  margin: 0 0.5rem;
 }
 .list a.link {
-  text-decoration: underline;
+  text-decoration: none;
 }
 .iconEdit{
   color: #ffad23;
@@ -220,20 +214,20 @@ table tr td:last-child {
   background-position: center;
   background-size: cover;
   border-radius: 50%;
-  margin: 5px 5px;
+  margin: 1rem;
   background-repeat: no-repeat;
 }
 .containerPicture {
   display: flex;
   flex-direction: column;
-  margin-bottom: 20px;
+  margin-bottom: 1rem;
   align-items: center; 
 }
 .containerPictureCharacter {
   display: inline-block;
 }
 .containerPicture div:first-child {
-  margin-bottom: 10px;
+  margin-bottom: 0.5rem;
 }
 @media (min-width: 800px) {
   .inventory {
@@ -241,11 +235,6 @@ table tr td:last-child {
   }
 }
 @media (min-width: 1000px) {
-  /* .characterDetails {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  } */
   .characterContainer {
     grid-template-columns: 1fr 3fr 2fr;
     width: 85%;
@@ -269,10 +258,10 @@ table tr td:last-child {
     display: none;
   }
   .characteristicsDetail {
-    padding: 0 20px;
+    padding: 0 1rem;
   }
   .skillsDetail {
-    padding: 0 20px;
+    padding: 0 1rem;
     justify-content: center;
     align-content: center;
     display: flex;

@@ -12,10 +12,13 @@
 .formFullWidthMobile input[type='text'] {
   display: flex;
   flex: 1;
-  margin: 0px 5px;
+  /* margin: 0px 5px; */
+}
+.campaignList ul {
+  margin: 0;
 }
 .campaignList ul li{
-  margin: 10px 0px;
+  margin: 0.5rem 0;
 }
 @media (min-width: 500px) {
   .containerCampaigns {
@@ -34,15 +37,13 @@
     flex-wrap: wrap;
   }
   .campaignList ul li{
-    margin: 10px 8px;
+    margin: 0.5rem;
+    /* margin: 10px 8px; */
   }
   .formFullWidthMobile {
     display: flex;
   }
-  .formFullWidthMobile input[type='text'] {
-    flex: none;
-    width: 220px;
-  }
+
 }
 @media (min-width: 800px) {
   .containerCampaigns {
@@ -54,6 +55,10 @@
   }
   nav ul {
     flex-direction: column;
+  }
+  .formFullWidthMobile input[type='text'] {
+    flex: none;
+    width: 220px;
   }
 }
 

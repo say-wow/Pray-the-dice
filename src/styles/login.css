@@ -79,7 +79,7 @@ body {
   border-width: 0;
   background: white;
   color: #737373;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   white-space: nowrap;
   box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.1);
   transition-property: background-color, box-shadow;

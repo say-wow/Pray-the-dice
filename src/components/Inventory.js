@@ -41,7 +41,7 @@ const Inventory = (props) => {
 
   if(character.uid) {
     return (
-      <div>
+      <div className='containerInv'>
         <p className='titleSection'><b>{i18next.t('inventory')}</b></p>
           <div>
             <div className={'tableInvHeader tableInvRow'}>
@@ -137,7 +137,7 @@ const Inventory = (props) => {
                 setNumberOfnewItem(e.target.value ? JSON.parse(e.target.value) : '');
               }}
             />
-            <input className={itemName === "" ? 'disabled' : ''} type="submit" value={i18next.t('create')} />
+            <input className={itemName === "" ? 'disabled' : 'outline'} type="submit" value={i18next.t('create')} />
           </form>
       </div>
     )

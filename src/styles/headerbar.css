@@ -1,6 +1,6 @@
 header {
   background-color: #1b1d29;
-  height: 60px;
+  height: 58px;
   color: #fff;
   display: grid;
   align-items: space-between;
@@ -30,7 +30,7 @@ header {
   justify-content: center;
 }
 .log button span {
-  margin: 0 5px;
+  margin: 0 0.5rem;
 }
 .logo {
   display: flex;
@@ -46,15 +46,15 @@ header {
   grid-area: log;
 }
 .homeLink {
-  padding: 0px 14px;
+  padding: 0 0.5rem;
 }
 .homeLinkIcon {
-  width: 50px;
+  width: 3rem;
 }
 .dropbtn {
   color: white;
-  padding: 18px;
-  font-size: 16px;
+  padding: 1rem;
+  font-size: 1em;
   border: none;
 }
 
@@ -74,7 +74,7 @@ header {
 
 .dropdown-content .btnDrop {
   color: black;
-  padding: 12px 16px;
+  padding: 0.5rem;
   text-decoration: none;
   display: block;
   background: none;

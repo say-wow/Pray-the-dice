@@ -53,12 +53,12 @@
 }
 .textAreaDescription {
   height: 100px;
-  margin: 5px 0;
+  margin: 0.5rem 0;
   width: calc(100% - 15px);
   display: block;
 }
 input[type=text].nameNewCharacter {
-  margin: 5px 0px;
+  margin: 0.5rem 0px;
   width: calc(100% - 15px);
   display: block;
 }
@@ -66,27 +66,28 @@ input[type=text].nameNewCharacter {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: center;
 }
 .list li a{
-  padding: 10px;
-}
-.list li a div{
-  display: none;
-}
-.skillRow {
   display: flex;
-  justify-content: flex-start;
-  margin: 8px 0;
-  min-height: 30px;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
 }
-.skillRow div {
-  /* margin-left: 10px; */
+/* .list li a div{
+  display: inline-block;
+} */
+.skillRow {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.5rem 0;
+  min-height: 30px;
+  align-items: center;
 }
 .skillRow input[type=number] {
   align-self: flex-end;
   justify-self: flex-end;
-  margin: 0 5px;
+  margin: 0 0.25rem;
 }
 .skillRow label input {
   /* min-width: 25px; */
@@ -112,6 +113,7 @@ input[type=text].nameNewCharacter {
 }
 .inputCharacteristics, .inputSkills {
   width: 50px;
+  margin: 0.25rem;
 }
 
 .tutoCreation ul {
@@ -119,17 +121,17 @@ input[type=text].nameNewCharacter {
   padding-inline-start: 20px;
 }
 .tutoCreation ul li {
-  margin-bottom: 5px;
+  margin-bottom: 0.5rem;
 }
 .tutoCreation {
   background-color: #007991;
-  padding: 10px;
+  padding: 0.5rem;
   margin-left: -20px;
   margin-right: -20px;
 }
 .tutoCreation p {
   margin-top: 0;
-  margin-bottom: 5px;
+  margin-bottom: 0.5rem;
 }
 .tutoCreation span, .tutoCreation p, .tutoCreation ul li{
   color: #fff
@@ -148,9 +150,9 @@ input[type=text].nameNewCharacter {
   width: 43%;
   position: relative;
   text-align: center;
-  padding:10px 20px;
+  padding:0.5rem 1rem;
   cursor:pointer;
-  border-radius: 4px 4px 0 0;
+  border-radius: 0.25rem 0.25rem 0 0;
   color:#ffad23;
 }
 .tab.active {
@@ -177,6 +179,9 @@ input[type=text].nameNewCharacter {
   left: -10px;
   box-shadow: 5px 5px 0 #ffad23;
 }
+.campaignInformation div p span:first-child {
+  color: #6c757d;
+}
 @media (min-width: 500px) {
   .containerCharacters {
     grid-template-areas:
@@ -196,7 +201,7 @@ input[type=text].nameNewCharacter {
     min-width: 490px;
   }
   input[type=text].nameNewCharacter {
-    margin: 5px 0px;
+    margin: 0.5rem 0px;
     width: auto;
     display: inline-block;
   }
@@ -214,7 +219,7 @@ input[type=text].nameNewCharacter {
   .tutoCreation {
     margin-left: 0px;
     margin-right: 0px;
-    border-radius: 4px;
+    border-radius: 0.25rem;
   }
   .tabsContainer {
     margin: 0;
@@ -233,7 +238,7 @@ input[type=text].nameNewCharacter {
     grid-gap: 20px;
   }
   input[type=text].nameNewCharacter {
-    margin: 5px 0px;
+    margin: 0.5rem 0px;
     width: auto;
     display: inline-block;
   }
@@ -249,6 +254,9 @@ input[type=text].nameNewCharacter {
     grid-area: characteristics;
     max-width: auto;
   }
+  .list {
+    justify-content: flex-start;
+  }
   .list li a div{
     display: inline-block;
   }
@@ -258,6 +266,9 @@ input[type=text].nameNewCharacter {
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
+  }
+  .skillRow {
+    justify-content: flex-start;
   }
 }
 @media (min-width: 1300px) {

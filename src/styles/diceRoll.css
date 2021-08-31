@@ -32,7 +32,7 @@
   z-index: 1;
 }
 button.subRoll {
-  margin: 0 0 10px 0;
+  margin: 0.25rem 0 0.25rem 0;
   min-width: none;
   border-radius: 50%;
   padding: 0;
@@ -54,18 +54,18 @@ button.mainRoll {
 
 @keyframes openRollButtonList {
   from {
-    height: 0px;
+    height: 0;
   }
   to {
-    height: 434px;
+    height: 420px;
   }
 }
 
 @keyframes closeRollButtonList {
   from {
-    height: 434px;
+    height: 420px;
   }
   to {
-    height: 0px;
+    height: 0;
   }
 }

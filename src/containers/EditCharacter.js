@@ -109,7 +109,7 @@ const EditCharacter = (props) => {
               </div>
             )}
             <label>
-              <input type="file" name="file" id="file" class="inputfile" onChange={handleChange} />
+              <input type="file" name="file" id="file" className="inputfile" onChange={handleChange} />
               <label for="file">{image ? image.name : i18next.t('Choose a file')}</label>
           </label>
           </div>
@@ -191,6 +191,7 @@ const EditCharacter = (props) => {
               ))
             }
             <button
+              className='outline'
               onClick={(e) => {
                 duplicateCharacter.skills.push({
                   isCustom: true,

@@ -125,7 +125,7 @@ const DiceHistorical = (props) => {
                   <li
                     id={i === 0 ? 'last' : null}
                     className={`${isMyRoll(histo) ? "myhistoRow" : "histoRow"} bubbleHisto`}
-                    style={!isMyRoll(histo) ? {margin: '5px 40px'} : null}
+                    style={!isMyRoll(histo) ? {margin: '0.5rem 2.25rem'} : null}
                   >
                     <div className='histoLeftSide'>
                       <span>
