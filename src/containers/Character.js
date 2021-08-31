@@ -51,6 +51,7 @@ const Character = (props) => {
   const [characteristics,setCharacteristics] = useState([]);
   const [skills,setSkills] = useState([]);
   const [hideRollSwitch,setHideRollSwitch] = useState(false);
+  const [noPicture] = useState('https://firebasestorage.googleapis.com/v0/b/beyond-dev-4a10b.appspot.com/o/charactersPictures%2FnoPicture.png?alt=media&token=63a24d98-aaa2-4480-b01d-761e58ad721e');
 
   useEffect(() => {
     if(user.uid) {
@@ -162,14 +163,12 @@ const Character = (props) => {
                         )}
                     </div>
                     <div className='nameContainer'>
-                      {character.picture && character.picture !== '' && (
                         <div
                           className='characterPicture'
                           style={{
-                            backgroundImage: `url(${character.picture})`,
+                            backgroundImage: `url(${character.picture || noPicture})`,
                           }}
                         />
-                      )}
                       <h2>
                         <span>{character.name}</span>
                       </h2>
@@ -186,12 +185,12 @@ const Character = (props) => {
                         to={`${match.url}/chat`}
                       >
                         <img className="iconChat" src={chat} alt="chat" />
-                        {/* <ChatIcon className="iconChat"/> */}
                       </Link>
                     </MobileView>
                   </div>
                   <div className='healthDetails'>
-                    <span>{`${i18next.t('hp')} : ${character.currentHp} / ${character.maxHp}`}</span>
+                    <span>{`${i18next.t('hp')} : `}</span>
+                    <span>{`${character.currentHp} / ${character.maxHp}`}</span>
                   </div>
                   {character.description && (
                     <div className='descriptionDetails'>

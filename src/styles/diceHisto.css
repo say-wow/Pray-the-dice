@@ -62,6 +62,18 @@
   font-style: italic;
   font-weight: normal;
 }
+.histoRow .histoLeftSide span {
+  color:#6c757d
+}
+.histoRow .histoLeftSide span:first-child {
+  color: #1b1d29;
+}
+.myhistoRow .histoLeftSide span {
+  color:#a5a2a2
+}
+.myhistoRow .histoLeftSide span:first-child {
+  color: #eaeaea;
+}
 .histoLeftSide span:first-child {
   font-size: 1em;
   font-style: normal;
