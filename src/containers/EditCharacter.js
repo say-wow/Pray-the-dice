@@ -130,7 +130,6 @@ const EditCharacter = (props) => {
               <option value="https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2Felement.png?alt=media&token=f69863b8-6bfe-4ad0-876d-2be9d236bc50">Elementaliste</option>
               <option value="https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2Fgladiator.png?alt=media&token=22a5ae74-9d9a-4e5b-a24f-d28c8a89069e">Gladiateur</option>
               <option value="https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2Flogo.png?alt=media&token=8c217f45-2899-445d-82aa-ca341a580a67">Logo Beyond</option>
-              <option value="https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2Fbeta.png?alt=media&token=0d43111d-9921-43f4-abc7-c657d480a54f">Beta</option>
             </select>
           </label>
           <label>

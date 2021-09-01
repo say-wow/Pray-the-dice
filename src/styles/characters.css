@@ -136,7 +136,7 @@ input[type=text].nameNewCharacter {
 .tutoCreation span, .tutoCreation p, .tutoCreation ul li{
   color: #fff
 }
-.tabsContainer {
+.skillsContainer .tabsContainer {
   display: flex;
   flex: 1;
   flex-direction: row;
@@ -146,7 +146,7 @@ input[type=text].nameNewCharacter {
   position: relative;
   margin: 0 -20px;
 }
-.tab {
+.skillsContainer .tab {
   width: 43%;
   position: relative;
   text-align: center;
@@ -155,14 +155,14 @@ input[type=text].nameNewCharacter {
   border-radius: 0.25rem 0.25rem 0 0;
   color:#ffad23;
 }
-.tab.active {
+.skillsContainer .tab.active {
   background-color: #ffad23;
   /* box-shadow:inset 0px -10em 0px 0px #ffad23; */
   position:relative;
   color:#fff;
 }
-.active:after,
-.active:before{
+.skillsContainer .active:after,
+.skillsContainer .active:before{
   content:'';
   position:absolute;
   bottom: 0;
@@ -171,11 +171,11 @@ input[type=text].nameNewCharacter {
   background-color: #fff;
   border-radius: 50%;
 }
-.active:after{
+.skillsContainer .active:after{
   right: -10px;
   box-shadow: -5px 5px 0 #ffad23;
 }
-.active:before{
+.skillsContainer .active:before{
   left: -10px;
   box-shadow: 5px 5px 0 #ffad23;
 }

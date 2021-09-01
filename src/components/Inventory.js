@@ -46,7 +46,7 @@ const Inventory = (props) => {
           <div>
             <div className={'tableInvHeader tableInvRow'}>
               <div>
-                <span>{i18next.t('name')}</span>
+                <span>{i18next.t('item')}</span>
               </div>
               <div>
                 <span>{i18next.t('number')}</span>

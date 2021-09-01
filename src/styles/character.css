@@ -2,20 +2,35 @@
   height: 100%;
 }
 .nameCharacteristics {
-  grid-area: 'nameCharacteristics';
+  grid-area: nameCharacteristics;
 }
 .skillsDetail {
-  grid-area: 'skillsDetail';
+  grid-area: skillsDetail;
 }
 .containerSkill {
-  grid-area: 'containerSkill';
+  grid-area: containerSkill;
 }
 .containerHisto {
-  grid-area: 'containerHisto';
+  grid-area: containerHisto;
 }
-
+.tabsDetails{
+  grid-area: tabsDetails;
+}
+.containerInventory{
+  grid-area: containerInventory;
+}
+.containerInv {
+  grid-area: containerInv;
+}
+.containerCompagny {
+  grid-area: containerCompagny;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-self: center;
+}
 .diceHistorical {
-  grid-area: 'diceHistorical';
+  grid-area: diceHistorical;
   overflow: auto;
   background-color: #ffffff;
   /* -ms-overflow-style: none;
@@ -244,6 +259,54 @@ table tr td:last-child {
   margin: 1rem;
   margin-left: 0;
 }
+
+.containerCharacterView .tabsContainer {
+  display: flex;
+  flex-direction: row;
+  /* overflow: hidden; */
+  border: none;
+  position: relative;
+  margin: 0 3rem;
+}
+.containerCharacterView .tab {
+  /* width: 43%; */
+  position: relative;
+  text-align: center;
+  padding:0.5rem 1rem;
+  cursor:pointer;
+  border-radius: 0 0 0.25rem 0.25rem;
+  color:#1b1d29;
+}
+.containerCharacterView .tab.active {
+  background-color: #1b1d29;
+  /* box-shadow:inset 0px -10em 0px 0px #1b1d29; */
+  position:relative;
+  color:#fff;
+}
+.containerCharacterView .active:after,
+.containerCharacterView .active:before{
+  content:'';
+  position:absolute;
+  top: 0;
+  width: 10px;
+  height: 10px;
+  background-color: #fff;
+  border-radius: 50%;
+}
+.containerCharacterView .active:after{
+  right: -10px;
+  box-shadow: -5px -5px 0 #1b1d29;
+}
+.containerCharacterView .active:before{
+  left: -10px;
+  box-shadow: 5px -5px 0 #1b1d29;
+}
+.memberCompagny {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+}
 @media (min-width: 800px) {
   .inventory {
     display: block;
@@ -252,18 +315,26 @@ table tr td:last-child {
 @media (min-width: 1000px) {
   .characterContainer {
     grid-template-columns: 3fr 2fr;
+    grid-template-rows:3rem;
     width: 85%;
     justify-content: center;
     align-content: center;
     grid-template-areas:
+      "tabsDetails containerHisto"
       "containerInfo containerHisto"
   }
   .containerInfo {
     display: grid;
+    grid-template-rows:3rem 0rem 0rem;
     grid-template-columns: 1fr 2fr;
-    /* align-content: center; */
     grid-template-areas:
       "nameCharacteristics skillsDetail"
+      "containerInv containerInv"
+      "containerCompagny containerCompagny";
+  }
+  .containerInventory {
+    background-color: dodgerblue;
+    height: 50px;
   }
   .containerCharacterView {
     display: flex;

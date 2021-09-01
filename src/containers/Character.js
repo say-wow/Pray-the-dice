@@ -39,7 +39,9 @@ import chat from '../assets/Images/chat.png'
 import Picture from '../components/Picture';
 import Skills from '../components/Skills';
 import Characteristics from '../components/Characteristics';
+import Compagny from '../components/Compagny';
 import {getLabelDice} from '../utils/dice'
+import {getValueOnLocalStorage} from '../utils/localStorage'
 
 init();
 const db = firebase.firestore();
@@ -56,6 +58,7 @@ const Character = (props) => {
   const [skills,setSkills] = useState([]);
   const [hideRollSwitch,setHideRollSwitch] = useState(false);
   const [view,setView] = useState('character');
+  const [compagny] = useState(getValueOnLocalStorage('compagny'));
 
   useEffect(() => {
     if(user.uid) {
@@ -158,8 +161,37 @@ const Character = (props) => {
           <div className='containerCharacterView'>
             {(character.idUser === user.uid || campaign.idUserDm === user.uid) && (
               <div className='characterContainer'>
-                <div className='containerInfo'>
-                  <div className='nameCharacteristics'>
+                <BrowserView className='tabsDetails'>
+                  <ul className='tabsContainer'>
+                    <li
+                      className={`tab ${view === 'character' ? 'active' : ''}`}
+                      onClick={() => {
+                        setView('character');
+                      }}  
+                    >
+                      {character.name}
+                    </li>
+                    <li
+                      className={`tab ${view === 'inventory' ? 'active' : ''}`}
+                      onClick={() => {
+                        setView('inventory');
+                      }}  
+                    >
+                      {i18next.t('inventory')}
+                    </li>
+                    <li
+                      className={`tab ${view === 'compagny' ? 'active' : ''}`}
+                      onClick={() => {
+                        setView('compagny');
+                      }}  
+                    >
+                      {i18next.t('compagny')}
+                    </li>
+                  </ul>
+                </BrowserView>
+                {view === 'character' && (
+                  <div className='containerInfo'>
+                    <div className='nameCharacteristics'>
                       <div className='namePictureCharacter'>
                         <Picture character={character}/>
                         <h2>
@@ -212,23 +244,45 @@ const Character = (props) => {
                             sendNewRoll={(roll) => sendNewRoll(roll)}
                           />
                       </div>
-                  </div>
-                  <div className='skillsDetail'>
-                    <div className='containerSkill'>
-                      <div className='skillsDetail'>
-                        <p className='titleSection'><b>{i18next.t('skill')}</b></p>
-                        <Skills
-                          skills={skills}
-                          campaign={campaign}
-                          character={character}
-                          user={user}
-                          hideRollSwitch={hideRollSwitch}
-                          sendNewRoll={(roll) => sendNewRoll(roll)}
-                        />
+                    </div>
+                    <div className='skillsDetail'>
+                      <div className='containerSkill'>
+                        <div className='skillsDetail'>
+                          <p className='titleSection'><b>{i18next.t('skill')}</b></p>
+                          <Skills
+                            skills={skills}
+                            campaign={campaign}
+                            character={character}
+                            user={user}
+                            hideRollSwitch={hideRollSwitch}
+                            sendNewRoll={(roll) => sendNewRoll(roll)}
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                )}
+                {view === 'inventory' && (
+                  <div className='containerInfo'>
+                    <Inventory
+                      updateInventory={(characterWithNewInventory) => {
+                        updateCharacter({
+                          ...characterWithNewInventory,
+                        });
+                        updateFirestoreCharacter(characterWithNewInventory);
+                      }}
+                      />
+                  </div>
+                )}
+                {view === 'compagny' && (
+                  <div className='containerInfo'>
+                    {compagny && compagny.length > 0 && (
+                      <Compagny
+                        compagny={compagny}
+                      />  
+                    )}
+                  </div>
+                )}
                 <BrowserView className='containerHisto'>
                   <DiceHistorical
                     list={rollList}

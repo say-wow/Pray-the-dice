@@ -64,34 +64,23 @@ const Characters = (props) => {
     if(!savedCaractersList || savedCaractersList.length === 0 || campaignIdUrl !== currentCampaign.uid || (savedCaractersList.length > 0 && savedCaractersList[0].idCampaign !== campaignIdUrl)) {
       try {
         const listCharacters = [];
-        if (currentCampaign.idUserDm !== user.uid) {
-          console.log('getCharactersVisibleForUser, 1');
-          await db.collection('characters').where('idUser', '==', user.uid).where('idCampaign', '==', campaignIdUsed).get()
-            .then(querySnapshot => {
-              querySnapshot.forEach(doc => {
+        const listCharactersGroup = [];
+        await db.collection('characters').where('idCampaign', '==', campaignIdUsed).get()
+          .then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+              console.log(doc.data())
+              if(doc.data().idUser === user.uid || currentCampaign.idUserDm === user.uid) {
                 listCharacters.push(doc.data())
-              });
-              setCharacters(listCharacters);
-              setValueOnLocalStorage('characters',listCharacters);
-            })
-            .catch(err => {
-              console.log(err.messsage)
-            })
-        } else {
-          console.log('getCharactersVisibleForUser, 2');
-          await db.collection('characters').where('idCampaign', '==', campaignIdUsed).get()
-            .then(querySnapshot => {
-              querySnapshot.forEach(doc => {
-                listCharacters.push(doc.data())
-              });
-              setCharacters(listCharacters);
-              setValueOnLocalStorage('characters',listCharacters);
-
-            })
-            .catch(err => {
-              console.log(err.messsage)
-            })
-        }
+              }
+              listCharactersGroup.push(doc.data())
+            });
+            setCharacters(listCharacters);
+            setValueOnLocalStorage('characters',listCharacters);
+            setValueOnLocalStorage('compagny',listCharactersGroup);
+          })
+          .catch(err => {
+            console.log(err.messsage)
+          })
       } catch (error) {
         console.log(error);
       }
