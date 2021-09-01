@@ -107,7 +107,7 @@ const EditCharacter = (props) => {
             e.preventDefault();
           }}
         >
-          <h3>{i18next.t('character')}</h3>
+          {/* <h3>{i18next.t('character')}</h3> */}
           <div className='containerPicture'>
             <Picture character={character} frame={frame}/>
             <label>

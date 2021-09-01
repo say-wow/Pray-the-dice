@@ -25,7 +25,7 @@ import '../styles/modal.css';
 import DiceChat from './DiceChat';
 import EditCharacter from './EditCharacter';
 import MobileInventory from './MobileInventory';
-import { ChatIcon, PencilAltIcon, ChevronDownIcon, ChevronUpIcon, ArchiveIcon } from '@heroicons/react/outline'
+import { PencilAltIcon, ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/outline'
 import {dynamicSortWithTraduction} from '../utils/sort';
 import {getRoll} from '../utils/dice';
 import {
@@ -39,6 +39,7 @@ import chat from '../assets/Images/chat.png'
 import Picture from '../components/Picture';
 import Skills from '../components/Skills';
 import Characteristics from '../components/Characteristics';
+import {getLabelDice} from '../utils/dice'
 
 init();
 const db = firebase.firestore();
@@ -94,8 +95,7 @@ const Character = (props) => {
     newList.push(newRoll);
     firebase.database().ref().child(`${character.idCampaign}`).set(newList);
     if(isMobile) {
-      const infoStat = newRoll.stat ? `${newRoll.stat.isCustom ? newRoll.stat.label : i18next.t(`skills.${newRoll.stat.label}`)} (${newRoll.stat.value})` : `Custom d${newRoll.diceType}`
-      toast.success(`${infoStat} : ${newRoll.value}`, {});
+      toast.success(`${getLabelDice(newRoll)} : ${newRoll.value}`, {});
     }
     firebase.analytics().setUserId(user.uid);
     firebase.analytics().setUserProperties({

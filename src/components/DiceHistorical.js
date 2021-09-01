@@ -5,9 +5,8 @@ import UserContext from '../context/UserContext';
 import '../styles/diceHisto.css';
 import i18next from 'i18next';
 import { EyeOffIcon } from '@heroicons/react/outline'
-import {
-  isDesktop
-} from "react-device-detect";
+import {isDesktop} from "react-device-detect";
+import {getLabelDice} from '../utils/dice';
 
 const cleanDuplicate = (arrayRoll, userUid, campaignUserUidDm, characterUid, diceLoaded = 10) => {
 
@@ -68,14 +67,6 @@ const DiceHistorical = (props) => {
       return true;
     }
     return false;
-  }
-
-  const getLabelDice = (histo) => {
-    const {stat, prefixTradStat, } = histo;
-    if(stat) {
-      return `${stat.isCustom ? stat.label : i18next.t(`${prefixTradStat}.${stat.label}`)} (${stat.value})`
-    } 
-    return `d${histo.diceType} ${i18next.t('customized')}`
   }
 
   return (

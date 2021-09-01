@@ -31,3 +31,11 @@ export const getRoll = (max, uidUserDmCampaign, character, user ,stat, hideRollS
     return dataRoll
     // props.setNewDice(dataRoll);
   }
+
+export const getLabelDice = (dice) => {
+  const {stat, prefixTradStat, } = dice;
+  if(stat && Object.keys(stat).length > 0) {
+    return `${stat.isCustom ? stat.label : i18next.t(`${prefixTradStat}.${stat.label}`)} (${stat.value})`
+  } 
+  return `d${dice.diceType} ${i18next.t('customized')}`
+}
