@@ -37,6 +37,8 @@ import { toast } from 'react-toastify';
 import backpack from '../assets/Images/backpack.png'
 import chat from '../assets/Images/chat.png'
 import Picture from '../components/Picture';
+import Skills from '../components/Skills';
+import Characteristics from '../components/Characteristics';
 
 init();
 const db = firebase.firestore();
@@ -155,38 +157,27 @@ const Character = (props) => {
           <div className='containerCharacterView'>
             {(character.idUser === user.uid || campaign.idUserDm === user.uid) && (
               <div className='characterContainer'>
-                <div className='characterDetails'>
-                  <div className='headDetails'>
-                    <div className='DMContainer'>
-                      {campaign.idUserDm === user.uid && (
-                          <h1 className='infoDmView'>{i18next.t('dm')}</h1>
-                        )}
-                    </div>
-                    <div className='nameContainer'>
-                      <Picture character={character}/>
-                      <h2>
-                        <span>{character.name}</span>
-                      </h2>
-                      <Link
-                        className={'link editLink'}
-                        to={`${match.url}/edit`}
-                      >
-                        <PencilAltIcon className="iconEdit"/>
-                      </Link>
-                    </div>
-                    <MobileView className='linkChatContainer'>
-                      <Link
-                        className='link'
-                        to={`${match.url}/chat`}
-                      >
-                        <img className="iconChat" src={chat} alt="chat" />
-                      </Link>
-                    </MobileView>
+                <div className='containerInfo'>
+                  <div className='namePictureCharacter'>
+                    <Picture character={character}/>
+                    <h2>
+                      <span>{character.name}</span>
+                    </h2>
+                    <Link
+                      className={'link editLink'}
+                      to={`${match.url}/edit`}
+                    >
+                      <PencilAltIcon className="iconEdit"/>
+                    </Link>
                   </div>
-                  <div className='healthDetails'>
-                    <span>{`${i18next.t('hp')} : `}</span>
-                    <span>{`${character.currentHp} / ${character.maxHp}`}</span>
-                  </div>
+                  <MobileView className='linkChatContainer'>
+                    <Link
+                      className='link'
+                      to={`${match.url}/chat`}
+                    >
+                      <img className="iconChat" src={chat} alt="chat" />
+                    </Link>
+                  </MobileView>
                   {character.description && (
                     <div className='descriptionDetails'>
                       <p
@@ -208,49 +199,30 @@ const Character = (props) => {
                       )}
                     </div>
                   )}
+                  <div className='characteristicsDetail'>
+                    <p className='titleSection'><b>{i18next.t('characteristic')}</b></p>
+                      <Characteristics
+                        characteristics={characteristics}
+                        campaign={campaign}
+                        character={character}
+                        user={user}
+                        hideRollSwitch={hideRollSwitch}
+                        sendNewRoll={(roll) => sendNewRoll(roll)}
+                      />
+                  </div>
                 </div>
-                <div className='characteristicsDetail'>
-                  <p className='titleSection'><b>{i18next.t('characteristic')}</b></p>
-                  <ul>
-                    {
-                      characteristics.map((charac, i) => (
-                        <li
-                          key={i}
-                          onClick={() => {
-                          sendNewRoll(getRoll(100,campaign.idUserDm, character, user, charac, hideRollSwitch, 'characteristics'))
-                        }}>
-                          <span className='title'>
-                            {i18next.t(`characteristics.${charac.label}`)}
-                          </span>
-                          <span className='subtitle'>
-                            ({charac.value})
-                          </span>
-                          <span className='value'>
-                            {charac.value * 5}
-                          </span>
-                        </li>
-                      ))
-                    }
-                  </ul>
-                </div>
-                <div className='skillsDetail'>
-                  <p className='titleSection'><b>{i18next.t('skill')}</b></p>
-                  <ul>
-                    {
-                    skills.sort(dynamicSortWithTraduction("label", 'skills')).map((skill,i) => (
-                      <li key={i} onClick={() => {
-                        sendNewRoll(getRoll(100,campaign.idUserDm, character, user, skill, hideRollSwitch, 'skills'))
-                      }}>
-                        <span>
-                          {skill.isCustom ? skill.label : i18next.t(`skills.${skill.label}`)}
-                        </span>
-                        <span>
-                          {skill.value}
-                        </span>
-                      </li>
-                    ))
-                  }
-                  </ul>
+                <div className='containerSkill'>
+                  <div className='skillsDetail'>
+                    <p className='titleSection'><b>{i18next.t('skill')}</b></p>
+                    <Skills
+                      skills={skills}
+                      campaign={campaign}
+                      character={character}
+                      user={user}
+                      hideRollSwitch={hideRollSwitch}
+                      sendNewRoll={(roll) => sendNewRoll(roll)}
+                    />
+                  </div>
                 </div>
                 <MobileView className='mobileInv'>
                   <Link
@@ -269,18 +241,6 @@ const Character = (props) => {
                       setHideRollSwitch(val)
                     }}
                   />
-                </BrowserView>
-                <BrowserView>
-                  <div className='inventory'>
-                    <Inventory
-                      updateInventory={(characterWithNewInventory) => {
-                        updateCharacter({
-                          ...characterWithNewInventory,
-                        });
-                        updateFirestoreCharacter(characterWithNewInventory);
-                      }}
-                    />
-                  </div>
                 </BrowserView>
                 <BrowserView>
                   <DiceRoll

@@ -198,7 +198,7 @@
 }
 @media (min-width: 1000px) {
   .histoView {
-    max-height: 800px;
+    /* max-height: 800px; */
     /* background-color: #f3f3f3; */
   }
   .listHisto {

@@ -5,7 +5,9 @@ import UserContext from '../context/UserContext';
 import '../styles/diceHisto.css';
 import i18next from 'i18next';
 import { EyeOffIcon } from '@heroicons/react/outline'
-
+import {
+  isDesktop
+} from "react-device-detect";
 
 const cleanDuplicate = (arrayRoll, userUid, campaignUserUidDm, characterUid, diceLoaded = 10) => {
 
@@ -77,7 +79,7 @@ const DiceHistorical = (props) => {
   }
 
   return (
-    <div ref={histoView} className='histoView'>
+    <div ref={histoView} className='histoView' style={{maxHeight: isDesktop ? `${window.innerHeight - 90}px` : 'none'}}>
       <div className='headerHisto'>
         <div>
           {limitHisto <= diceHistorical.length && (

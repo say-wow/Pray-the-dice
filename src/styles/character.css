@@ -1,10 +1,27 @@
 .containerCharacterView {
-  /* display: grid;
-  grid-gap: 20px;
-  grid-template-areas:
-    "characterContainer"
-    "diceHistorical"; */
+  height: 100%;
 }
+.characterContainer {
+  grid-template-columns: 1fr;
+  width: 100%;
+  justify-content: center;
+  align-content: center;
+  grid-template-areas:
+    "containerInfo" 
+    "containerSkill"
+    "containerHisto"
+}
+.containerInfo {
+  grid-area: containerInfo;
+}
+.containerSkill {
+  grid-area: containerSkill;
+}
+.containerHisto {
+  grid-area: containerHisto;
+  /* height: 100%; */
+}
+
 .diceHistorical {
   grid-area: diceHistorical;
   overflow: auto;
@@ -37,15 +54,6 @@
 .headDetails {
   grid-area: headDetails;
 }
-.characterDetails {
-  display: grid;
-  grid-area: characterDetails;
-  grid-template-columns: 1fr;
-  grid-template-areas:
-    "headDetails"
-    "healthDetails"
-    "descriptionDetails"
-}
 .healthDetails {
   grid-area: healthDetails;
 }
@@ -63,6 +71,7 @@
 .descriptionDetails p{
   display: flex;
   align-items: flex-end;
+  padding: 0.25rem;
 }
 .characteristicsDetail {
   grid-area: characteristicsDetail;
@@ -136,13 +145,13 @@
 }
 .characterContainer {
   display: grid;
-  grid-template-columns: 1fr;
+  /* grid-template-columns: 1fr;
   grid-template-areas:
     "characterDetails"
     "characteristicsDetail"
     "skillsDetail"
     "inventory"
-    "containerHisto";
+    "containerHisto"; */
 }
 .linkChatContainer {
   display: flex;
@@ -175,18 +184,15 @@
   height: 15px;
   color: #969595;
 }
-.nameContainer {
+.namePictureCharacter {
   display: flex;
   align-items: center;
 }
-.nameContainer h2{
+.namePictureCharacter h2{
   margin: 0.5rem;
   margin-left: 0;
 }
-.containerHisto {
-  grid-area: containerHisto;
-  height: 100%;
-}
+
 
 table tr td {
   width: 250px;
@@ -245,7 +251,7 @@ table tr td:last-child {
 .containerPicture div:first-child {
   margin-bottom: 0.5rem;
 }
-.nameContainer .characterPicture {
+.namePictureCharacter .characterPicture {
   margin: 1rem;
   margin-left: 0;
 }
@@ -256,14 +262,12 @@ table tr td:last-child {
 }
 @media (min-width: 1000px) {
   .characterContainer {
-    grid-template-columns: 1fr 3fr 2fr;
+    grid-template-columns: 1fr 2fr 2fr;
     width: 85%;
     justify-content: center;
     align-content: center;
     grid-template-areas:
-      "characterDetails characterDetails containerHisto"
-      "characteristicsDetail skillsDetail containerHisto"
-      "characteristicsDetail inventory containerHisto"
+      "containerInfo containerSkill containerHisto"
   }
   .containerCharacterView {
     display: flex;
