@@ -57,7 +57,7 @@ const Inventory = (props) => {
             </div>
           {
             character.inventory.map((item, i) => (
-              <div key={item.uid} className='tableInvRow'>
+              <div key={i} className='tableInvRow'>
                 <div>
                   <span>{item.name}</span>
                 </div>

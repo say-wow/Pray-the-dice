@@ -36,6 +36,7 @@ import {
 import { toast } from 'react-toastify';
 import backpack from '../assets/Images/backpack.png'
 import chat from '../assets/Images/chat.png'
+import Picture from '../components/Picture';
 
 init();
 const db = firebase.firestore();
@@ -51,7 +52,6 @@ const Character = (props) => {
   const [characteristics,setCharacteristics] = useState([]);
   const [skills,setSkills] = useState([]);
   const [hideRollSwitch,setHideRollSwitch] = useState(false);
-  const [noPicture] = useState('https://firebasestorage.googleapis.com/v0/b/beyond-dev-4a10b.appspot.com/o/charactersPictures%2FnoPicture.png?alt=media&token=63a24d98-aaa2-4480-b01d-761e58ad721e');
 
   useEffect(() => {
     if(user.uid) {
@@ -163,12 +163,7 @@ const Character = (props) => {
                         )}
                     </div>
                     <div className='nameContainer'>
-                        <div
-                          className='characterPicture'
-                          style={{
-                            backgroundImage: `url(${character.picture || noPicture})`,
-                          }}
-                        />
+                      <Picture character={character}/>
                       <h2>
                         <span>{character.name}</span>
                       </h2>

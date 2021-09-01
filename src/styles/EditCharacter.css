@@ -18,6 +18,9 @@ input[type="submit"] {
   align-self: flex-end;
   /* border-radius: 0 !important; */
 }
+.editContainer label {
+  margin: 0.25rem 0;
+}
 .editBlock {
   /* background-color: #fff; */
   padding: 0.5rem 1rem;

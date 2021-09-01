@@ -41,6 +41,7 @@ select {
   background: white;
   border-radius: 0.25rem;
   padding: 0.5rem;
+  border: 2px solid #E7E7EE;
 }
 input[type=text], input[type=number], textarea {
   border: 2px solid #E7E7EE;

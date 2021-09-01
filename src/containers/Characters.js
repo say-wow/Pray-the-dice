@@ -23,6 +23,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import i18next from 'i18next';
 import {setValueOnLocalStorage, getValueOnLocalStorage} from "../utils/localStorage";
+import Picture from '../components/Picture';
 
 init();
 const db = firebase.firestore();
@@ -45,9 +46,6 @@ const Characters = (props) => {
   const {user} = useContext(UserContext)
   const {campaign, updateCampaign} = useContext(CampaignContext)
   const campaignIdUsed = campaign.uid || campaignIdUrl;
-  const [playersOnThisCampaign, setPlayersOnThisCampaign] = useState();
-  const [campaignRolls, setCampaignRolls] = useState();
-  const [noPicture] = useState('https://firebasestorage.googleapis.com/v0/b/beyond-dev-4a10b.appspot.com/o/charactersPictures%2FnoPicture.png?alt=media&token=63a24d98-aaa2-4480-b01d-761e58ad721e');
   
   const contextValue = {
     character,
@@ -57,15 +55,6 @@ const Characters = (props) => {
   useEffect( () => {
     if(user.uid){
       getCampaign();
-
-      // if(!campaign.uid) {
-      //   getCampaign();
-      // }
-      // else if(campaignIdUrl && user) {
-      //   // getCharactersVisibleForUser(campaign);
-      // }
-      // getCharacterForUser();
-      // getDiceForThisCampaign();
     }
   }, []);
 
@@ -144,7 +133,7 @@ const Characters = (props) => {
       skills: [...characterData.skills],
       characteristics: [...characterData.characteristics],
       inventory: [],
-      picture: '',
+      picture: null,
     };
     await db.collection('characters').doc(characterUid).set(data).then(res => {
       const charactersList = getValueOnLocalStorage('characters');
@@ -237,12 +226,7 @@ const Characters = (props) => {
                         }}
                         to={`${match.url}/${character.uid}`}
                       >
-                        <div
-                          className='characterPicture'
-                          style={{
-                            backgroundImage: `url(${character.picture || noPicture})`,
-                          }}
-                        />
+                        <Picture character={character}/>
                         {character.name}
                       </Link>
                     </li>
