@@ -55,6 +55,7 @@ const Character = (props) => {
   const [characteristics,setCharacteristics] = useState([]);
   const [skills,setSkills] = useState([]);
   const [hideRollSwitch,setHideRollSwitch] = useState(false);
+  const [view,setView] = useState('character');
 
   useEffect(() => {
     if(user.uid) {
@@ -158,81 +159,76 @@ const Character = (props) => {
             {(character.idUser === user.uid || campaign.idUserDm === user.uid) && (
               <div className='characterContainer'>
                 <div className='containerInfo'>
-                  <div className='namePictureCharacter'>
-                    <Picture character={character}/>
-                    <h2>
-                      <span>{character.name}</span>
-                    </h2>
-                    <Link
-                      className={'link editLink'}
-                      to={`${match.url}/edit`}
-                    >
-                      <PencilAltIcon className="iconEdit"/>
-                    </Link>
-                  </div>
-                  <MobileView className='linkChatContainer'>
-                    <Link
-                      className='link'
-                      to={`${match.url}/chat`}
-                    >
-                      <img className="iconChat" src={chat} alt="chat" />
-                    </Link>
-                  </MobileView>
-                  {character.description && (
-                    <div className='descriptionDetails'>
-                      <p
-                        className="click"
-                        onClick={() => {
-                          setDescriptionIsDisplay(!descriptionIsDisplay)
-                        }}
-                      >
-                        {`${i18next.t('description')}`}
-                        {descriptionIsDisplay && (
-                          <ChevronUpIcon className='iconDescriptionOpen' />
-                        )}
-                        {!descriptionIsDisplay && (
-                          <ChevronDownIcon className='iconDescriptionOpen' />
-                        )}
-                      </p>
-                      {descriptionIsDisplay && (
-                        <p>{character.description}</p>
+                  <div className='nameCharacteristics'>
+                      <div className='namePictureCharacter'>
+                        <Picture character={character}/>
+                        <h2>
+                          <span>{character.name}</span>
+                        </h2>
+                        <Link
+                          className={'link editLink'}
+                          to={`${match.url}/edit`}
+                        >
+                          <PencilAltIcon className="iconEdit"/>
+                        </Link>
+                      </div>
+                      <MobileView className='linkChatContainer'>
+                        <Link
+                          className='link'
+                          to={`${match.url}/chat`}
+                        >
+                          <img className="iconChat" src={chat} alt="chat" />
+                        </Link>
+                      </MobileView>
+                      {character.description && (
+                        <div className='descriptionDetails'>
+                          <p
+                            className="click"
+                            onClick={() => {
+                              setDescriptionIsDisplay(!descriptionIsDisplay)
+                            }}
+                          >
+                            {`${i18next.t('description')}`}
+                            {descriptionIsDisplay && (
+                              <ChevronUpIcon className='iconDescriptionOpen' />
+                            )}
+                            {!descriptionIsDisplay && (
+                              <ChevronDownIcon className='iconDescriptionOpen' />
+                            )}
+                          </p>
+                          {descriptionIsDisplay && (
+                            <p>{character.description}</p>
+                          )}
+                        </div>
                       )}
-                    </div>
-                  )}
-                  <div className='characteristicsDetail'>
-                    <p className='titleSection'><b>{i18next.t('characteristic')}</b></p>
-                      <Characteristics
-                        characteristics={characteristics}
-                        campaign={campaign}
-                        character={character}
-                        user={user}
-                        hideRollSwitch={hideRollSwitch}
-                        sendNewRoll={(roll) => sendNewRoll(roll)}
-                      />
+                      <div className='characteristicsDetail'>
+                        <p className='titleSection'><b>{i18next.t('characteristic')}</b></p>
+                          <Characteristics
+                            characteristics={characteristics}
+                            campaign={campaign}
+                            character={character}
+                            user={user}
+                            hideRollSwitch={hideRollSwitch}
+                            sendNewRoll={(roll) => sendNewRoll(roll)}
+                          />
+                      </div>
                   </div>
-                </div>
-                <div className='containerSkill'>
                   <div className='skillsDetail'>
-                    <p className='titleSection'><b>{i18next.t('skill')}</b></p>
-                    <Skills
-                      skills={skills}
-                      campaign={campaign}
-                      character={character}
-                      user={user}
-                      hideRollSwitch={hideRollSwitch}
-                      sendNewRoll={(roll) => sendNewRoll(roll)}
-                    />
+                    <div className='containerSkill'>
+                      <div className='skillsDetail'>
+                        <p className='titleSection'><b>{i18next.t('skill')}</b></p>
+                        <Skills
+                          skills={skills}
+                          campaign={campaign}
+                          character={character}
+                          user={user}
+                          hideRollSwitch={hideRollSwitch}
+                          sendNewRoll={(roll) => sendNewRoll(roll)}
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <MobileView className='mobileInv'>
-                  <Link
-                    className='fullButton'
-                    to={`${match.url}/inventory`}
-                  >
-                    <img className="iconInvLarge" src={backpack} alt="Backpack" />
-                    <span>{i18next.t('inventory')}</span>
-                  </Link>
-                </MobileView>
                 <BrowserView className='containerHisto'>
                   <DiceHistorical
                     list={rollList}
@@ -250,6 +246,15 @@ const Character = (props) => {
                     }}
                   />
                 </BrowserView>
+                <MobileView className='mobileInv'>
+                  <Link
+                    className='fullButton'
+                    to={`${match.url}/inventory`}
+                  >
+                    <img className="iconInvLarge" src={backpack} alt="Backpack" />
+                    <span>{i18next.t('inventory')}</span>
+                  </Link>
+                </MobileView>
               </div>
             )}
           </div>

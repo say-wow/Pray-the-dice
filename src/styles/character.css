@@ -1,29 +1,21 @@
 .containerCharacterView {
   height: 100%;
 }
-.characterContainer {
-  grid-template-columns: 1fr;
-  width: 100%;
-  justify-content: center;
-  align-content: center;
-  grid-template-areas:
-    "containerInfo" 
-    "containerSkill"
-    "containerHisto"
+.nameCharacteristics {
+  grid-area: 'nameCharacteristics';
 }
-.containerInfo {
-  grid-area: containerInfo;
+.skillsDetail {
+  grid-area: 'skillsDetail';
 }
 .containerSkill {
-  grid-area: containerSkill;
+  grid-area: 'containerSkill';
 }
 .containerHisto {
-  grid-area: containerHisto;
-  /* height: 100%; */
+  grid-area: 'containerHisto';
 }
 
 .diceHistorical {
-  grid-area: diceHistorical;
+  grid-area: 'diceHistorical';
   overflow: auto;
   background-color: #ffffff;
   /* -ms-overflow-style: none;
@@ -113,9 +105,6 @@
 }
 .DMContainer h1{
   margin: 0.5rem 0;
-}
-.skillsDetail {
-  grid-area: 'skillsDetail';
 }
 .skillsDetail ul {
   border-radius: 0.25rem;
@@ -262,12 +251,19 @@ table tr td:last-child {
 }
 @media (min-width: 1000px) {
   .characterContainer {
-    grid-template-columns: 1fr 2fr 2fr;
+    grid-template-columns: 3fr 2fr;
     width: 85%;
     justify-content: center;
     align-content: center;
     grid-template-areas:
-      "containerInfo containerSkill containerHisto"
+      "containerInfo containerHisto"
+  }
+  .containerInfo {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    /* align-content: center; */
+    grid-template-areas:
+      "nameCharacteristics skillsDetail"
   }
   .containerCharacterView {
     display: flex;
