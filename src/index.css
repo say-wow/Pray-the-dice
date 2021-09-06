@@ -197,7 +197,22 @@ input[type=checkbox] {
   position: absolute;
   z-index: 1;
 }
+.tooltip .tooltiptextMobile {
+  visibility: hidden;
+  min-width: 65px;
+  background-color: #55565d;
+  color: #fff;
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  right: 0;
+  bottom: 10px;
+  position: absolute;
+  z-index: 1;
+}
 .tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+.tooltip:hover .tooltiptextMobile {
   visibility: visible;
 }
 
@@ -209,6 +224,11 @@ input[type=checkbox] {
 .tooltipDice .tooltiptext {
   min-width: 65px;
   left: 58px;
+  bottom: 10px;
+  text-align: center;
+}
+.tooltipDice .tooltiptextMobile {
+  right: 58px;
   bottom: 10px;
   text-align: center;
 }
