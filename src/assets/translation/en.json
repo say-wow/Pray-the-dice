@@ -117,5 +117,7 @@
     "chara90": "Error: One of the skills exceeds the maximum value of 90"
   },
   "start to play now": "Start playing now..",
-  "customized": "Custom"
+  "customized": "Custom",
+  "item": "Item",
+  "company": "Company"
 }

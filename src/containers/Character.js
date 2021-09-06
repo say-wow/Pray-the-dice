@@ -39,7 +39,7 @@ import chat from '../assets/Images/chat.png'
 import Picture from '../components/Picture';
 import Skills from '../components/Skills';
 import Characteristics from '../components/Characteristics';
-import Compagny from '../components/Compagny';
+import Company from '../components/Company';
 import {getLabelDice} from '../utils/dice'
 import {getValueOnLocalStorage} from '../utils/localStorage'
 
@@ -58,11 +58,12 @@ const Character = (props) => {
   const [skills,setSkills] = useState([]);
   const [hideRollSwitch,setHideRollSwitch] = useState(false);
   const [view,setView] = useState('character');
-  const [compagny] = useState(getValueOnLocalStorage('compagny'));
+  const [company, setCompany] = useState([]);
 
   useEffect(() => {
     if(user.uid) {
       getCharacter();
+      setCompany(getValueOnLocalStorage('company'));
     }
   }, []);
 
@@ -180,12 +181,12 @@ const Character = (props) => {
                       {i18next.t('inventory')}
                     </li>
                     <li
-                      className={`tab ${view === 'compagny' ? 'active' : ''}`}
+                      className={`tab ${view === 'company' ? 'active' : ''}`}
                       onClick={() => {
-                        setView('compagny');
+                        setView('company');
                       }}  
                     >
-                      {i18next.t('compagny')}
+                      {i18next.t('company')}
                     </li>
                   </ul>
                 </BrowserView>
@@ -274,11 +275,11 @@ const Character = (props) => {
                       />
                   </div>
                 )}
-                {view === 'compagny' && (
+                {view === 'company' && (
                   <div className='containerInfo'>
-                    {compagny && compagny.length > 0 && (
-                      <Compagny
-                        compagny={compagny}
+                    {company && (
+                      <Company
+                        company={company}
                       />  
                     )}
                   </div>

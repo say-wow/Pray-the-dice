@@ -1,11 +1,11 @@
 import React from 'react';
 import Picture from './Picture';
 
-const Compagny = (props) => {
+const Company = (props) => {
   return (
-    <div className='containerCompagny'>
-      {props.compagny.map(compagnyMember => (
-        <div className='memberCompagny'>
+    <div className='containerCompany'>
+      {props.company.map(compagnyMember => (
+        <div className='memberCompany'>
           <Picture character={compagnyMember}/>
           <b>{compagnyMember.name}</b>
         </div>
@@ -15,4 +15,4 @@ const Compagny = (props) => {
   
 }
 
-export default Compagny
+export default Company

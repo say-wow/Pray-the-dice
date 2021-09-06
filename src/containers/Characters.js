@@ -72,11 +72,13 @@ const Characters = (props) => {
               if(doc.data().idUser === user.uid || currentCampaign.idUserDm === user.uid) {
                 listCharacters.push(doc.data())
               }
-              listCharactersGroup.push(doc.data())
+              if(doc.data().idUser !== currentCampaign.idUserDm) {
+                listCharactersGroup.push(doc.data())
+              }
             });
             setCharacters(listCharacters);
             setValueOnLocalStorage('characters',listCharacters);
-            setValueOnLocalStorage('compagny',listCharactersGroup);
+            setValueOnLocalStorage('company',listCharactersGroup);
           })
           .catch(err => {
             console.log(err.messsage)
