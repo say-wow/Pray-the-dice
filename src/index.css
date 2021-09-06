@@ -201,6 +201,18 @@ input[type=checkbox] {
   visibility: visible;
 }
 
+.tooltipDice {
+  height: 58px;
+  border-bottom: none;
+  cursor: pointer;
+}
+.tooltipDice .tooltiptext {
+  min-width: 65px;
+  left: 58px;
+  bottom: 10px;
+  text-align: center;
+}
+
 .Toastify__toast--warning {
   background: #ffad23 !important;
 }
