@@ -131,14 +131,14 @@ const NewCharacterForm = (props) => {
             <p>
               <b>{i18next.t('characteristic')}</b>
             </p>
-            <p className="tutoCreation">
+            <div className="tutoCreation">
               <span>{i18next.t('creationHelp.characteristicsHead')}</span>
               <ul>
                 <li>{i18next.t('creationHelp.chara1')}</li>
                 <li>{i18next.t('creationHelp.chara2')}</li>
               </ul>
               <span>{i18next.t('creationHelp.charaFoot')}</span>
-            </p>
+            </div>
             {listCharac.map((chara, i) => (
               <div key={i}>
                 <label>
