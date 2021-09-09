@@ -21,6 +21,7 @@ import './index.css';
 import './styles/login.css';
 
 init();
+const db = firebase.firestore();
 
 const App = () => {
 
@@ -56,6 +57,7 @@ const App = () => {
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
           setUser(user);
+          getUserDataFirestore(user)
         } else {
           setUser({
             uid: null,
@@ -64,6 +66,20 @@ const App = () => {
         }
       });
     }
+
+  const getUserDataFirestore = async (loguser) => {
+    await db.collection('users').doc(loguser.uid).get()
+    .then(doc => {
+      const mergeUser = {
+        ...doc.data(),
+        ...loguser
+      };
+      setUser(mergeUser);
+    })
+    .catch(err => {
+      console.log(err.messsage)
+    })
+  }
 
     return (
     <Router>

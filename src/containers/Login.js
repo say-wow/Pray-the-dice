@@ -24,6 +24,7 @@ export default function Login() {
         name: user.displayName,
         authProvider: "google",
         email: user.email,
+        frameUnlock:[]
       });
       firebase.analytics().setUserId(user.uid);
       firebase.analytics().setUserProperties({
@@ -70,7 +71,6 @@ export default function Login() {
           </span>
           <span className="google-button__text">{i18next.t('sign up with google')}</span>
         </button>
-        {/* <img src={loginCharacter} alt='' /> */}
       </div>
     </div>
     );

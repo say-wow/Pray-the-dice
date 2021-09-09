@@ -7,6 +7,7 @@ import "firebase/storage";
 import i18next from 'i18next';
 import '../styles/EditCharacter.css';
 import CharacterContext from '../context/CharacterContext';
+import UserContext from '../context/UserContext';
 import CampaignContext from '../context/CampaignContext';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -18,6 +19,7 @@ import Picture from '../components/Picture';
 const EditCharacter = (props) => {
   const {character, updateCharacter} = useContext(CharacterContext);
   const {campaign} = useContext(CampaignContext);
+  const {user} = useContext(UserContext);
   const [duplicateCharacter, setDuplicateCharacter] = useState({...character});
   const [image, setImage] = useState(null);
   const [url, setUrl] = useState("");
@@ -130,6 +132,9 @@ const EditCharacter = (props) => {
               <option value="https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2Felement.png?alt=media&token=f69863b8-6bfe-4ad0-876d-2be9d236bc50">Elementaliste</option>
               <option value="https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2Fgladiator.png?alt=media&token=22a5ae74-9d9a-4e5b-a24f-d28c8a89069e">Gladiateur</option>
               <option value="https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2Flogo.png?alt=media&token=8c217f45-2899-445d-82aa-ca341a580a67">Logo Beyond</option>
+              {user.frameUnlock && user.frameUnlock.includes('beta') && (
+                <option value="https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2Flogo.png?alt=media&token=8c217f45-2899-445d-82aa-ca341a580a67">Beta</option>
+              )}
             </select>
           </label>
           <label>

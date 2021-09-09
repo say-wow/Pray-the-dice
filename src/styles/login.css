@@ -23,7 +23,8 @@ body {
 .rightPanel h2 {
   color: #ffffffa6;
   margin-bottom: 45px;
-  font-size: 1em;
+  font-size: 1.5em;
+  text-align: center;
 }
 .rightPanel h1 {
   color: #fff;
