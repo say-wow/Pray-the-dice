@@ -13,6 +13,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Breadcrumb from '../components/Breadcrumb';
 import Picture from '../components/Picture';
+import FrameSelector from '../components/FrameSelector';
 // init();
 // const db = firebase.firestore();
 
@@ -45,9 +46,9 @@ const EditCharacter = (props) => {
     }
   };
 
-  const handleChangeFrame = (e) => {
-    if(e.target.value) {
-      setFrame(e.target.value);
+  const handleChangeFrame = (frame) => {
+    if(frame) {
+      
     }
   }
 
@@ -137,6 +138,12 @@ const EditCharacter = (props) => {
               )}
             </select>
           </label>
+          <FrameSelector
+            selected={frame}
+            select={(frame) => {
+              setFrame(frame);
+            }}
+          />
           <label>
             <span>{i18next.t('hp')} :</span>
             <input

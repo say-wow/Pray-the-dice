@@ -91,6 +91,26 @@ span.labelSkillUneditable {
 .containerEditSkill label {
   margin: 0.25rem 0;
 }
+.frameDemo {
+  height: 65px;
+  width: 65px;
+  cursor: pointer;
+  position: relative;
+  /* border: 1px solid #1b1d29; */
+}
+.selectedFrame:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 18px;
+  height: 18px;
+  z-index: 0;
+  border: 2px solid ;
+  border-radius: 1px;
+  margin-top: 2px;
+  transition: .2s;
+}
 @media (min-width: 1000px) {
   .containerEditSkill {
     width: 50%;
