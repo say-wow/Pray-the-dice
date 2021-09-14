@@ -13,7 +13,7 @@ const Breadcrumb = (props) => {
       cursor: 'pointer',
     }}>
       <ChevronLeftIcon className='iconBreadcrumb'/>
-      <span className='link' onClick={() => {history.goBack()}}>
+      <span className='link' style={{fontSize: "1.25rem"}} onClick={() => {history.goBack()}}>
         {props.sentence}
       </span>
     </div>

@@ -63,7 +63,12 @@ const Character = (props) => {
   useEffect(() => {
     if(user.uid) {
       getCharacter();
-      setCompany(getValueOnLocalStorage('company'));
+      const companyMember = getValueOnLocalStorage('company');
+      if(companyMember) {
+        setCompany(getValueOnLocalStorage('company'));
+      } else {
+        getCharactersCompany(campaign);
+      }
     }
   }, []);
 
@@ -79,7 +84,6 @@ const Character = (props) => {
   },[character])
 
   const getCharacter = async () => {
-    console.log('getCharacter');
     await db.collection('characters').doc(character.uid || characterIdUrl).get()
       .then(doc => {
         updateCharacter({
@@ -121,6 +125,27 @@ const Character = (props) => {
     }).catch(e => {
       console.log(e)
     });
+  }
+
+  const getCharactersCompany = async (currentCampaign) => {
+    try {
+      const listCharactersGroup = [];
+      await db.collection('characters').where('idCampaign', '==', currentCampaign.uid).get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            if(doc.data().idUser !== currentCampaign.idUserDm) {
+              listCharactersGroup.push(doc.data())
+            }
+          });
+          setCompany(listCharactersGroup);
+
+        })
+        .catch(err => {
+          console.log(err.messsage)
+        })
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   if(character) {

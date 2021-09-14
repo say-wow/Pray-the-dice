@@ -1,43 +1,43 @@
 [
   {
     "value": "https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2F92.png?alt=media&token=eaf56deb-53d5-4042-b348-3136a6bc062c",
-    "condition": null
+    "condition": null,
+    "name": "92"
   },
   {
     "value": "https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2Falchemy.png?alt=media&token=23dfcd2d-b1b2-4b95-acd4-fc0db08b60bf",
-    "condition": null
-  },
-  {
-    "value": "https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2Fcoin.png?alt=media&token=54a68609-afed-44dc-bff5-e765690d669e",
-    "condition": null
+    "condition": null,
+    "name": "alchemy"
   },
   {
     "value": "https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2Foublie.png?alt=media&token=390e84b8-c1e7-4167-b1c3-e06645730a06",
-    "condition": null
+    "condition": null,
+    "name": "Forgotten"
   },
   {
     "value": "https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2Fcard.png?alt=media&token=4eeb7115-28b2-4d44-a49b-d8e29583b0b9",
-    "condition": null
+    "condition": null,
+    "name": "card"
   },
   {
     "value": "https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2Fcrown.png?alt=media&token=e964154a-ea2d-44fd-9c50-d33f4cf75ca3",
-    "condition": null
+    "condition": null,
+    "name": "king"
   },
   {
     "value": "https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2Fdeath.png?alt=media&token=7dce2cee-4030-4bbb-a0b7-8b933101bf63",
-    "condition": null
+    "condition": null,
+    "name": "death"
   },
   {
-    "value": "https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2Fgladiator.png?alt=media&token=22a5ae74-9d9a-4e5b-a24f-d28c8a89069e",
-    "condition": null
+    "value": "https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2Fwanted.png?alt=media&token=e0c3f1d2-019d-469b-b2c7-00b710a223bc",
+    "condition": null,
+    "name": "wanted"
   },
   {
-    "value": "https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2Flogo.png?alt=media&token=8c217f45-2899-445d-82aa-ca341a580a67",
-    "condition": null
-  },
-  {
-    "value": "https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2Ftest.png?alt=media&token=17926a95-ac5d-439f-af08-11ccd7e22292",
-    "condition": null
+    "value": "https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2Fportal.png?alt=media&token=915dacc3-02fa-4484-a29d-83e13099e2ae",
+    "condition": null,
+    "name": "portal"
   }
 ]
 

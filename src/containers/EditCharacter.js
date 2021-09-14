@@ -46,16 +46,9 @@ const EditCharacter = (props) => {
     }
   };
 
-  const handleChangeFrame = (frame) => {
-    if(frame) {
-      
-    }
-  }
-
   const handleUpload = async () => {
     if(image.size < 1048576){
       const uploadTask = firebase.storage().ref(`charactersPictures/${character.uid}.png`).put(image);
-      console.log(uploadTask);
       uploadTask.on(
         "state_changed",
         snapshot => {
@@ -99,9 +92,7 @@ const EditCharacter = (props) => {
                 console.log('error',error)
               }
             } else {
-              if(frame) {
-                duplicateCharacter.framePicture = frame === 'none' ? null : frame;
-              }
+              duplicateCharacter.framePicture = frame === '' ? null : frame;
               if(duplicateCharacter.maxHp !== '' && duplicateCharacter.currentHp !== '') {
                 props.updateDataCharacter(duplicateCharacter);
                 toast.success(i18next.t('update succed'), {});              
@@ -115,30 +106,12 @@ const EditCharacter = (props) => {
             <Picture character={character} frame={frame}/>
             <label>
               <input type="file" name="file" id="file" className="inputfile" onChange={handleChange} />
-              <label htmlFor="file">{image ? image.name : i18next.t('Choose a file')}</label>
+              <label htmlFor="file">{image ? image.name : i18next.t('choose a file')}</label>
           </label>
           </div>
           {/* Need to be update */}
-          <label>
-            PICTURE FRAME : 
-            <select value={character.framePicture} onChange={handleChangeFrame}>
-              <option value={'none'}>Aucune</option>
-              <option value="https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2F92.png?alt=media&token=eaf56deb-53d5-4042-b348-3136a6bc062c">92 Aria</option>
-              <option value="https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2Falchemy.png?alt=media&token=23dfcd2d-b1b2-4b95-acd4-fc0db08b60bf">Alchimiste</option>
-              <option value="https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2Fcoin.png?alt=media&token=54a68609-afed-44dc-bff5-e765690d669e">Or</option>
-              <option value="https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2Foublie.png?alt=media&token=390e84b8-c1e7-4167-b1c3-e06645730a06">Oublié</option>
-              <option value="https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2Fcard.png?alt=media&token=4eeb7115-28b2-4d44-a49b-d8e29583b0b9">Magie</option>
-              <option value="https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2Fcrown.png?alt=media&token=e964154a-ea2d-44fd-9c50-d33f4cf75ca3">Couronne</option>
-              <option value="https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2Fdeath.png?alt=media&token=7dce2cee-4030-4bbb-a0b7-8b933101bf63">Mort</option>
-              <option value="https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2Felement.png?alt=media&token=f69863b8-6bfe-4ad0-876d-2be9d236bc50">Elementaliste</option>
-              <option value="https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2Fgladiator.png?alt=media&token=22a5ae74-9d9a-4e5b-a24f-d28c8a89069e">Gladiateur</option>
-              <option value="https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2Flogo.png?alt=media&token=8c217f45-2899-445d-82aa-ca341a580a67">Logo Beyond</option>
-              {user.frameUnlock && user.frameUnlock.includes('beta') && (
-                <option value="https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2Flogo.png?alt=media&token=8c217f45-2899-445d-82aa-ca341a580a67">Beta</option>
-              )}
-            </select>
-          </label>
           <FrameSelector
+            user={user}
             selected={frame}
             select={(frame) => {
               setFrame(frame);
@@ -215,7 +188,6 @@ const EditCharacter = (props) => {
                     onChange={(e) => {
                       duplicateCharacter.skills[i].value = parseInt(e.target.value);
                       setDuplicateCharacter({...duplicateCharacter});
-                      console.log(duplicateCharacter);
                     }}
                   />
                 </label>
@@ -229,7 +201,6 @@ const EditCharacter = (props) => {
                   label: '',
                   value: '',
                 })
-                console.log(duplicateCharacter.skills);
                 setDuplicateCharacter({...duplicateCharacter});
                 e.preventDefault()
               }}

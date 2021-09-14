@@ -86,12 +86,10 @@ const Campaigns = (props) => {
   }
 
   const getCampaigns = (campaignsByCharacter) => {
-    console.log(campaignsByCharacter);
     const listCampaigns = [...campaignsByCharacter];
     db.collection('campaigns').where('idUserDm', '==', user.uid).get()
       .then(querySnapshot => {
         querySnapshot.forEach( doc => {
-          console.log(doc.data());
           if(!campaignsByCharacter.some(element => (doc.data().uid === element.uid))) {
             listCampaigns.push(doc.data())
           }

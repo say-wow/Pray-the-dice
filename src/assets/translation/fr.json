@@ -24,7 +24,7 @@
   "update succed": "Mise à jour réussi",
   "an error is appeare": "Une erreur est arrivé",
   "back to character": "Retour au personnage",
-  "update": "Mise à jour",
+  "update": "Sauvegarder",
   "new skill": "Nouvelle compétence",
   "was created with success": "à été créé avec succès",
   "campaign information": "Information de la campagne",
@@ -120,5 +120,6 @@
   "customized": "Personnalisé",
   "item": "Object",
   "company": "Compagnie",
-  "dice": "Dé"
+  "dice": "Dé",
+  "choose a file": "Importez une image"
 }

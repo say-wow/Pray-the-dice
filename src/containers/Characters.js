@@ -68,7 +68,6 @@ const Characters = (props) => {
         await db.collection('characters').where('idCampaign', '==', campaignIdUsed).get()
           .then(querySnapshot => {
             querySnapshot.forEach(doc => {
-              console.log(doc.data())
               if(doc.data().idUser === user.uid || currentCampaign.idUserDm === user.uid) {
                 listCharacters.push(doc.data())
               }
@@ -94,11 +93,9 @@ const Characters = (props) => {
   const getCampaign = async () => {
     const savedCampaign = await getValueOnLocalStorage('currentCampaign');
     if(!savedCampaign || campaignIdUrl !== savedCampaign.uid) {
-      console.log('getCampaign');
       await db.collection('campaigns').doc(campaignIdUsed).get()
         .then(doc => {
           updateCampaign(doc.data());
-          console.log(doc.data());
           setValueOnLocalStorage('currentCampaign',{...doc.data()});
           getCharactersVisibleForUser(doc.data());
       })

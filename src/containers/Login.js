@@ -24,7 +24,7 @@ export default function Login() {
         name: user.displayName,
         authProvider: "google",
         email: user.email,
-        frameUnlock:[]
+        frameUnlock:['beta']
       });
       firebase.analytics().setUserId(user.uid);
       firebase.analytics().setUserProperties({
