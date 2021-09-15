@@ -216,7 +216,7 @@ const NewCharacterForm = (props) => {
                 <b>{i18next.t('skill')} {!generationCharacterClassic ? `(${additionalSkillPoint})` : null}</b>
               </p>
               {listSkills.map((skill, i) => (
-                <div className='skillRow'>
+                <div key={i} className='skillRow'>
                   <div className='skillName'>
                     <div className="tooltip">
                       <span>

@@ -1,6 +1,6 @@
 header {
   background-color: #1b1d29;
-  height: 58px;
+  /* height: 58px; */
   color: #fff;
   display: grid;
   align-items: space-between;
@@ -82,7 +82,10 @@ header {
   text-align: start;
 }
 
-.dropdown-content .btnDrop:hover {background-color: #ddd;}
+.dropdown-content .btnDrop:hover {
+  background-color: #ddd;
+  border-radius: 0;
+}
 
 .dropdown:hover .dropdown-content {
   display: block;

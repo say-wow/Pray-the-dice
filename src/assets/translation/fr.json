@@ -24,8 +24,8 @@
   "update succed": "Mise à jour réussi",
   "an error is appeare": "Une erreur est arrivé",
   "back to character": "Retour au personnage",
-  "update": "Sauvegarder",
   "new skill": "Nouvelle compétence",
+  "update": "Mise à jour",
   "was created with success": "à été créé avec succès",
   "campaign information": "Information de la campagne",
   "character": "Personnage",
@@ -121,5 +121,12 @@
   "item": "Object",
   "company": "Compagnie",
   "dice": "Dé",
-  "choose a file": "Importez une image"
+  "choose a file": "Importez une image",
+  "archive": "Archiver le personnage",
+  "save": "Sauvegarder",
+  "archive validation": "Êtes vous sur de vouloir archiver ce personnage ?",
+  "archive succed": "Personnage archivé",
+  "general": "Général",
+  "avatar": "Avatar",
+  "management": "Gestion du personnage"
 }

@@ -48,7 +48,7 @@ const db = firebase.firestore();
 
 const Character = (props) => {
   let match = useRouteMatch();
-  const {user} = useContext(UserContext);
+  const {user, updateUser} = useContext(UserContext);
   const {campaign} = useContext(CampaignContext);
   const {character, updateCharacter} = useContext(CharacterContext);
   let { characterIdUrl } = useParams();
@@ -63,12 +63,13 @@ const Character = (props) => {
   useEffect(() => {
     if(user.uid) {
       getCharacter();
-      const companyMember = getValueOnLocalStorage('company');
-      if(companyMember) {
-        setCompany(getValueOnLocalStorage('company'));
-      } else {
-        getCharactersCompany(campaign);
-      }
+      getCharactersCompany(campaign);
+      // const companyMember = getValueOnLocalStorage('company');
+      // if(companyMember) {
+      //   setCompany(getValueOnLocalStorage('company'));
+      // } else {
+      //   getCharactersCompany(campaign);
+      // }
     }
   }, []);
 
@@ -97,7 +98,7 @@ const Character = (props) => {
     })
   }
 
-  const sendNewRoll = (newRoll) => {
+  const sendNewRoll = async (newRoll) => {
     const newList = [
       ...rollList
     ];
@@ -112,9 +113,16 @@ const Character = (props) => {
       uid: user.uid,
       campaign: campaign.uid,
     });
+    if(newRoll.value === 100) {
+      await unlockFrame('100');
+    }
+    if(newRoll.value === 1) {
+      await unlockFrame('1');
+    }
+    const labelStat = newRoll.stat ? newRoll.stat.label : 'Custom'
     firebase.analytics().logEvent('Roll', {
       campaign: campaign.uid,
-      stat: newRoll.stat ? newRoll.stat.label : 'Custom',
+      stat: labelStat,
       result: newRoll.value 
     });
   }
@@ -130,7 +138,7 @@ const Character = (props) => {
   const getCharactersCompany = async (currentCampaign) => {
     try {
       const listCharactersGroup = [];
-      await db.collection('characters').where('idCampaign', '==', currentCampaign.uid).get()
+      await db.collection('characters').where('idCampaign', '==', currentCampaign.uid).where('active', '==', true).get()
         .then(querySnapshot => {
           querySnapshot.forEach(doc => {
             if(doc.data().idUser !== currentCampaign.idUserDm) {
@@ -145,6 +153,17 @@ const Character = (props) => {
         })
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  const unlockFrame = async (newItemUnlock) => {
+    let newUser = user
+    if(!newUser.frameUnlock.includes(newItemUnlock)) {
+      newUser.frameUnlock.push(newItemUnlock);
+      updateUser(newUser);
+      await db.collection("users").doc(user.uid).set({
+        ...newUser
+      }); 
     }
   }
 

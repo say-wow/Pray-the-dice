@@ -1,5 +1,5 @@
 .formUpdateCharacter {
-  margin: 0;
+  margin: 1rem 0;
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
@@ -7,6 +7,9 @@
 }
 .formUpdateCharacter label{
   align-items: center;
+}
+.formUpdateCharacter .danger{
+  width: max-content;
 }
 .labelFormUpdate {
   width: 300px;
@@ -102,6 +105,9 @@ span.labelSkillUneditable {
 }
 .selectedFrame {
   border: 0.15rem solid #1b1d29;
+}
+.editBlock h3 {
+  text-decoration: underline;
 }
 @media (min-width: 1000px) {
   .containerEditSkill {

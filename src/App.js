@@ -56,8 +56,13 @@ const App = () => {
     const getUserId = () => {
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
-          setUser(user);
-          getUserDataFirestore(user)
+          const userJson = {};
+          userJson.uid = user.uid;
+          userJson.email = user.email;
+          userJson.displayName = user.displayName;
+          userJson.photoURL = user.photoURL;
+          // setUser(userJson);
+          getUserDataFirestore(userJson)
         } else {
           setUser({
             uid: null,

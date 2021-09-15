@@ -23,10 +23,10 @@ const HeaderBar = (props) => {
         <div className='log'>
           <div className="dropdown">
             <button className={'dropbtn main'}>
-              {user.displayName}
+              {user.name}
             </button>
             <div className="dropdown-content">
-              <button
+              {/* <button
                 className="btnDrop" 
                 onClick={() => {
                   localStorage.clear();
@@ -34,7 +34,7 @@ const HeaderBar = (props) => {
                 }}
               >
                 {i18next.t('clear cache')}
-              </button>
+              </button> */}
               <button
                 className="btnDrop"
                 onClick={() => {

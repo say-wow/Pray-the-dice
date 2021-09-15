@@ -18,12 +18,17 @@ export default function Login() {
 
     try {
       const data = await firebase.auth().signInWithPopup(googleAuthProvider)
-      const user = data.user;   
+      const user = {};
+      user.uid = data.user.uid;
+      user.email = data.user.email;
+      user.displayName = data.user.displayName;
+      user.photoURL = data.user.photoURL;
       await db.collection("users").doc(user.uid).set({
         uid: user.uid,
         name: user.displayName,
         authProvider: "google",
         email: user.email,
+        locale: data.additionalUserInfo.profile.locale,
         frameUnlock:['beta']
       });
       firebase.analytics().setUserId(user.uid);
@@ -34,7 +39,7 @@ export default function Login() {
       firebase.analytics().logEvent('Login', {
         authProvider: "google",
       });
-      updateUser(data.user);
+      updateUser(user);
     } catch (err) {
       console.log(err);
     }

@@ -326,14 +326,13 @@ table tr td:last-child {
   .containerInfo {
     display: grid;
     grid-template-rows:3rem 0rem 0rem;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 1fr 1fr;
     grid-template-areas:
       "nameCharacteristics skillsDetail"
       "containerInv containerInv"
       "containerCompany containerCompany";
   }
   .containerInventory {
-    background-color: dodgerblue;
     height: 50px;
   }
   .containerCharacterView {
@@ -359,10 +358,28 @@ table tr td:last-child {
   }
   .skillsDetail ul {
     margin: 0;
-    width: 500px;
+    width: 400px;
   }
   .containerPicture {
     display: flex;
     flex-direction: row;
+  }
+}
+@media (min-width: 1500px) {
+  /* .characterContainer {
+    width: 85%;
+  } */
+  .skillsDetail ul {
+    margin: 0;
+    width: 500px;
+  }
+  .containerInfo {
+    display: grid;
+    grid-template-rows:3rem 0rem 0rem;
+    grid-template-columns: 1fr 2fr;
+    grid-template-areas:
+      "nameCharacteristics skillsDetail"
+      "containerInv containerInv"
+      "containerCompany containerCompany";
   }
 }

@@ -121,5 +121,12 @@
   "item": "Item",
   "company": "Company",
   "dice": "Dice",
-  "choose a file": "Select a picture"
+  "choose a file": "Select a picture",
+  "archive": "Archive character",
+  "save": "Save",
+  "archive validation": "Are you sure you want to archived this character ?",
+  "archive succed": "Archived character",
+  "general": "General",
+  "avatar": "Avatar",
+  "management": "management"
 }

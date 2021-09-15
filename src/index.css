@@ -78,6 +78,13 @@ input[type=submit].outline, button.outline {
   color: #ffad23;
   background-color: transparent;
 }
+input[type=submit].danger, button.danger {
+  color: #fff;
+  background: #D52941;
+}
+input[type=submit].dropbtn, button.dropbtn {
+  border-radius: 0;
+}
 input[type=submit].outline:hover, button.outline:hover {
   color: #fff;
   background: #ffad23;

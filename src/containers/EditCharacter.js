@@ -101,7 +101,7 @@ const EditCharacter = (props) => {
             e.preventDefault();
           }}
         >
-          {/* <h3>{i18next.t('character')}</h3> */}
+          <h3>{i18next.t('avatar')} :</h3>
           <div className='containerPicture'>
             <Picture character={character} frame={frame}/>
             <label>
@@ -109,7 +109,6 @@ const EditCharacter = (props) => {
               <label htmlFor="file">{image ? image.name : i18next.t('choose a file')}</label>
           </label>
           </div>
-          {/* Need to be update */}
           <FrameSelector
             user={user}
             selected={frame}
@@ -117,6 +116,7 @@ const EditCharacter = (props) => {
               setFrame(frame);
             }}
           />
+          <h3>{i18next.t('general')} :</h3>
           <label>
             <span>{i18next.t('hp')} :</span>
             <input
@@ -159,7 +159,7 @@ const EditCharacter = (props) => {
               }}
             />
           </label>
-          <h3>{i18next.t('skill')}</h3>
+          <h3>{i18next.t('skill')} :</h3>
           <div className='containerEditSkill'>
             {
               duplicateCharacter.skills.map((skill, i) => (
@@ -209,6 +209,28 @@ const EditCharacter = (props) => {
             </button>
           </div>
           <input type="submit" value={i18next.t('update')} />
+        </form>
+        <form
+          className={'formUpdateCharacter columnForm'}
+          onSubmit={ async (e) => {
+            
+            e.preventDefault();
+          }}
+        >
+          <h3>{i18next.t('management')} :</h3>
+          <button
+            className='danger'
+            onClick={(e) => {
+              if(window.confirm(i18next.t('archive validation'))) {
+                duplicateCharacter.active = false;
+                props.updateDataCharacter(duplicateCharacter);
+                toast.success(i18next.t('archive succed'), {});
+              }
+              e.preventDefault()
+            }}
+          >
+            {i18next.t('archive')}
+          </button>
         </form>
       </div>
     </div>

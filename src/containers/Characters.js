@@ -22,7 +22,7 @@ import '../styles/characters.css';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import i18next from 'i18next';
-import {setValueOnLocalStorage, getValueOnLocalStorage} from "../utils/localStorage";
+// import {setValueOnLocalStorage, getValueOnLocalStorage} from "../utils/localStorage";
 import Picture from '../components/Picture';
 
 init();
@@ -60,52 +60,83 @@ const Characters = (props) => {
 
 
   const getCharactersVisibleForUser = async (currentCampaign) => {
-    const savedCaractersList = getValueOnLocalStorage('characters');
-    if(!savedCaractersList || savedCaractersList.length === 0 || campaignIdUrl !== currentCampaign.uid || (savedCaractersList.length > 0 && savedCaractersList[0].idCampaign !== campaignIdUrl)) {
-      try {
-        const listCharacters = [];
-        const listCharactersGroup = [];
-        await db.collection('characters').where('idCampaign', '==', campaignIdUsed).get()
-          .then(querySnapshot => {
-            querySnapshot.forEach(doc => {
-              if(doc.data().idUser === user.uid || currentCampaign.idUserDm === user.uid) {
-                listCharacters.push(doc.data())
-              }
-              if(doc.data().idUser !== currentCampaign.idUserDm) {
-                listCharactersGroup.push(doc.data())
-              }
-            });
-            setCharacters(listCharacters);
-            setValueOnLocalStorage('characters',listCharacters);
-            setValueOnLocalStorage('company',listCharactersGroup);
-          })
-          .catch(err => {
-            console.log(err.messsage)
-          })
-      } catch (error) {
-        console.log(error);
-      }
-    } else {
-      setCharacters(savedCaractersList);
+    // const savedCaractersList = getValueOnLocalStorage('characters');
+    // if(!savedCaractersList || savedCaractersList.length === 0 || campaignIdUrl !== currentCampaign.uid || (savedCaractersList.length > 0 && savedCaractersList[0].idCampaign !== campaignIdUrl)) {
+    //   try {
+    //     const listCharacters = [];
+    //     const listCharactersGroup = [];
+    //     await db.collection('characters').where('idCampaign', '==', campaignIdUsed).get()
+    //       .then(querySnapshot => {
+    //         querySnapshot.forEach(doc => {
+    //           if(doc.data().idUser === user.uid || currentCampaign.idUserDm === user.uid) {
+    //             listCharacters.push(doc.data())
+    //           }
+    //           if(doc.data().idUser !== currentCampaign.idUserDm) {
+    //             listCharactersGroup.push(doc.data())
+    //           }
+    //         });
+    //         setCharacters(listCharacters);
+    //         setValueOnLocalStorage('characters',listCharacters);
+    //         setValueOnLocalStorage('company',listCharactersGroup);
+    //       })
+    //       .catch(err => {
+    //         console.log(err.messsage)
+    //       })
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // } else {
+    //   setCharacters(savedCaractersList);
+    // }
+    try {
+      const listCharacters = [];
+      const listCharactersGroup = [];
+      await db.collection('characters').where('idCampaign', '==', campaignIdUsed).where('active', '==', true).get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            if(doc.data().idUser === user.uid || currentCampaign.idUserDm === user.uid) {
+              listCharacters.push(doc.data())
+            }
+            if(doc.data().idUser !== currentCampaign.idUserDm) {
+              listCharactersGroup.push(doc.data())
+            }
+          });
+          setCharacters(listCharacters);
+        })
+        .catch(err => {
+          console.log(err.messsage)
+        })
+    } catch (error) {
+      console.log(error);
     }
   }
 
   const getCampaign = async () => {
-    const savedCampaign = await getValueOnLocalStorage('currentCampaign');
-    if(!savedCampaign || campaignIdUrl !== savedCampaign.uid) {
-      await db.collection('campaigns').doc(campaignIdUsed).get()
-        .then(doc => {
-          updateCampaign(doc.data());
-          setValueOnLocalStorage('currentCampaign',{...doc.data()});
-          getCharactersVisibleForUser(doc.data());
-      })
-      .catch(err => {
-        console.log(err.messsage)
-      })
-    } else {
-      updateCampaign({...savedCampaign});
-      getCharactersVisibleForUser({...savedCampaign});
-    }
+    // const savedCampaign = await getValueOnLocalStorage('currentCampaign');
+    // if(!savedCampaign || campaignIdUrl !== savedCampaign.uid) {
+    //   console.log('getCampaign');
+    //   await db.collection('campaigns').doc(campaignIdUsed).get()
+    //     .then(doc => {
+    //       updateCampaign(doc.data());
+    //       console.log(doc.data());
+    //       setValueOnLocalStorage('currentCampaign',{...doc.data()});
+    //       getCharactersVisibleForUser(doc.data());
+    //   })
+    //   .catch(err => {
+    //     console.log(err.messsage)
+    //   })
+    // } else {
+    //   updateCampaign({...savedCampaign});
+    //   getCharactersVisibleForUser({...savedCampaign});
+    // }
+    await db.collection('campaigns').doc(campaignIdUsed).get()
+    .then(doc => {
+      updateCampaign(doc.data());
+      getCharactersVisibleForUser(doc.data());
+    })
+    .catch(err => {
+      console.log(err.messsage)
+    })
   }
 
   const createCharacter = async (characterData) => {
@@ -122,12 +153,15 @@ const Characters = (props) => {
       characteristics: [...characterData.characteristics],
       inventory: [],
       picture: null,
+      active: true
     };
     await db.collection('characters').doc(characterUid).set(data).then(res => {
-      const charactersList = getValueOnLocalStorage('characters');
+      // const charactersList = getValueOnLocalStorage('characters');
+      const charactersList = [...characters]
       charactersList.push(data);
-      setValueOnLocalStorage('characters',charactersList);
-      getCharactersVisibleForUser(campaignIdUsed);
+      setCharacters(charactersList);
+      // setValueOnLocalStorage('characters',charactersList);
+      // getCharactersVisibleForUser(campaignIdUsed);
 
       firebase.analytics().logEvent('characterCreation',{
         name: data.name,
