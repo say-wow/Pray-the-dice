@@ -22,7 +22,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
-  background-image: url('./assets/Images/Beyond-back.png');
+  background-image: url('./assets/Images/background.png');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50% 50%;
@@ -79,6 +79,11 @@ input[type=submit].outline, button.outline {
   background-color: transparent;
 }
 input[type=submit].danger, button.danger {
+  border: 1px solid #D52941;
+  color: #D52941;
+  background-color: transparent
+}
+input[type=submit].danger:hover, button.danger:hover {
   color: #fff;
   background: #D52941;
 }

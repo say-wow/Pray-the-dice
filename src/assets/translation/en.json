@@ -122,10 +122,14 @@
   "company": "Company",
   "dice": "Dice",
   "choose a file": "Select a picture",
-  "archive": "Archive character",
+  "archive": {
+    "character": "Archive character",
+    "campaign": "Archive the campaign",
+    "character-validation": "Are you sure you want to archived this character ?",
+    "campaign-validation": "Are you sure you want to archived this campaign and all character ?",
+    "succed": "Archived succed"
+  },  
   "save": "Save",
-  "archive validation": "Are you sure you want to archived this character ?",
-  "archive succed": "Archived character",
   "general": "General",
   "avatar": "Avatar",
   "management": "management"

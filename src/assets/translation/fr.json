@@ -122,10 +122,14 @@
   "company": "Compagnie",
   "dice": "Dé",
   "choose a file": "Importez une image",
-  "archive": "Archiver le personnage",
+  "archive": {
+    "character": "Archiver le personnage",
+    "campaign": "Archiver la campagne",
+    "character-validation": "Êtes vous sur de vouloir archiver ce personnage ?",
+    "campaign-validation": "Êtes vous sur de vouloir archiver cette campagne et tout ses personnages ?",
+    "succed": "Archive réussit"
+  },
   "save": "Sauvegarder",
-  "archive validation": "Êtes vous sur de vouloir archiver ce personnage ?",
-  "archive succed": "Personnage archivé",
   "general": "Général",
   "avatar": "Avatar",
   "management": "Gestion du personnage"

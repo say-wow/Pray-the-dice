@@ -208,30 +208,22 @@ const EditCharacter = (props) => {
               {i18next.t('create skill')}
             </button>
           </div>
-          <input type="submit" value={i18next.t('update')} />
+          <input type="submit" value={i18next.t('save')} />
         </form>
-        <form
-          className={'formUpdateCharacter columnForm'}
-          onSubmit={ async (e) => {
-            
-            e.preventDefault();
+        <h3>{i18next.t('management')} :</h3>
+        <button
+          className='danger'
+          onClick={(e) => {
+            if(window.confirm(i18next.t('archive.character-validation'))) {
+              duplicateCharacter.active = false;
+              props.updateDataCharacter(duplicateCharacter);
+              toast.success(i18next.t('archive.succed'), {});
+            }
+            e.preventDefault()
           }}
         >
-          <h3>{i18next.t('management')} :</h3>
-          <button
-            className='danger'
-            onClick={(e) => {
-              if(window.confirm(i18next.t('archive validation'))) {
-                duplicateCharacter.active = false;
-                props.updateDataCharacter(duplicateCharacter);
-                toast.success(i18next.t('archive succed'), {});
-              }
-              e.preventDefault()
-            }}
-          >
-            {i18next.t('archive')}
-          </button>
-        </form>
+          {i18next.t('archive.character')}
+        </button>
       </div>
     </div>
   );

@@ -183,6 +183,14 @@ const Characters = (props) => {
     });
   }
 
+  const updateCampaignFirestore = async (newCampaignData) => {
+    await db.collection('campaigns').doc(newCampaignData.uid).set(newCampaignData).then(res => {
+      toast.success(i18next.t('archive.succed'), {});
+    }).catch(err => {
+      toast.error(err, {});
+    });
+  }
+
   return (
     <div className='containerCharacters'>
       <CharacterContext.Provider value={contextValue}>
@@ -236,6 +244,21 @@ const Characters = (props) => {
                     )}
                   </div>
                 </div>
+                {user.uid === campaign.idUserDm && (
+                  <button
+                    className='danger'
+                    onClick={(e) => {
+                      if(window.confirm(i18next.t('archive.campaign-validation'))) {
+                        const newData = {...campaign}
+                        newData.active = false;
+                        updateCampaignFirestore(newData);
+                      }
+                      e.preventDefault()
+                    }}
+                  >
+                  {i18next.t('archive.campaign')}
+                  </button>
+                )}
                 <h3>{i18next.t('my characters')}</h3>
                 <ul className='list'>
                   {characters.map((character, i) => (

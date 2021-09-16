@@ -7,7 +7,7 @@ import "firebase/firestore";
 import 'firebase/analytics';
 import UserContext from "../context/UserContext";
 import i18next from "i18next";
-import logo from '../assets/Images/logo.png';
+import logo from '../assets/Images/logo150.png';
 const db = firebase.firestore();
 
 export default function Login() {
@@ -22,6 +22,7 @@ export default function Login() {
       user.uid = data.user.uid;
       user.email = data.user.email;
       user.displayName = data.user.displayName;
+      user.name = data.user.displayName;
       user.photoURL = data.user.photoURL;
       await db.collection("users").doc(user.uid).set({
         uid: user.uid,
@@ -49,7 +50,7 @@ export default function Login() {
     <div className="wrapperLogin">
       <div className='leftPanel'>
         <h1>
-          Beyond the dice
+          Pray the dice
         </h1>
         <img src={logo} alt="Logo" />
         {/* <p>
@@ -59,7 +60,7 @@ export default function Login() {
       <div className='rightPanel'>
         <img src={logo} className='loginLogoMobile' alt="Logo" />
         <h1>
-          Beyond the dice
+          Pray the dice
         </h1>
         <h2>
           {i18next.t('start to play now')}

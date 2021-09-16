@@ -6,9 +6,8 @@ import "firebase/firestore";
 import UserContext from "../context/UserContext";
 import '../styles/headerbar.css';
 import {Link, useParams} from "react-router-dom";
-import { LogoutIcon, HomeIcon } from '@heroicons/react/outline'
 import i18next from 'i18next';
-import wlogo from '../assets/Images/whiteLogo.png';
+import logo from '../assets/Images/logo150.png';
 
 const HeaderBar = (props) => {
   const {user, updateUser} = useContext(UserContext)
@@ -17,7 +16,7 @@ const HeaderBar = (props) => {
       <div className='header'>
         <div className='logo'>
           <Link className={'link homeLink'} to="/campaigns">
-            <img src={wlogo} className="homeLinkIcon" alt="Logo" />
+            <img src={logo} className="homeLinkIcon" alt="Logo" />
           </Link>
         </div>
         <div className='log'>

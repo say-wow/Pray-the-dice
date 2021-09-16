@@ -13,7 +13,7 @@
     <img src="https://github.com/Qboussard/beyond-the-dice/blob/master/src/assets/Images/logo.png?raw=true" alt="Logo" width="80" height="80">
   </a>
 
-  <h1 align="center">Beyond the dice</h1>
+  <h1 align="center">Pray the dice</h1>
 
   <p align="center">
     A web tabletop app for roleplaying games.
