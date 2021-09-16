@@ -1,17 +1,12 @@
 [
   {
-    "value": "https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2F92.png?alt=media&token=eaf56deb-53d5-4042-b348-3136a6bc062c",
-    "condition": null,
-    "name": "92"
-  },
-  {
     "value": "https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2Falchemy.png?alt=media&token=23dfcd2d-b1b2-4b95-acd4-fc0db08b60bf",
     "condition": null,
     "name": "alchemy"
   },
   {
     "value": "https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2Foublie.png?alt=media&token=390e84b8-c1e7-4167-b1c3-e06645730a06",
-    "condition": null,
+    "condition": "Forgotten",
     "name": "Forgotten"
   },
   {
@@ -30,14 +25,29 @@
     "name": "death"
   },
   {
-    "value": "https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2Fwanted.png?alt=media&token=e0c3f1d2-019d-469b-b2c7-00b710a223bc",
+    "value": "https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2Fwanted.png?alt=media&token=fbafa9d2-19a0-4abc-92b5-df75e2756539",
     "condition": null,
     "name": "wanted"
   },
   {
-    "value": "https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2Fportal.png?alt=media&token=915dacc3-02fa-4484-a29d-83e13099e2ae",
+    "value": "https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2Fpray.png?alt=media&token=c0a8de89-960a-4fc8-8fc0-dfbcb642c00d",
     "condition": null,
-    "name": "portal"
+    "name": "prayLogo"
+  },
+  {
+    "value": "https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2F1.png?alt=media&token=3fdfc0a9-8d94-4628-ad83-6b8de2d03d2b",
+    "condition": "1",
+    "name": "1"
+  },
+  {
+    "value": "https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2F100.png?alt=media&token=30ba14fa-dda6-4e03-8eb2-b2cef69f60b4",
+    "condition": "100",
+    "name": "100"
+  },
+  {
+    "value": "https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2Fbeta.png?alt=media&token=7eae7183-498f-42f3-a0a1-79409fab0f42",
+    "condition": "beta",
+    "name": "beta"
   }
 ]
 

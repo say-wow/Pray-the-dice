@@ -116,7 +116,7 @@
   "error": {
     "chara90": "Erreur : L'une des compétences dépasse la valeur maximale de 90"
   },
-  "start to play now": "Commencez à jouer dès maintenant.",
+  "start to play now": "Créer un compte et commencer votre grande épopée maintenant avec vos amis ou qu'ils soient.",
   "customized": "Personnalisé",
   "item": "Object",
   "company": "Compagnie",
@@ -132,5 +132,6 @@
   "save": "Sauvegarder",
   "general": "Général",
   "avatar": "Avatar",
-  "management": "Gestion du personnage"
+  "management": "Gestion du personnage",
+  "signup": "Inscrivez-vous"
 }
