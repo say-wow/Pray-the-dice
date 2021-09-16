@@ -9,8 +9,8 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="https://github.com/Qboussard/beyond-the-dice/blob/master/src/assets/Images/logo.png?raw=true" alt="Logo" width="80" height="80">
+  <a href="http://www.praythedice.com">
+    <img src="https://zupimages.net/up/21/37/k2df.png" alt="Logo" width="80" height="80">
   </a>
 
   <h1 align="center">Pray the dice</h1>
@@ -175,4 +175,4 @@ Project Link: [https://github.com/Qboussard/beyond-the-dice](https://github.com/
 [stars-url]: https://github.com/Qboussard/beyond-the-dice/stargazers
 [issues-shield]: https://img.shields.io/github/issues/Qboussard/beyond-the-dice.svg?style=for-the-badge
 [issues-url]: https://github.com/Qboussard/beyond-the-dice/issues
-[product-screenshot]:https://zupimages.net/up/21/37/3wvi.png
+[product-screenshot]:https://zupimages.net/up/21/37/f0b1.png
