@@ -196,8 +196,36 @@
   margin: 0.5rem;
   margin-left: 0;
 }
-
-
+.hpCharacter {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.25rem;
+  margin-bottom: 0.5rem;
+  position: relative;
+}
+.hpCharacter span{
+  font-size: 1.25em;
+  font-weight: bold;
+  word-spacing: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+.hpCharacter .hpBar{
+  position: absolute;
+  left: 0;
+  height: 0.25rem;
+  background-color: #ffad23;
+  bottom: 0;
+  z-index: 51;
+}
+.hpCharacter .hpBarEmpty{
+  position: absolute;
+  left: 0;
+  height: 0.25rem;
+  background-color: #eaeaea;
+  bottom: 0;
+  width: 100%;
+  z-index: 50;
+}
 table tr td {
   width: 250px;
 }

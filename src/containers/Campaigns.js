@@ -20,6 +20,8 @@ import '../styles/campaigns.css';
 import { ToastContainer, toast } from 'react-toastify';
 import {setValueOnLocalStorage, getValueOnLocalStorage} from "../utils/localStorage";
 import 'react-toastify/dist/ReactToastify.css';
+import {useHistory} from "react-router-dom";
+
 init();
 const db = firebase.firestore();
 
@@ -36,6 +38,7 @@ const Campaigns = (props) => {
   const [invitationJoinCode, setInvitationJoinCode] = useState(undefined);
   const [campaignToJoin, setCampaignToJoin] = useState(undefined);
   let match = useRouteMatch();
+  const history = useHistory();
 
   const {user} = useContext(UserContext)
   const contextValue = {
@@ -55,6 +58,12 @@ const Campaigns = (props) => {
       // }
     }
   }, []);
+
+  useEffect( () => {
+    if(campaign && campaign.uid && campaignToJoin) {
+      history.push(`${match.url}/${campaign.uid}`);
+    }
+  }, [campaign]);
 
   const getCampaignByCharacter = async () => {
     const listUidCampaignByCharacter = [];
@@ -153,6 +162,7 @@ const Campaigns = (props) => {
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
           setCampaignToJoin(doc.data());
+          setCampaign(doc.data());
         });
       })
       .catch(err => {
@@ -214,18 +224,6 @@ const Campaigns = (props) => {
                 </form>
 
               </div>
-
-              {campaignToJoin && (
-                <Link
-                  className='link'
-                  onClick={() => {
-                    setCampaign(campaignToJoin)
-                  }}
-                  to={`${match.url}/${campaignToJoin.uid}`}
-                >
-                  {`${i18next.t('join')} ${campaignToJoin.name}`}
-                </Link>
-              )}
             </div>
           </Route>
         </Switch>

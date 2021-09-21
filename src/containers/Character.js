@@ -249,6 +249,13 @@ const Character = (props) => {
                           <PencilAltIcon className="iconEdit"/>
                         </Link>
                       </div>
+                      <div className='hpCharacter'>
+                        <span>
+                          {`${character.currentHp} / ${character.maxHp}`}
+                        </span>
+                        <div className='hpBar' style={{width: `${(character.currentHp * 100) / character.maxHp}%`}}/>
+                        <div className='hpBarEmpty'/>
+                      </div>
                       <MobileView className='linkChatContainer'>
                         <Link
                           className='link'
