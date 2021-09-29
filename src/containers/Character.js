@@ -63,6 +63,7 @@ const Character = (props) => {
   useEffect(() => {
     if(user.uid) {
       getCharacter();
+      console.log('getCharacter');
       getCharactersCompany(campaign);
       // const companyMember = getValueOnLocalStorage('company');
       // if(companyMember) {
@@ -139,11 +140,13 @@ const Character = (props) => {
   }
 
   const getCharactersCompany = async (currentCampaign) => {
+    console.log('test')
     try {
       const listCharactersGroup = [];
       await db.collection('characters').where('idCampaign', '==', currentCampaign.uid).where('active', '==', true).get()
         .then(querySnapshot => {
           querySnapshot.forEach(doc => {
+            console.log(doc.data())
             if(doc.data().idUser !== currentCampaign.idUserDm) {
               listCharactersGroup.push(doc.data())
             }
