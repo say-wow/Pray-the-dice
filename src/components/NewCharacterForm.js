@@ -150,7 +150,7 @@ const NewCharacterForm = (props) => {
                     type="number"
                     className='inputCharacteristics'
                     max={18}
-                    min={4}
+                    min={3}
                     value={chara.value}
                     onChange={(e) => {
                       const newValue = e.target.value !== '' ? JSON.parse(e.target.value) : null;

@@ -232,6 +232,10 @@ input[type=text].nameNewCharacter {
       "listCharacters"
       "newCharacterForm";
    }
+  .listCharacters .list .link {
+    margin-left: 0.25rem;    
+    margin-right: 0.25rem;    
+  }
    .formNewCharacter {
     display: grid;
     grid-template-columns: 1fr 0fr;

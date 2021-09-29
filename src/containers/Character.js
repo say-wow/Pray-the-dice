@@ -113,12 +113,15 @@ const Character = (props) => {
       uid: user.uid,
       campaign: campaign.uid,
     });
-    if(newRoll.value === 100) {
-      await unlockFrame('100');
+    if(newRoll.diceType === 100) {
+      if(newRoll.value === 100) {
+        await unlockFrame('100');
+      }
+      if(newRoll.value === 1) {
+        await unlockFrame('1');
+      }
     }
-    if(newRoll.value === 1) {
-      await unlockFrame('1');
-    }
+    
     const labelStat = newRoll.stat ? newRoll.stat.label : 'Custom'
     firebase.analytics().logEvent('Roll', {
       campaign: campaign.uid,
@@ -164,6 +167,7 @@ const Character = (props) => {
       await db.collection("users").doc(user.uid).set({
         ...newUser
       }); 
+      toast.warning(i18next.t('new frame unlock'), {});
     }
   }
 
