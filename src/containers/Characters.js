@@ -257,6 +257,7 @@ const Characters = (props) => {
                             onChange={(e) => {
                               const newData = {...campaign}
                               newData.hideValueCharacterStatsOnChat = e.target.checked;
+                              updateCampaign(newData);
                               updateCampaignFirestore(newData);
                             }}
                           />
@@ -273,6 +274,7 @@ const Characters = (props) => {
                       if(window.confirm(i18next.t('archive.campaign-validation'))) {
                         const newData = {...campaign}
                         newData.active = false;
+                        updateCampaign(newData);
                         updateCampaignFirestore(newData);
                       }
                       e.preventDefault()
