@@ -64,15 +64,14 @@ const Character = (props) => {
     if(user.uid) {
       getCharacter();
       console.log('getCharacter');
-      getCharactersCompany(campaign);
-      // const companyMember = getValueOnLocalStorage('company');
-      // if(companyMember) {
-      //   setCompany(getValueOnLocalStorage('company'));
-      // } else {
-      //   getCharactersCompany(campaign);
-      // }
     }
   }, []);
+ 
+  useEffect(() => {
+    if(campaign.uid) {
+      getCharactersCompany(campaign);
+    }
+  }, [campaign]);
 
   useEffect(() => {
     if(character.uid) {
@@ -106,7 +105,7 @@ const Character = (props) => {
     newList.push(newRoll);
     firebase.database().ref().child(`${character.idCampaign}`).set(newList);
     if(isMobile) {
-      toast.success(`${getLabelDice(newRoll)} : ${newRoll.value}`, {});
+      toast.success(`${getLabelDice(newRoll, campaign)} : ${newRoll.value}`, {});
     }
     firebase.analytics().setUserId(user.uid);
     firebase.analytics().setUserProperties({
@@ -143,6 +142,7 @@ const Character = (props) => {
     console.log('test')
     try {
       const listCharactersGroup = [];
+      console.log(currentCampaign)
       await db.collection('characters').where('idCampaign', '==', currentCampaign.uid).where('active', '==', true).get()
         .then(querySnapshot => {
           querySnapshot.forEach(doc => {

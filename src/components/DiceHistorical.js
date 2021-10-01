@@ -125,7 +125,7 @@ const DiceHistorical = (props) => {
                         {histo.userName}
                       </span>
                       <span>
-                        {getLabelDice(histo)}
+                        {getLabelDice(histo,campaign)}
                       </span>
                       {histo.isHided && (
                         <EyeOffIcon className="iconHide"/>

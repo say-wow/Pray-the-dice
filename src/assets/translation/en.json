@@ -135,5 +135,6 @@
   "avatar": "Avatar",
   "management": "management",
   "signup": "Sign up",
-  "new frame unlock": "New picture frame unlocked 🥳"
+  "new frame unlock": "New picture frame unlocked 🥳",
+  "hide character stat value on chat": "Hide stat values in the history"
 }

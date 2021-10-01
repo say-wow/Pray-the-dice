@@ -185,7 +185,7 @@ const Characters = (props) => {
 
   const updateCampaignFirestore = async (newCampaignData) => {
     await db.collection('campaigns').doc(newCampaignData.uid).set(newCampaignData).then(res => {
-      toast.success(i18next.t('archive.succed'), {});
+      toast.success(i18next.t('update succed'), {});
     }).catch(err => {
       toast.error(err, {});
     });
@@ -244,6 +244,28 @@ const Characters = (props) => {
                     )}
                   </div>
                 </div>
+                {user.uid === campaign.idUserDm && (
+                  <div>
+                    <p>
+                      <div className="switch">
+                        <label>
+                          {i18next.t('hide character stat value on chat')}
+                          <input
+                            type="checkbox"
+                            value={campaign.hideValueCharacterStatsOnChat}
+                            defaultChecked={campaign.hideValueCharacterStatsOnChat}
+                            onChange={(e) => {
+                              const newData = {...campaign}
+                              newData.hideValueCharacterStatsOnChat = e.target.checked;
+                              updateCampaignFirestore(newData);
+                            }}
+                          />
+                          <span className="lever"></span>
+                        </label>
+                      </div>
+                    </p>
+                  </div>
+                )}
                 {user.uid === campaign.idUserDm && (
                   <button
                     className='danger'

@@ -157,6 +157,7 @@ input[type=checkbox] {
   background-color: rgba(0, 0, 0, 0.20);
   border-radius: 1rem;
   margin-right: 0.5rem;
+  margin-left: 0.5rem;
   transition: background 0.3s ease;
   vertical-align: middle;
   /* margin: 0 16px; */

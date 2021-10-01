@@ -15,23 +15,31 @@ const db = firebase.firestore();
 export default function Login() {
   const {user, updateUser} = useContext(UserContext)
 
-  const signInWithGoogle = async () => {
-    const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+  const signIn = async (provider) => {
+    let authProvider = null;
+    if(provider === 'facebook') {
+      authProvider = new firebase.auth.FacebookAuthProvider();
+    }
+    if(provider === 'google') {
+      authProvider = new firebase.auth.GoogleAuthProvider();
+    }
 
     try {
-      const data = await firebase.auth().signInWithPopup(googleAuthProvider)
+      const data = await firebase.auth().signInWithPopup(authProvider)
       const user = {};
       user.uid = data.user.uid;
-      user.email = data.user.email;
+      if(data.user.email) {
+        user.email = data.user.email;
+      }
       user.displayName = data.user.displayName;
       user.name = data.user.displayName;
       user.photoURL = data.user.photoURL;
       await db.collection("users").doc(user.uid).set({
         uid: user.uid,
         name: user.displayName,
-        authProvider: "google",
-        email: user.email,
-        locale: data.additionalUserInfo.profile.locale,
+        authProvider: provider,
+        email: user.email || null,
+        locale: data.additionalUserInfo.profile.locale || 'en',
         frameUnlock:['beta']
       });
       firebase.analytics().setUserId(user.uid);
@@ -40,20 +48,9 @@ export default function Login() {
         uid: user.uid,
       });
       firebase.analytics().logEvent('Login', {
-        authProvider: "google",
+        authProvider: provider,
       });
       updateUser(user);
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  const signInWithFacebook = async () => {
-    const FBprovider = new firebase.auth.FacebookAuthProvider();
-
-    try {
-      const data = await firebase.auth().signInWithPopup(FBprovider)
-      console.log(data);
     } catch (err) {
       console.log(err);
     }
@@ -78,7 +75,7 @@ export default function Login() {
           </p>
           <button
             onClick={() => {
-              signInWithGoogle();
+              signIn('google');
             }}
             type="button"
             className="google-button"
@@ -90,7 +87,7 @@ export default function Login() {
           </button>
           <button
             onClick={() => {
-              signInWithFacebook();
+              signIn('facebook');
             }}
             type="button"
             className="facebook-button"
