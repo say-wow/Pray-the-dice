@@ -103,7 +103,7 @@ const Character = (props) => {
     newList.push(newRoll);
     firebase.database().ref().child(`${character.idCampaign}`).set(newList);
     if(isMobile) {
-      toast.success(`${getLabelDice(newRoll, campaign)} : ${newRoll.value}`, {});
+      toast.success(`${getLabelDice(newRoll, campaign, user)} : ${newRoll.value}`, {});
     }
     firebase.analytics().setUserId(user.uid);
     firebase.analytics().setUserProperties({
