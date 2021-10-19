@@ -8,7 +8,7 @@ import { PencilIcon, TrashIcon, CheckIcon } from '@heroicons/react/solid'
 import i18next from 'i18next';
 
 const Inventory = (props) => {
-  const {character, updateCharacter} = useContext(CharacterContext);
+  const {character} = useContext(CharacterContext);
   const [itemName, setItemName] = useState("")
   const [numberOfnewItem, setNumberOfnewItem] = useState()
   const [lineToUpdateInv, setLineToUpdateInv] = useState(null)

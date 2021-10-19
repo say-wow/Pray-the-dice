@@ -5,7 +5,6 @@ import "firebase/analytics";
 import "firebase/auth";
 import "firebase/firestore";
 import 'firebase/analytics';
-import { getAuth, getRedirectResult, FacebookAuthProvider } from "firebase/auth";
 
 import UserContext from "../context/UserContext";
 import i18next from "i18next";

@@ -8,7 +8,6 @@ import i18next from 'i18next';
 import '../styles/EditCharacter.css';
 import CharacterContext from '../context/CharacterContext';
 import UserContext from '../context/UserContext';
-import CampaignContext from '../context/CampaignContext';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Breadcrumb from '../components/Breadcrumb';
@@ -18,8 +17,7 @@ import FrameSelector from '../components/FrameSelector';
 // const db = firebase.firestore();
 
 const EditCharacter = (props) => {
-  const {character, updateCharacter} = useContext(CharacterContext);
-  const {campaign} = useContext(CampaignContext);
+  const {character} = useContext(CharacterContext);
   const {user} = useContext(UserContext);
   const [duplicateCharacter, setDuplicateCharacter] = useState({...character});
   const [image, setImage] = useState(null);

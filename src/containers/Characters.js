@@ -13,6 +13,7 @@ import {
 } from "react-router-dom";
 import { uid } from 'uid';
 import Character from './Character';
+import Dm from './Dm';
 import NewCharacterForm from '../components/NewCharacterForm';
 import UserContext from '../context/UserContext';
 import CampaignContext from '../context/CampaignContext';
@@ -24,6 +25,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import i18next from 'i18next';
 // import {setValueOnLocalStorage, getValueOnLocalStorage} from "../utils/localStorage";
 import Picture from '../components/Picture';
+import logo from '../assets/Images/logo150.png';
 
 init();
 const db = firebase.firestore();
@@ -195,6 +197,9 @@ const Characters = (props) => {
     <div className='containerCharacters'>
       <CharacterContext.Provider value={contextValue}>
         <Switch>
+          <Route path={`${match.url}/dm`} exact={true}>
+            <Dm/>
+          </Route>
           <Route path={`${match.url}/:characterIdUrl`}>
             <Character character={character}/>
           </Route>
@@ -246,25 +251,23 @@ const Characters = (props) => {
                 </div>
                 {user.uid === campaign.idUserDm && (
                   <div>
-                    <p>
-                      <div className="switch">
-                        <label>
-                          {i18next.t('hide character stat value on chat')}
-                          <input
-                            type="checkbox"
-                            value={campaign.hideValueCharacterStatsOnChat}
-                            defaultChecked={campaign.hideValueCharacterStatsOnChat}
-                            onChange={(e) => {
-                              const newData = {...campaign}
-                              newData.hideValueCharacterStatsOnChat = e.target.checked;
-                              updateCampaign(newData);
-                              updateCampaignFirestore(newData);
-                            }}
-                          />
-                          <span className="lever"></span>
-                        </label>
-                      </div>
-                    </p>
+                    <div className="switch">
+                      <label>
+                        {i18next.t('hide character stat value on chat')}
+                        <input
+                          type="checkbox"
+                          value={campaign.hideValueCharacterStatsOnChat}
+                          defaultChecked={campaign.hideValueCharacterStatsOnChat}
+                          onChange={(e) => {
+                            const newData = {...campaign}
+                            newData.hideValueCharacterStatsOnChat = e.target.checked;
+                            updateCampaign(newData);
+                            updateCampaignFirestore(newData);
+                          }}
+                        />
+                        <span className="lever"></span>
+                      </label>
+                    </div>
                   </div>
                 )}
                 {user.uid === campaign.idUserDm && (
@@ -300,6 +303,20 @@ const Characters = (props) => {
                       </Link>
                     </li>
                   ))}
+                  {user.uid === campaign.idUserDm && (
+                    <li>
+                      <Link
+                        className='link'
+                        to={`${match.url}/dm`}
+                        onClick={() => {
+                          setCharacter(null)
+                        }}
+                      >
+                        <Picture character={{picture: logo}}/>
+                        {i18next.t('dm initial')}
+                      </Link>
+                    </li>
+                  )}
                 </ul>
               </div>
               <NewCharacterForm

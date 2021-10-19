@@ -1,5 +1,4 @@
 import React, {useEffect, useState, useContext, useRef} from 'react';
-import CharacterContext from '../context/CharacterContext';
 import CampaignContext from '../context/CampaignContext';
 import UserContext from '../context/UserContext';
 import '../styles/diceHisto.css';
@@ -8,7 +7,7 @@ import { EyeOffIcon } from '@heroicons/react/outline'
 import {isDesktop} from "react-device-detect";
 import {getLabelDice} from '../utils/dice';
 
-const cleanDuplicate = (arrayRoll, userUid, campaignUserUidDm, characterUid, diceLoaded = 10) => {
+const cleanDuplicate = (arrayRoll, userUid, campaignUserUidDm, diceLoaded = 10) => {
 
   let savedDate = null;
   let savedPictureUrl = null;
@@ -40,7 +39,6 @@ const cleanDuplicate = (arrayRoll, userUid, campaignUserUidDm, characterUid, dic
 
 const DiceHistorical = (props) => {
   const {list} = props;
-  const {character} = useContext(CharacterContext);
   const {user} = useContext(UserContext);
   const {campaign} = useContext(CampaignContext);
   const [limitHisto, setLimitHisto] = useState(15);
@@ -56,7 +54,7 @@ const DiceHistorical = (props) => {
   });
 
   useEffect(() => {
-    const rolls = cleanDuplicate(list, user.uid, campaign.idUserDm, character.uid, limitHisto);
+    const rolls = cleanDuplicate(list, user.uid, campaign.idUserDm, limitHisto);
     setDiceHistorical(rolls.reverse());
   }, [list, limitHisto]);
 

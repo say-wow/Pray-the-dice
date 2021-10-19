@@ -4,7 +4,7 @@ import Breadcrumb from '../components/Breadcrumb';
 import CharacterContext from '../context/CharacterContext';
 
 const MobileInventory = (props) => {
-  const {character, updateCharacter} = useContext(CharacterContext);
+  const {character} = useContext(CharacterContext);
 
   return (
     <div className=''>

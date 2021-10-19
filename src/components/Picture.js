@@ -12,7 +12,7 @@ const Picture = (props) => {
     <div
       className='characterPicture'
       style={{
-        backgroundImage: `url(${props.character.picture || 'https://firebasestorage.googleapis.com/v0/b/beyond-dev-4a10b.appspot.com/o/charactersPictures%2FnoPicture.png?alt=media&token=63a24d98-aaa2-4480-b01d-761e58ad721e'})`,
+        backgroundImage: `url(${props.character.picture || 'https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/charactersPictures%2Fnopicture.png?alt=media&token=4a376f9c-0235-4b6c-889b-f1ffd6d12a48'})`,
       }}
     >
       {frameUrl && (

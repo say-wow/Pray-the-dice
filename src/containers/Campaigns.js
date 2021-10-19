@@ -18,7 +18,6 @@ import NewCampaignForm from '../components/NewCampaignForm';
 import {init} from '../utils/initFirebase'
 import '../styles/campaigns.css';
 import { ToastContainer, toast } from 'react-toastify';
-import {setValueOnLocalStorage, getValueOnLocalStorage} from "../utils/localStorage";
 import 'react-toastify/dist/ReactToastify.css';
 import {useHistory} from "react-router-dom";
 

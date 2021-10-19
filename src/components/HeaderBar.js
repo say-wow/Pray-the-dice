@@ -5,7 +5,7 @@ import "firebase/auth";
 import "firebase/firestore";
 import UserContext from "../context/UserContext";
 import '../styles/headerbar.css';
-import {Link, useParams} from "react-router-dom";
+import {Link} from "react-router-dom";
 import i18next from 'i18next';
 import logo from '../assets/Images/logo150.png';
 
