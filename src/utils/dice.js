@@ -37,10 +37,10 @@ export const getRoll = (max, uidUserDmCampaign, character, user ,stat, hideRollS
     // props.setNewDice(dataRoll);
   }
 
-export const getLabelDice = (dice, campaign) => {
+export const getLabelDice = (dice, campaign, user) => {
   const {stat, prefixTradStat, } = dice;
   if(stat && Object.keys(stat).length > 0) {
-    return `${stat.isCustom ? stat.label : i18next.t(`${prefixTradStat}.${stat.label}`)} ${!campaign.hideValueCharacterStatsOnChat ? `(${stat.value})` : ''}`
+    return `${stat.isCustom ? stat.label : i18next.t(`${prefixTradStat}.${stat.label}`)} ${!campaign.hideValueCharacterStatsOnChat || campaign.idUserDm === user.uid ? `(${stat.value})` : ''}`
   } 
   return `d${dice.diceType} ${i18next.t('customized')}`
 }
