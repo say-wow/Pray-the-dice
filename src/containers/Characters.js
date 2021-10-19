@@ -193,7 +193,8 @@ const Characters = (props) => {
     });
   }
 
-  return (
+if(user && campaign) {
+    return (
     <div className='containerCharacters'>
       <CharacterContext.Provider value={contextValue}>
         <Switch>
@@ -329,6 +330,7 @@ const Characters = (props) => {
       </CharacterContext.Provider>
     </div>
   );
+}
 }
 
 export default Characters

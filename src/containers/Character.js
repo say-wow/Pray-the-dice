@@ -58,6 +58,7 @@ const Character = (props) => {
   const [hideRollSwitch,setHideRollSwitch] = useState(false);
   const [view,setView] = useState('character');
   const [company, setCompany] = useState([]);
+  const [editHp, setEditHp] = useState(false);
 
   useEffect(() => {
     if(user.uid) {
@@ -252,9 +253,37 @@ const Character = (props) => {
                         </Link>
                       </div>
                       <div className='hpCharacter'>
-                        <span>
-                          {`${character.currentHp} / ${character.maxHp}`}
-                        </span>
+                        {!editHp && (
+                          <span
+                          className={'currentHpDisplay click'}
+                          onClick={() => {
+                            setEditHp(!editHp);
+                          }}>
+                            {`${character.currentHp}`}
+                          </span>
+                        )}
+                        {editHp && (
+                          <input
+                            className='updateHp'
+                            name="current HP"
+                            type="number"
+                            min='0'
+                            max='100'
+                            onBlur={() => {
+                              setEditHp(!editHp);
+                              updateFirestoreCharacter(character);
+                            }}
+                            value={character.currentHp}
+                            onChange={(e) => {
+                              const newDataCharacter = {...character};
+                              newDataCharacter.currentHp = e.target.value;
+                              updateCharacter(newDataCharacter)
+                              
+                            }}
+                          />
+                        )}
+                        <span>{` / `}</span>
+                        <span>{character.maxHp}</span>
                         <div className='hpBar' style={{width: `${(character.currentHp * 100) / character.maxHp}%`}}/>
                         <div className='hpBarEmpty'/>
                       </div>
