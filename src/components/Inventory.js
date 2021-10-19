@@ -4,7 +4,7 @@ import "firebase/auth";
 import "firebase/firestore";
 import CharacterContext from '../context/CharacterContext';
 import '../styles/inventory.css'
-import { PencilIcon, TrashIcon, RefreshIcon } from '@heroicons/react/solid'
+import { PencilIcon, TrashIcon, CheckIcon } from '@heroicons/react/solid'
 import i18next from 'i18next';
 
 const Inventory = (props) => {
@@ -64,9 +64,11 @@ const Inventory = (props) => {
                 <div>
                   {lineToUpdateInv === i && (
                     <input
+                      className='updateItemNumber'
                       name="update number item"
                       type="number"
-                      placeholder={item.number}
+                      // placeholder={item.number}
+                      defaultValue={item.number}
                       value={updateItem}
                       onChange={(e) => {
                         setUpdateItem(e.target.value ? JSON.parse(e.target.value) : '');
@@ -85,7 +87,7 @@ const Inventory = (props) => {
                         updateItemNumber(item, i)
                       }}
                     >
-                      <RefreshIcon className="iconInv"/>
+                      <CheckIcon className="iconInv"/>
                     </button>
                   )}
                   {lineToUpdateInv !== i && (

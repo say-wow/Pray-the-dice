@@ -116,4 +116,9 @@
   .containerInv {
     margin-bottom: 0;
   }
+  input[type='number'].updateItemNumber {
+    height: 19px;
+    padding: 0;
+    /* padding-left: 0.5rem; */
+  }
 }
