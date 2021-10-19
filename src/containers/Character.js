@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useContext, useRef} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import firebase from "firebase/app";
 import "firebase/analytics";
 import "firebase/auth";
@@ -41,7 +41,6 @@ import Skills from '../components/Skills';
 import Characteristics from '../components/Characteristics';
 import Company from '../components/Company';
 import {getLabelDice} from '../utils/dice'
-import {getValueOnLocalStorage} from '../utils/localStorage'
 
 init();
 const db = firebase.firestore();

@@ -7,7 +7,6 @@ import DiceHistorical from '../components/DiceHistorical';
 import DiceRoll from '../components/DiceRoll';
 import '../styles/diceHisto.css';
 import Breadcrumb from '../components/Breadcrumb';
-import i18next from 'i18next';
 import CharacterContext from '../context/CharacterContext';
 // import { css } from 'emotion';
 // import ScrollToBottom from 'react-scroll-to-bottom';
@@ -15,7 +14,7 @@ init();
 
 
 const DiceChat = (props) => {
-  const {character, updateCharacter} = useContext(CharacterContext);
+  const {character} = useContext(CharacterContext);
   const heightContainer = window.innerHeight - 130;
   const {list, setNewDice} = props;
   return (

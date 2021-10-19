@@ -15,12 +15,17 @@ export const getRoll = (max, uidUserDmCampaign, character, user ,stat, hideRollS
     if(prefixTradStat === 'characteristics') {
       statRoll.value = statRoll.value * 5;
     }
-
+    if(!character) {
+      character = {
+        uid:'DMMODE',
+        picture: 'https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/charactersPictures%2Fnopicture.png?alt=media&token=4a376f9c-0235-4b6c-889b-f1ffd6d12a48'
+      }
+    }
     const dataRoll = {
       createdAt: new Date(Date.now()).toLocaleDateString("fr-FR"),
       userName: !isDm ? character.name : i18next.t('dm'),
       userUid: user.uid,
-      characterId: character.uid,
+      characterId: character ? character.uid : 'DM',
       value: randomValue,
       diceType: max,
       pictureUserSendRoll: character.picture || user.photoURL,
