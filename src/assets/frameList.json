@@ -20,11 +20,6 @@
     "name": "king"
   },
   {
-    "value": "https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2Fdeath.png?alt=media&token=7dce2cee-4030-4bbb-a0b7-8b933101bf63",
-    "condition": null,
-    "name": "death"
-  },
-  {
     "value": "https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2Fwanted.png?alt=media&token=fbafa9d2-19a0-4abc-92b5-df75e2756539",
     "condition": null,
     "name": "wanted"
@@ -48,6 +43,21 @@
     "value": "https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2Fbeta.png?alt=media&token=7eae7183-498f-42f3-a0a1-79409fab0f42",
     "condition": "beta",
     "name": "beta"
+  },
+  {
+    "value": "https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2FdeathGod.png?alt=media&token=53a2a4ca-8750-47f0-aedb-fb877064fa82",
+    "condition": "deathGod",
+    "name": "deathGod"
+  },
+  {
+    "value": "https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2Fring.png?alt=media&token=10415c5d-3e82-49ac-8bb6-758f1a21ce8d",
+    "condition": null,
+    "name": "rainbowRing"
+  },
+  {
+    "value": "https://firebasestorage.googleapis.com/v0/b/beyondthedice-cfc1b.appspot.com/o/frame%2Fring2.png?alt=media&token=d47a890b-e0ad-4430-95b6-418850ee59e5",
+    "condition": null,
+    "name": "silverRing"
   }
 ]
 
