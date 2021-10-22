@@ -61,7 +61,7 @@ const Character = (props) => {
   const [editHp, setEditHp] = useState(false);
 
   useEffect(() => {
-    if(user.uid) {
+    if(user.uid && characterIdUrl !== 'dm') {
       getCharacter();
     }
   }, []);
@@ -73,7 +73,7 @@ const Character = (props) => {
   }, [campaign]);
 
   useEffect(() => {
-    if(character.uid) {
+    if(character && character.uid) {
       const dbRefObject = firebase.database().ref().child(`${character.idCampaign}`);
       dbRefObject.on('value', snap => {
         setRollList(Object.values(snap.val() || {}));

@@ -47,10 +47,12 @@ const Dm = (props) => {
 
   useEffect(() => {
     if(campaign.uid){
+      console.log('plop');
       getCharactersCompany(campaign);
       console.log(campaign.uid);
       const dbRefObject = firebase.database().ref().child(`${campaign.uid}`);
       dbRefObject.on('value', snap => {
+        console.log(snap.val());
         setRollList(Object.values(snap.val() || {}));
       });
     }
@@ -80,7 +82,6 @@ const Dm = (props) => {
     });
   }
 
-
   const getCharactersCompany = async (currentCampaign) => {
     try {
       const listCharactersGroup = [];
@@ -92,7 +93,6 @@ const Dm = (props) => {
             }
           });
           setCompany(listCharactersGroup);
-
         })
         .catch(err => {
           console.log(err.messsage)
@@ -103,6 +103,7 @@ const Dm = (props) => {
   }
 
   if(campaign.idUserDm === user.uid) {
+    console.log('DM',rollList)
     return (
       <Switch>
         <Route path={`${match.url}/chat`}>
@@ -117,17 +118,16 @@ const Dm = (props) => {
              }}
           />
         </Route>
-
         <Route path={match.path}>
           <div className='containerCharacterView'>
               <div className='characterContainer'>
                 <MobileView className='linkChatContainerDmView'>
-                    <Link
+                    {/* <Link
                       className='link'
                       to={`${match.url}/chat`}
                     >
                       <img className="iconChat" src={chat} alt="chat" />
-                    </Link>
+                    </Link> */}
                   </MobileView>
                 <div className='containerInfo'>
                   {company && (
@@ -159,13 +159,11 @@ const Dm = (props) => {
           </div>
         </Route>
       </Switch>
-
     );
   } else {
     history.goBack();
     return null;
   }
-  
 }
 
 export default Dm
