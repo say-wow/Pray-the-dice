@@ -289,21 +289,6 @@ if(user && campaign) {
                 )}
                 <h3>{i18next.t('my characters')}</h3>
                 <ul className='list'>
-                  {characters.map((character, i) => (
-                    <li key={i}>
-                      <Link
-                        className='link'
-                        key={character.uid}
-                        onClick={() => {
-                          setCharacter(character)
-                        }}
-                        to={`${match.url}/${character.uid}`}
-                      >
-                        <Picture character={character}/>
-                        {character.name}
-                      </Link>
-                    </li>
-                  ))}
                   {user.uid === campaign.idUserDm && (
                     <li>
                       <Link
@@ -318,6 +303,21 @@ if(user && campaign) {
                       </Link>
                     </li>
                   )}
+                  {characters.map((character, i) => (
+                    <li key={i}>
+                      <Link
+                        className='link'
+                        key={character.uid}
+                        onClick={() => {
+                          setCharacter(character)
+                        }}
+                        to={`${match.url}/${character.uid}`}
+                      >
+                        <Picture character={character}/>
+                        {character.name.substring(0, 13)}{character.name.length > 14 ? '...' : ''}
+                      </Link>
+                    </li>
+                  ))}
                 </ul>
               </div>
               <NewCharacterForm
