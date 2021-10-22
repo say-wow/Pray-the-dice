@@ -252,6 +252,7 @@ if(user && campaign) {
                 </div>
                 {user.uid === campaign.idUserDm && (
                   <div>
+                    <h3>{i18next.t('settings campaign')}</h3>
                     <div className="switch">
                       <label>
                         {i18next.t('hide character stat value on chat')}
@@ -268,24 +269,22 @@ if(user && campaign) {
                         />
                         <span className="lever"></span>
                       </label>
-                    </div>
+                    </div><br/>
+                    <button
+                      className='danger'
+                      onClick={(e) => {
+                        if(window.confirm(i18next.t('archive.campaign-validation'))) {
+                          const newData = {...campaign}
+                          newData.active = false;
+                          updateCampaign(newData);
+                          updateCampaignFirestore(newData);
+                        }
+                        e.preventDefault()
+                      }}
+                    >
+                      {i18next.t('archive.campaign')}
+                    </button>
                   </div>
-                )}
-                {user.uid === campaign.idUserDm && (
-                  <button
-                    className='danger'
-                    onClick={(e) => {
-                      if(window.confirm(i18next.t('archive.campaign-validation'))) {
-                        const newData = {...campaign}
-                        newData.active = false;
-                        updateCampaign(newData);
-                        updateCampaignFirestore(newData);
-                      }
-                      e.preventDefault()
-                    }}
-                  >
-                  {i18next.t('archive.campaign')}
-                  </button>
                 )}
                 <h3>{i18next.t('my characters')}</h3>
                 <ul className='list'>
