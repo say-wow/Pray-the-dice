@@ -55,6 +55,9 @@ input:focus, textarea:focus {
 .click {
   cursor: pointer;
 }
+.editable {
+  cursor: context-menu;
+}
 input[type=submit], button {
   background-color: #ffad23;
   padding: 0.5rem 1rem;
@@ -266,6 +269,10 @@ input[type=checkbox] {
 .iconBreadcrumb {
   height: 20px;
   color: #1b1d29
+}
+[contenteditable]:read-write:focus {
+  outline: 0.15rem solid #1b1d29;
+  border-radius: 0.25rem;
 }
 @media (min-width: 800px) {
   .compactPage {

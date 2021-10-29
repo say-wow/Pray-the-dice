@@ -225,6 +225,9 @@
   margin-bottom: 0.25rem;
   padding: 0.5rem;
 }
+.hpCharacter span[contenteditable] {
+  outline: 0rem solid transparent;
+}
 .hpCharacter .hpBar{
   position: absolute;
   left: 0;

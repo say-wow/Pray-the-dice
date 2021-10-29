@@ -58,7 +58,6 @@ const Character = (props) => {
   const [hideRollSwitch,setHideRollSwitch] = useState(false);
   const [view,setView] = useState('character');
   const [company, setCompany] = useState([]);
-  const [editHp, setEditHp] = useState(false);
 
   useEffect(() => {
     if(user.uid && characterIdUrl !== 'dm') {
@@ -169,6 +168,23 @@ const Character = (props) => {
       toast.warning(i18next.t('new frame unlock'), {});
     }
   }
+  
+  const updateHp = (newHp) => {
+    if(/^\d+$/.test(newHp)) {
+      const updateCharacter = {...character}
+      updateCharacter.currentHp = JSON.parse(newHp);
+      updateFirestoreCharacter(updateCharacter);
+    } else {
+    }
+  }
+
+  const renameValidation = (newName) => {
+    if(campaign.renameCharacter) {
+      const updateCharacter = {...character}
+      updateCharacter.name = newName;
+      updateFirestoreCharacter(updateCharacter);
+    }
+  }
 
   if(character) {
     return (
@@ -243,7 +259,14 @@ const Character = (props) => {
                       <div className='namePictureCharacter'>
                         <Picture character={character}/>
                         <h2>
-                          <span>{character.name}</span>
+                          <span
+                            style={{padding: '0.25rem'}}
+                            onBlur={(e)=>{
+                              renameValidation(e.currentTarget.textContent);  
+                            }}
+                            contentEditable={campaign.renameCharacter}>
+                              {character.name}
+                            </span>
                         </h2>
                         <Link
                           className={'link editLink'}
@@ -253,35 +276,15 @@ const Character = (props) => {
                         </Link>
                       </div>
                       <div className='hpCharacter'>
-                        {!editHp && (
-                          <span
+                        <span
+                          onBlur={(e)=>{
+                            updateHp(e.currentTarget.textContent)
+                          }}
+                          contenteditable="true"
                           className={'currentHpDisplay click'}
-                          onClick={() => {
-                            setEditHp(!editHp);
-                          }}>
-                            {`${character.currentHp}`}
-                          </span>
-                        )}
-                        {editHp && (
-                          <input
-                            className='updateHp'
-                            name="current HP"
-                            type="number"
-                            min='0'
-                            max='100'
-                            onBlur={() => {
-                              setEditHp(!editHp);
-                              updateFirestoreCharacter(character);
-                            }}
-                            value={character.currentHp}
-                            onChange={(e) => {
-                              const newDataCharacter = {...character};
-                              newDataCharacter.currentHp = e.target.value;
-                              updateCharacter(newDataCharacter)
-                              
-                            }}
-                          />
-                        )}
+                        >
+                          {`${character.currentHp}`}
+                        </span>
                         <span>{` / `}</span>
                         <span>{character.maxHp}</span>
                         <div className='hpBar' style={{width: `${(character.currentHp * 100) / character.maxHp}%`}}/>
@@ -312,7 +315,17 @@ const Character = (props) => {
                             )}
                           </p>
                           {descriptionIsDisplay && (
-                            <p>{character.description}</p>
+                            <p
+                              className="click"
+                              contenteditable="true"
+                              onBlur={(e)=>{
+                                const updateCharacter = {...character}
+                                updateCharacter.description = e.currentTarget.textContent;
+                                updateFirestoreCharacter(updateCharacter);
+                              }}
+                            >
+                              {character.description}
+                            </p>
                           )}
                         </div>
                       )}

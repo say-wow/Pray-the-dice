@@ -136,6 +136,9 @@
   "management": "Gestion du personnage",
   "signup": "Inscrivez-vous",
   "new frame unlock": "Nouvelle décoration d'image débloqué 🥳",
-  "hide character stat value on chat": "Cacher les valeurs de statistique dans le l'historique",
+  "campaignSettings": {
+    "hide character stat value on chat": "Cacher les valeurs de statistique dans le l'historique",
+    "rename character": "Les joueurs peuvent renommer leurs personnages"
+  },
   "settings campaign": "Configuration"
 }

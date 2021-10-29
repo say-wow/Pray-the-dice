@@ -251,11 +251,10 @@ if(user && campaign) {
                   </div>
                 </div>
                 {user.uid === campaign.idUserDm && (
-                  <div>
+                  <div className='settingsCampaign'>
                     <h3>{i18next.t('settings campaign')}</h3>
                     <div className="switch">
                       <label>
-                        {i18next.t('hide character stat value on chat')}
                         <input
                           type="checkbox"
                           value={campaign.hideValueCharacterStatsOnChat}
@@ -268,8 +267,26 @@ if(user && campaign) {
                           }}
                         />
                         <span className="lever"></span>
+                        {i18next.t('campaignSettings.hide character stat value on chat')}
                       </label>
-                    </div><br/>
+                    </div>
+                    <div className="switch">
+                      <label>
+                        <input
+                          type="checkbox"
+                          value={campaign.renameCharacter}
+                          defaultChecked={campaign.renameCharacter}
+                          onChange={(e) => {
+                            const newData = {...campaign}
+                            newData.renameCharacter = e.target.checked;
+                            updateCampaign(newData);
+                            updateCampaignFirestore(newData);
+                          }}
+                        />
+                        <span className="lever"></span>
+                        {i18next.t('campaignSettings.rename character')}
+                      </label>
+                    </div>
                     <button
                       className='danger'
                       onClick={(e) => {

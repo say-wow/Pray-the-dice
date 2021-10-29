@@ -136,6 +136,9 @@
   "management": "management",
   "signup": "Sign up",
   "new frame unlock": "New picture frame unlocked 🥳",
-  "hide character stat value on chat": "Hide stat values in the history",
+  "campaignSettings": {
+    "hide character stat value on chat": "Hide stat values in the history",
+    "rename character": "The player can rename his character"
+  },
   "settings campaign": "Settings"
 }
