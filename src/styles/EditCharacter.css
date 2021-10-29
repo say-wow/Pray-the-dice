@@ -37,7 +37,7 @@ input[type="submit"] {
   flex-direction: row;
 }
 label{
-  display: flex;
+  /* display: flex; */
   flex-direction: row;
   flex-wrap: wrap;
 }
