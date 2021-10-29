@@ -264,7 +264,7 @@ const Character = (props) => {
                             onBlur={(e)=>{
                               renameValidation(e.currentTarget.textContent);  
                             }}
-                            contentEditable={campaign.renameCharacter}>
+                            contenteditable={campaign.renameCharacter}>
                               {character.name}
                             </span>
                         </h2>
