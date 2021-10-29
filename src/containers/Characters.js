@@ -26,7 +26,7 @@ import i18next from 'i18next';
 // import {setValueOnLocalStorage, getValueOnLocalStorage} from "../utils/localStorage";
 import Picture from '../components/Picture';
 import logo from '../assets/Images/logo150.png';
-
+import CampaignSettings from '../components/CampaignSettings';
 init();
 const db = firebase.firestore();
 
@@ -144,6 +144,8 @@ const Characters = (props) => {
   const createCharacter = async (characterData) => {
     const characterUid = uid();
     const data = {
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      lastUpdateAt:firebase.firestore.FieldValue.serverTimestamp(),
       name: characterData.name,
       uid: characterUid,
       idCampaign: campaignIdUsed,
@@ -186,6 +188,7 @@ const Characters = (props) => {
   }
 
   const updateCampaignFirestore = async (newCampaignData) => {
+    newCampaignData.lastUpdateAt = firebase.firestore.FieldValue.serverTimestamp();
     await db.collection('campaigns').doc(newCampaignData.uid).set(newCampaignData).then(res => {
       toast.success(i18next.t('update succed'), {});
     }).catch(err => {
@@ -251,57 +254,13 @@ if(user && campaign) {
                   </div>
                 </div>
                 {user.uid === campaign.idUserDm && (
-                  <div className='settingsCampaign'>
-                    <h3>{i18next.t('settings campaign')}</h3>
-                    <div className="switch">
-                      <label>
-                        <input
-                          type="checkbox"
-                          value={campaign.hideValueCharacterStatsOnChat}
-                          defaultChecked={campaign.hideValueCharacterStatsOnChat}
-                          onChange={(e) => {
-                            const newData = {...campaign}
-                            newData.hideValueCharacterStatsOnChat = e.target.checked;
-                            updateCampaign(newData);
-                            updateCampaignFirestore(newData);
-                          }}
-                        />
-                        <span className="lever"></span>
-                        {i18next.t('campaignSettings.hide character stat value on chat')}
-                      </label>
-                    </div>
-                    <div className="switch">
-                      <label>
-                        <input
-                          type="checkbox"
-                          value={campaign.renameCharacter}
-                          defaultChecked={campaign.renameCharacter}
-                          onChange={(e) => {
-                            const newData = {...campaign}
-                            newData.renameCharacter = e.target.checked;
-                            updateCampaign(newData);
-                            updateCampaignFirestore(newData);
-                          }}
-                        />
-                        <span className="lever"></span>
-                        {i18next.t('campaignSettings.rename character')}
-                      </label>
-                    </div>
-                    <button
-                      className='danger'
-                      onClick={(e) => {
-                        if(window.confirm(i18next.t('archive.campaign-validation'))) {
-                          const newData = {...campaign}
-                          newData.active = false;
-                          updateCampaign(newData);
-                          updateCampaignFirestore(newData);
-                        }
-                        e.preventDefault()
-                      }}
-                    >
-                      {i18next.t('archive.campaign')}
-                    </button>
-                  </div>
+                  <CampaignSettings
+                    campaign={campaign}
+                    update={(campagneUpdated) => {
+                      updateCampaign(campagneUpdated);
+                      updateCampaignFirestore(campagneUpdated);
+                    }}
+                  />
                 )}
                 <h3>{i18next.t('my characters')}</h3>
                 <ul className='list'>

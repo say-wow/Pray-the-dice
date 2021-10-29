@@ -132,11 +132,15 @@ const Campaigns = (props) => {
     const data = {
       createdBy: user.displayName,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      lastUpdateAt: firebase.firestore.FieldValue.serverTimestamp(),
       idUserDm: user.uid,
       invitationCode: invitationCode,
       name: name,
       uid: gameUid,
       active: true,
+      clickStat: true,
+      renameCharacter: false,
+      hideValueCharacterStatsOnChat: false,
     };
     savedCampaignsList.push(data)
     await db.collection('campaigns').doc(gameUid).set(data).then(res => {

@@ -138,7 +138,8 @@
   "new frame unlock": "Nouvelle décoration d'image débloqué 🥳",
   "campaignSettings": {
     "hide character stat value on chat": "Cacher les valeurs de statistique dans le l'historique",
-    "rename character": "Les joueurs peuvent renommer leurs personnages"
+    "rename character": "Les joueurs peuvent renommer leurs personnages",
+    "click to roll": "Les joueurs peuvent cliquer sur une statistique pour lancer un dé"
   },
   "settings campaign": "Configuration"
 }

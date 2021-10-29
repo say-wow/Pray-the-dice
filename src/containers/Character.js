@@ -68,19 +68,21 @@ const Character = (props) => {
   useEffect(() => {
     if(campaign.uid) {
       getCharactersCompany(campaign);
-    }
-  }, [campaign]);
-
-  useEffect(() => {
-    if(character && character.uid) {
-      const dbRefObject = firebase.database().ref().child(`${character.idCampaign}`);
+      const dbRefObject = firebase.database().ref().child(`${campaign.uid}`);
       dbRefObject.on('value', snap => {
         setRollList(Object.values(snap.val() || {}));
       });
-      setCharacteristics(character.characteristics.sort(dynamicSortWithTraduction("label", 'characteristics')));
-      setSkills(character.skills.sort(dynamicSortWithTraduction("label", 'skills')));
     }
-  },[character])
+  }, [campaign]);
+
+  // useEffect(() => {
+  //   if(character && character.uid) {
+  //     const dbRefObject = firebase.database().ref().child(`${character.idCampaign}`);
+  //     dbRefObject.on('value', snap => {
+  //       setRollList(Object.values(snap.val() || {}));
+  //     });
+  //   }
+  // },[character])
 
   const getCharacter = async () => {
     await db.collection('characters').doc(character.uid || characterIdUrl).get()
@@ -129,6 +131,7 @@ const Character = (props) => {
   }
 
   const updateFirestoreCharacter = async (newData) => {
+    newData.lastUpdateAt = firebase.firestore.FieldValue.serverTimestamp();
     await db.collection('characters').doc(newData.uid).set(newData).then(res => {
       // toast.success(i18next.t('update succed'), {});
     }).catch(e => {
@@ -171,18 +174,19 @@ const Character = (props) => {
   
   const updateHp = (newHp) => {
     if(/^\d+$/.test(newHp)) {
-      const updateCharacter = {...character}
-      updateCharacter.currentHp = JSON.parse(newHp);
-      updateFirestoreCharacter(updateCharacter);
+      const updatedCharacter = {...character}
+      updatedCharacter.currentHp = JSON.parse(newHp);
+      updateCharacter(updatedCharacter);
+      updateFirestoreCharacter(updatedCharacter);
     } else {
     }
   }
 
   const renameValidation = (newName) => {
     if(campaign.renameCharacter) {
-      const updateCharacter = {...character}
-      updateCharacter.name = newName;
-      updateFirestoreCharacter(updateCharacter);
+      const updatedCharacter = {...character}
+      updatedCharacter.name = newName;
+      updateFirestoreCharacter(updatedCharacter);
     }
   }
 
@@ -264,7 +268,7 @@ const Character = (props) => {
                             onBlur={(e)=>{
                               renameValidation(e.currentTarget.textContent);  
                             }}
-                            contenteditable={campaign.renameCharacter}>
+                            contentEditable={campaign.renameCharacter}>
                               {character.name}
                             </span>
                         </h2>
@@ -280,7 +284,7 @@ const Character = (props) => {
                           onBlur={(e)=>{
                             updateHp(e.currentTarget.textContent)
                           }}
-                          contenteditable="true"
+                          contentEditable="true"
                           className={'currentHpDisplay click'}
                         >
                           {`${character.currentHp}`}
@@ -317,7 +321,7 @@ const Character = (props) => {
                           {descriptionIsDisplay && (
                             <p
                               className="click"
-                              contenteditable="true"
+                              contentEditable="true"
                               onBlur={(e)=>{
                                 const updateCharacter = {...character}
                                 updateCharacter.description = e.currentTarget.textContent;
@@ -337,7 +341,11 @@ const Character = (props) => {
                             character={character}
                             user={user}
                             hideRollSwitch={hideRollSwitch}
-                            sendNewRoll={(roll) => sendNewRoll(roll)}
+                            sendNewRoll={(roll) => {
+                              if(campaign.clickStat) {
+                                sendNewRoll(roll)}
+                              }
+                            }
                           />
                       </div>
                     </div>
@@ -351,7 +359,11 @@ const Character = (props) => {
                             character={character}
                             user={user}
                             hideRollSwitch={hideRollSwitch}
-                            sendNewRoll={(roll) => sendNewRoll(roll)}
+                            sendNewRoll={(roll) => {
+                              if(campaign.clickStat) {
+                                sendNewRoll(roll)}
+                              }
+                            }
                           />
                         </div>
                       </div>

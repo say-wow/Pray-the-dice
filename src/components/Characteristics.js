@@ -9,6 +9,7 @@ const Skills = (props) => {
         props.characteristics.map((charac, i) => (
           <li
             key={i}
+            style={{cursor: props.campaign.clickStat ? 'pointer' : 'default'}}
             onClick={() => {
             props.sendNewRoll(getRoll(100,props.campaign.idUserDm, props.character, props.user, charac, props.hideRollSwitch, 'characteristics'))
           }}>

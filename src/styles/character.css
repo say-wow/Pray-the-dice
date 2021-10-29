@@ -108,7 +108,6 @@
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  cursor: pointer;
 }
 .characteristicsDetail ul li span.title {
   font-size: 0.75em;
@@ -141,7 +140,6 @@
   padding-bottom: 0.5rem;
   display: flex;
   justify-content: space-between;
-  cursor: pointer;
 }
 .skillsDetail ul li:last-child {
   border-bottom: 0px solid #1b1d29;

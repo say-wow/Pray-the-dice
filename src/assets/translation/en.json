@@ -138,7 +138,8 @@
   "new frame unlock": "New picture frame unlocked 🥳",
   "campaignSettings": {
     "hide character stat value on chat": "Hide stat values in the history",
-    "rename character": "The player can rename his character"
+    "rename character": "The player can rename his character",
+    "click to roll": "The player can roll a die by clicking on a statistic"
   },
   "settings campaign": "Settings"
 }
