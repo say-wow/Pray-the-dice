@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "beyondthedice-cfc1b"
-  }
+    "default": "beyondthedice-cfc1b",
+    "staging": "beyond-dev-4a10b",
+    "prod": "beyondthedice-cfc1b"
+  },
+  "targets": {}
 }

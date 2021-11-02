@@ -175,16 +175,17 @@ const Character = (props) => {
   const updateHp = (newHp) => {
     if(/^\d+$/.test(newHp)) {
       const updatedCharacter = {...character}
-      updatedCharacter.currentHp = JSON.parse(newHp);
-      updateCharacter(updatedCharacter);
-      updateFirestoreCharacter(updatedCharacter);
-    } else {
+      if(JSON.parse(newHp) !== updatedCharacter.currentHp) {
+        updatedCharacter.currentHp = JSON.parse(newHp);
+        updateCharacter(updatedCharacter);
+        updateFirestoreCharacter(updatedCharacter);
+      }
     }
   }
 
   const renameValidation = (newName) => {
-    if(campaign.renameCharacter) {
-      const updatedCharacter = {...character}
+    const updatedCharacter = {...character}
+    if(campaign.renameCharacter && newName !== updatedCharacter.name) {
       updatedCharacter.name = newName;
       updateFirestoreCharacter(updatedCharacter);
     }
