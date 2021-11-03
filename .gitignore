@@ -12,7 +12,10 @@
 /build
 .firebase/
 
+# env
 .env
+/src/utils/initFirebase.js
+
 # misc
 .DS_Store
 .env.local
