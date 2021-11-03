@@ -44,12 +44,12 @@ const Dm = (props) => {
 
   useEffect(() => {
     if(campaign.uid){
-      console.log('plop');
+      // console.log('plop');
       getCharactersCompany(campaign);
-      console.log(campaign.uid);
+      // console.log(campaign.uid);
       const dbRefObject = firebase.database().ref().child(`${campaign.uid}`);
       dbRefObject.on('value', snap => {
-        console.log(snap.val());
+        // console.log(snap.val());
         setRollList(Object.values(snap.val() || {}));
       });
     }
