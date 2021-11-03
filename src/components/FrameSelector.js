@@ -14,6 +14,7 @@ const FrameSelector = (props) => {
             />
           )
         }
+        return null;
       })}
     </div>
   );

@@ -8,8 +8,6 @@ import 'firebase/analytics';
 import {
   Switch,
   Route,
-  Link,
-  useParams,
   useRouteMatch,
 } from "react-router-dom";
 import {init} from '../utils/initFirebase'
@@ -27,7 +25,6 @@ import {
   isMobile
 } from "react-device-detect";
 import { toast } from 'react-toastify';
-import chat from '../assets/Images/chat.png'
 import Company from '../components/Company';
 import {getLabelDice} from '../utils/dice'
 import {useHistory} from "react-router-dom";

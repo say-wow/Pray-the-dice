@@ -11,8 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: rm -rf node_modules
       - run: yarn install
+      - run: yarn test
       - run: yarn build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:

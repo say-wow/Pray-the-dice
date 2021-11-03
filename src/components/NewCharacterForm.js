@@ -16,7 +16,6 @@ const NewCharacterForm = (props) => {
   const [additionalSkillPoint, setAdditionalSkillPoint] = useState(50);
   const [listBonusSkills, setListBonusSkills] = useState([...dataCharacter.skillsBonus]);
   const [description, setDescription] = useState('');
-  const [hp, setHp] = useState(null);
   const {createCharacter} = props;
   const skillsRef = useRef(null);
   const [generationCharacterClassic, setGenerationCharacterClassic] = useState(true)
@@ -86,7 +85,6 @@ const NewCharacterForm = (props) => {
               setListSkills([...dataCharacter.skills]);
               setAdditionalSkillPoint(50);
               setListBonusSkills([...dataCharacter.skillsBonus]);
-              setHp(null);
             } else {
               toast.error(`${i18next.t('error.chara90')}`, {
                 position: "top-right",

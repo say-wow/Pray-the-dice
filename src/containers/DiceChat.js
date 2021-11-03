@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext} from 'react';
 import "firebase/analytics";
 import "firebase/auth";
 import "firebase/firestore";
@@ -15,15 +15,9 @@ init();
 
 
 const DiceChat = (props) => {
-  console.log('plkdewf')
   const {character} = useContext(CharacterContext);
   const heightContainer = window.innerHeight - 130;
   const {list, setNewDice} = props;
-  console.log('chat',props);
-  
-  useEffect(() => {
-    console.log('chat',props);
-  }, []);
 
   return (
     <div className='diceChatContainer' style={{height: heightContainer, marginHorizontal: -15}}>

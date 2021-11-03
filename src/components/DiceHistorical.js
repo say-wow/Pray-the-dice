@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState, useContext, useRef} from 'react';
 import CampaignContext from '../context/CampaignContext';
 import UserContext from '../context/UserContext';

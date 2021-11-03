@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-use-before-define */
 import React, {useContext} from "react";
 import firebase from "firebase/app";
