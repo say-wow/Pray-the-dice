@@ -14,7 +14,8 @@ jobs:
       - run: yarn install
       - run: yarn test
       - run: yarn build
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+      - run: firebase deploy --token '${{secrets.FIREBASE_TOKEN}}'
+      # - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           REACT_APP_API_KEY: '${{secrets.API_KEY}}'
           REACT_APP_APP_ID: '${{secrets.APP_ID}}'
