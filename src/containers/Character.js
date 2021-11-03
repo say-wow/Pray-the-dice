@@ -173,10 +173,13 @@ const Character = (props) => {
     }
   }
   
-  const updateHp = (newHp) => {
+  const updateHp = async(newHp) => {
     if(/^\d+$/.test(newHp)) {
       const updatedCharacter = {...character}
       if(JSON.parse(newHp) !== updatedCharacter.currentHp) {
+        if(JSON.parse(newHp) === 0) {
+          await unlockFrame('deathGod');
+        }
         updatedCharacter.currentHp = JSON.parse(newHp);
         updateCharacter(updatedCharacter);
         updateFirestoreCharacter(updatedCharacter);
