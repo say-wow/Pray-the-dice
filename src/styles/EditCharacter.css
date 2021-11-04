@@ -91,8 +91,14 @@ span.labelSkillUneditable {
 .inputfile + label * {
 	pointer-events: none;
 }
+.containerEditSkill {
+  display: flex;
+  flex-direction: column;
+}
 .containerEditSkill label {
   margin: 0.25rem 0;
+  display: flex;
+  justify-content: space-around;
 }
 .frameDemo {
   height: 65px;
