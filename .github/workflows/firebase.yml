@@ -44,6 +44,7 @@ jobs:
           path: build
       - name: Depoy to Firebase
         uses: w9jds/firebase-action@master
+        run: firebase use prod
         with:
           args: deploy --only hosting
         env:
