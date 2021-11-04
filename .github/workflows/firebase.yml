@@ -25,11 +25,6 @@ jobs:
       run: |
         yarn install
         yarn build
-    - name: Archive Build
-      uses: actions/upload-artifact@v2
-      with:
-        name: build
-        path: build
       env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
           REACT_APP_API_KEY: ${{secrets.API_KEY}}
@@ -41,6 +36,12 @@ jobs:
           REACT_APP_PROJECT_ID: ${{secrets.PROJECT_ID}}
           REACT_APP_STORAGE_BUCKET: ${{secrets.STORAGE_BUCKET}}
           repoToken: ${{ secrets.GITHUB_TOKEN }}
+    - name: Archive Build
+      uses: actions/upload-artifact@v2
+      with:
+        name: build
+        path: build
+
   deploy:
     name: Deploy
     needs: build
