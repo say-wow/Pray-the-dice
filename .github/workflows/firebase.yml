@@ -7,8 +7,7 @@ name: Firebase CI
     branches: [ master ]
 
 jobs:
-  test:
-    name: Test
+  build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -22,28 +21,13 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm install -g yarn
-    - name: install
+    - name: Install
       run: |
         yarn install
-    - name: test
+    - name: Test
       run: |
         yarn test
-
-  build:
-    name: Build
-    needs: test
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [14.x]
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: build
+    - name: Build
       run: |
         yarn build
       env:
