@@ -115,9 +115,15 @@ service cloud.firestore {
    ```
 2. Install NPM packages
    ```console
-   npm install
+   yarn install
    ```
 
+### Start and use
+
+Start the server
+  ```console
+  yarn start
+  ```
 
 
 <!-- CONTRIBUTING -->
