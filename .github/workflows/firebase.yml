@@ -25,6 +25,7 @@ jobs:
       run: |
         yarn install
         yarn build
+        firebase use prod
     - name: Archive Build
       uses: actions/upload-artifact@v2
       with:
@@ -44,7 +45,6 @@ jobs:
           path: build
       - name: Depoy to Firebase
         uses: w9jds/firebase-action@master
-        run: firebase use prod
         with:
           args: deploy --only hosting
         env:
