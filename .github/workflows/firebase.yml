@@ -48,7 +48,7 @@ jobs:
           args: deploy --only hosting
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-                    REACT_APP_API_KEY: ${{secrets.API_KEY}}
+          REACT_APP_API_KEY: ${{secrets.API_KEY}}
           REACT_APP_APP_ID: ${{secrets.APP_ID}}
           REACT_APP_AUTH_DOMAIN: ${{secrets.AUTH_DOMAIN}}
           REACT_APP_DATABASE: ${{secrets.DATABASE}}
