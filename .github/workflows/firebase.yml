@@ -1,0 +1,59 @@
+name: Firebase CI
+
+'on':
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm install -g yarn
+    - name: yarn install, build and test
+      run: |
+        yarn install
+        yarn build
+    - name: Archive Build
+      uses: actions/upload-artifact@v2
+      with:
+        name: build
+        path: build
+        
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download Build
+        uses: actions/download-artifact@v2
+        with:
+          name: build
+          path: build
+      - name: Depoy to Firebase
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only hosting
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+                    REACT_APP_API_KEY: ${{secrets.API_KEY}}
+          REACT_APP_APP_ID: ${{secrets.APP_ID}}
+          REACT_APP_AUTH_DOMAIN: ${{secrets.AUTH_DOMAIN}}
+          REACT_APP_DATABASE: ${{secrets.DATABASE}}
+          REACT_APP_MEASUREMENT_ID: ${{secrets.MEASUREMENT_ID}}
+          REACT_APP_MESSAGING_SENDER_ID: ${{secrets.MESSAGING_SENDER_ID}}
+          REACT_APP_PROJECT_ID: ${{secrets.PROJECT_ID}}
+          REACT_APP_STORAGE_BUCKET: ${{secrets.STORAGE_BUCKET}}
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
