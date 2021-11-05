@@ -20,12 +20,13 @@ import {init} from './utils/initFirebase';
 import UserContext from "./context/UserContext";
 import './index.css';
 import './styles/login.css';
+import Loader from "react-js-loader";
 
 init();
 const db = firebase.firestore();
 
 const App = () => {
-
+  const [loading, setLoading] = useState(false);
   const [user, setUser] = useState({
     uid: null,
     displayName: null,
@@ -48,13 +49,14 @@ const App = () => {
     useEffect( () => {
       getUserId();
     },[]);
-
+  
   const contextValue = {
     user: user,
     updateUser: setUser
   }
 
     const getUserId = () => {
+      setLoading(true);
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
           const userJson = {};
@@ -69,6 +71,7 @@ const App = () => {
             uid: null,
             displayName: null,
           });
+          setLoading(false);
         }
       });
     }
@@ -81,33 +84,44 @@ const App = () => {
         ...loguser
       };
       setUser(mergeUser);
+      setLoading(false);
+
     })
     .catch(err => {
       console.log(err.messsage)
+      setLoading(false);
     })
   }
 
     return (
     <Router>
       <UserContext.Provider value={contextValue}>
-        <div style={{width: '100%', height: '100%'}}>
-        {user && user.uid && (
-          <HeaderBar />
+        {loading &&  (
+          <div className='loaderContainer'>
+              <Loader type="bubble-loop" bgColor={"#ffad23"} size={80} />
+          </div>
         )}
-          <Switch>
-            <Route path="/campaigns" >
-              {!user.uid && (
-                <Login />
-              )}
-              {user && user.uid && (
-                <Campaigns />
-              )}
-            </Route>
-            <Route exact path="/">
-              <Redirect to="/campaigns" />
-            </Route>
-          </Switch>
-        </div>
+        {!loading && (
+          <div style={{width: '100%', height: '100%'}}>
+            {user && user.uid && (
+              <HeaderBar />
+            )}
+            <Switch>
+              <Route path="/campaigns" >
+                {!user.uid && (
+                  <Login />
+                )}
+                {user && user.uid && (
+                  <Campaigns />
+                )}
+              </Route>
+              <Route exact path="/">
+                <Redirect to="/campaigns" />
+              </Route>
+            </Switch>
+          </div>
+        )}
+        
       </UserContext.Provider>
     </Router>
   );
