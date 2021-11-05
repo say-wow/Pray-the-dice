@@ -100,7 +100,6 @@ const Dm = (props) => {
   }
 
   if(campaign.idUserDm === user.uid) {
-    console.log('DM',rollList)
     return (
       <Switch>
         <Route path={`${match.url}/chat`}>
