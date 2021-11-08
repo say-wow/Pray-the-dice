@@ -14,6 +14,7 @@ import i18next from 'i18next';
 import Campaigns from './containers/Campaigns';
 import HeaderBar from './components/HeaderBar';
 import Login from './containers/Login';
+import Box from './containers/Box';
 import enTranslation from './assets/translation/en.json';
 import frTranslation from './assets/translation/fr.json';
 import {init} from './utils/initFirebase';
@@ -117,6 +118,9 @@ const App = () => {
               </Route>
               <Route exact path="/">
                 <Redirect to="/campaigns" />
+              </Route>
+              <Route exact path="/box">
+                <Box />
               </Route>
             </Switch>
           </div>
