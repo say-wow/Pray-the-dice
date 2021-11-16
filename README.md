@@ -148,7 +148,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Boussard Quentin - [@Gaviil_](https://twitter.com/Gaviil_)
+Praythedice - [@Gaviil_](https://twitter.com/praythedice)
 Project Link: [https://github.com/Qboussard/beyond-the-dice](https://github.com/Qboussard/beyond-the-dice)
 
 

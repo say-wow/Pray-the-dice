@@ -76,14 +76,11 @@ const Character = (props) => {
     }
   }, [campaign]);
 
-  // useEffect(() => {
-  //   if(character && character.uid) {
-  //     const dbRefObject = firebase.database().ref().child(`${character.idCampaign}`);
-  //     dbRefObject.on('value', snap => {
-  //       setRollList(Object.values(snap.val() || {}));
-  //     });
-  //   }
-  // },[character])
+  useEffect(() => {
+    if(character && character.uid) {
+      setSkills(character.skills);
+    }
+  },[character])
 
   const getCharacter = async () => {
     await db.collection('characters').doc(character.uid || characterIdUrl).get()

@@ -27,7 +27,7 @@ const Inventory = (props) => {
   const updateItemNumber = async (item, index) => {
     const updatedItem = {
       ...item,
-      number: updateItem || item.number
+      number: updateItem !== null || updateItem !== undefined ? updateItem : item.number
     }
     setLineToUpdateInv(null)
     character.inventory[index] = updatedItem;
