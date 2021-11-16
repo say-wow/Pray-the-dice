@@ -85,7 +85,7 @@ export default function Login() {
             </span>
             <span className="google-button__text">{i18next.t('sign up with google')}</span>
           </button>
-          <button
+          {/* <button
             onClick={() => {
               signIn('facebook');
             }}
@@ -93,7 +93,7 @@ export default function Login() {
             className="facebook-button"
           >
             <span className="facebook-button__text">{i18next.t('sign up with facebook')}</span>
-          </button>
+          </button> */}
         </div>
       </div>
     </div>
