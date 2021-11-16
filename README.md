@@ -18,9 +18,9 @@
   <p align="center">
     A web tabletop app for roleplaying games.
     <br />
-    <a href="https://github.com/Qboussard/beyond-the-dice/issues">Report Bug</a>
+    <a href="https://github.com/Qboussard/Pray-the-dice/issues">Report Bug</a>
     ·
-    <a href="https://github.com/Qboussard/beyond-the-dice/issues">Request Feature</a>
+    <a href="https://github.com/Qboussard/Pray-the-dice/issues">Request Feature</a>
   </p>
 </p>
 
@@ -111,7 +111,7 @@ service cloud.firestore {
 
 1. Clone the repo
    ```console
-   git clone https://github.com/Qboussard/beyond-the-dice.git
+   git clone https://github.com/Qboussard/Pray-the-dice.git
    ```
 2. Install NPM packages
    ```console
@@ -149,7 +149,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ## Contact
 
 Praythedice - [@Gaviil_](https://twitter.com/praythedice)
-Project Link: [https://github.com/Qboussard/beyond-the-dice](https://github.com/Qboussard/beyond-the-dice)
+Project Link: [https://github.com/Qboussard/Pray-the-dice](https://github.com/Qboussard/Pray-the-dice)
 
 
 
@@ -174,11 +174,11 @@ Project Link: [https://github.com/Qboussard/beyond-the-dice](https://github.com/
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [contributors-shield]: https://img.shields.io/github/contributors/Qboussard/beyond-the-dice.svg?style=for-the-badge
-[contributors-url]: https://github.com/Qboussard/beyond-the-dice/graphs/contributors
+[contributors-url]: https://github.com/Qboussard/Pray-the-dice/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/Qboussard/beyond-the-dice.svg?style=for-the-badge
-[forks-url]: https://github.com/Qboussard/beyond-the-dice/network/members
+[forks-url]: https://github.com/Qboussard/Pray-the-dice/network/members
 [stars-shield]: https://img.shields.io/github/stars/Qboussard/beyond-the-dice.svg?style=for-the-badge
-[stars-url]: https://github.com/Qboussard/beyond-the-dice/stargazers
+[stars-url]: https://github.com/Qboussard/Pray-the-dice/stargazers
 [issues-shield]: https://img.shields.io/github/issues/Qboussard/beyond-the-dice.svg?style=for-the-badge
-[issues-url]: https://github.com/Qboussard/beyond-the-dice/issues
+[issues-url]: https://github.com/Qboussard/Pray-the-dice/issues
 [product-screenshot]:https://zupimages.net/up/21/37/f0b1.png
