@@ -28,7 +28,7 @@ import { toast } from 'react-toastify';
 import Company from '../components/Company';
 import {getLabelDice} from '../utils/dice'
 import {useHistory} from "react-router-dom";
-
+import Statistics from "../components/Statistics";
 
 init();
 const db = firebase.firestore();
@@ -125,13 +125,19 @@ const Dm = (props) => {
                       <img className="iconChat" src={chat} alt="chat" />
                     </Link> */}
                   </MobileView>
-                <div className='containerInfo'>
+                <div className='containerInfoComp'>
                   {company && (
                     <Company
                       list
                       withLife
                       company={company}
-                    />  
+                    />
+                  )}
+                  {rollList.length > 0 && (
+                    <Statistics
+                      rollList={rollList}
+                      company={company}
+                    />
                   )}
                 </div>
                 <BrowserView className='containerHisto'>

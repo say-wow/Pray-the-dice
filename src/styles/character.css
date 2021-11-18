@@ -366,6 +366,19 @@ input[type='number'].updateHp {
   /* height: 35px;
   width: 61px; */
 }
+.statsCampaign {
+  display: flex;
+  flex-direction: column;
+}
+.statsCampaign div{
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 0.05rem #a9adb1 solid;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
 @media (min-width: 800px) {
   .inventory {
     display: block;

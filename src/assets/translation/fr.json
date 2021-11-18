@@ -141,5 +141,13 @@
     "rename character": "Les joueurs peuvent renommer leurs personnages",
     "click to roll": "Les joueurs peuvent cliquer sur une statistique pour lancer un dé"
   },
-  "settings campaign": "Configuration"
+  "settings campaign": "Configuration",
+  "stats": {
+    "title": "Statistiques",
+    "TotalRoll": "Nombre de lancé dans la campagne",
+    "criticFail": "Nombre d'échecs critiques",
+    "criticSuccess": "Nombre de réussites critiques",
+    "unluckiestPlayer": "Joueur le plus malchanceux",
+    "luckiestPlayer": "Joueur le plus chanceux"
+  }
 }
