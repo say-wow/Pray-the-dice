@@ -137,9 +137,10 @@
   "signup": "Inscrivez-vous",
   "new frame unlock": "Nouvelle décoration d'image débloqué 🥳",
   "campaignSettings": {
-    "hide character stat value on chat": "Cacher les valeurs de statistique dans le l'historique",
+    "hide character stat value on chat": "Cacher les valeurs de statistique dans l'historique",
     "rename character": "Les joueurs peuvent renommer leurs personnages",
-    "click to roll": "Les joueurs peuvent cliquer sur une statistique pour lancer un dé"
+    "click to roll": "Les joueurs peuvent cliquer sur une statistique pour lancer un dé",
+    "player can see all cards": "Les mages peuvent voir le détail de leur deck de magie"
   },
   "settings campaign": "Configuration",
   "stats": {
@@ -149,5 +150,10 @@
     "criticSuccess": "Nombre de réussites critiques",
     "unluckiestPlayer": "Joueur le plus malchanceux",
     "luckiestPlayer": "Joueur le plus chanceux"
-  }
+  },
+  "character is aria mage": "Le personnage est un mage d'Aria",
+  "remaining cards": "Carte(s) restante(s)",
+  "magic": "Magie",
+  "cards available": "Carte(s) disponible(s)",
+  "cards used": "Carte(s) utilisée(s)"
 }

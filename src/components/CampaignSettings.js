@@ -54,6 +54,22 @@ const CampaignSettings = (props) => {
           {i18next.t('campaignSettings.click to roll')}
         </label>
       </div>
+      <div className="switch">
+        <label>
+          <input
+            type="checkbox"
+            value={campaign.playerCanSeeAllCards}
+            defaultChecked={campaign.playerCanSeeAllCards}
+            onChange={(e) => {
+              const newData = {...campaign}
+              newData.playerCanSeeAllCards = e.target.checked;
+              props.update(newData);
+            }}
+          />
+          <span className="lever"></span>
+          {i18next.t('campaignSettings.player can see all cards')}
+        </label>
+      </div>
       <button
         className='danger'
         onClick={(e) => {

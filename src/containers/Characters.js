@@ -28,6 +28,7 @@ import i18next from 'i18next';
 import Picture from '../components/Picture';
 import logo from '../assets/Images/logo150.png';
 import CampaignSettings from '../components/CampaignSettings';
+import cards from '../assets/cards.json';
 init();
 const db = firebase.firestore();
 
@@ -158,8 +159,11 @@ const Characters = (props) => {
       characteristics: [...characterData.characteristics],
       inventory: [],
       picture: null,
-      active: true
+      active: true,
     };
+    if(characterData.isAriaMage) {
+      data.magicCards = [...cards]
+    }
     await db.collection('characters').doc(characterUid).set(data).then(res => {
       // const charactersList = getValueOnLocalStorage('characters');
       const charactersList = [...characters]

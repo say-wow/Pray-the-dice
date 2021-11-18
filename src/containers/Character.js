@@ -28,7 +28,7 @@ import EditCharacter from './EditCharacter';
 import MobileInventory from './MobileInventory';
 import { PencilAltIcon, ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/outline'
 import {dynamicSortWithTraduction} from '../utils/sort';
-import {getRoll} from '../utils/dice';
+import {getRoll, getMagicCard} from '../utils/dice';
 import {
   BrowserView,
   MobileView,
@@ -42,6 +42,9 @@ import Skills from '../components/Skills';
 import Characteristics from '../components/Characteristics';
 import Company from '../components/Company';
 import {getLabelDice} from '../utils/dice'
+import MagicCard from '../components/MagicCard';
+import coin from '../assets/Images/coin.png';
+import MagicCardResume from '../components/MagicCardResume';
 
 init();
 const db = firebase.firestore();
@@ -249,6 +252,16 @@ const Character = (props) => {
                     >
                       {i18next.t('inventory')}
                     </li>
+                    {character.magicCards && campaign.playerCanSeeAllCards && (
+                      <li
+                        className={`tab ${view === 'magic' ? 'active' : ''}`}
+                        onClick={() => {
+                          setView('magic');
+                        }}  
+                      >
+                        {i18next.t('magic')}
+                      </li>
+                    )}
                     <li
                       className={`tab ${view === 'company' ? 'active' : ''}`}
                       onClick={() => {
@@ -335,6 +348,26 @@ const Character = (props) => {
                           )}
                         </div>
                       )}
+                      <div className='containerCoinAndCard'>
+                        <div>
+                          {/* <img src={coin} style={{height: '40px'}} alt=""/>
+                          <img src={coin} style={{height: '40px'}} alt=""/>
+                          <img src={coin} style={{height: '40px'}} alt=""/> */}
+                        </div>
+                        {character.magicCards && (
+                          <MagicCard
+                            magicCards={character.magicCards}
+                            drawCard={() => {
+                              const data = getMagicCard(character, user);
+                              if(data !== null ){
+                                updateCharacter(data.character);
+                                updateFirestoreCharacter(data.character);
+                                sendNewRoll(data.roll);
+                              }
+                            }}
+                          />
+                        )}
+                      </div>
                       <div className='characteristicsDetail'>
                         <p className='titleSection'><b>{i18next.t('characteristic')}</b></p>
                           <Characteristics
@@ -382,6 +415,13 @@ const Character = (props) => {
                         updateFirestoreCharacter(characterWithNewInventory);
                       }}
                       />
+                  </div>
+                )}
+                {view === 'magic' && (
+                  <div className='containerInfo'>
+                    <MagicCardResume
+                      cardsList={character.magicCards}
+                    />
                   </div>
                 )}
                 {view === 'company' && (

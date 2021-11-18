@@ -378,7 +378,11 @@ input[type='number'].updateHp {
   width: 100%;
   justify-content: space-between;
 }
-
+.containerCoinAndCard {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 @media (min-width: 800px) {
   .inventory {
     display: block;
@@ -398,7 +402,7 @@ input[type='number'].updateHp {
   .containerInfo {
     display: grid;
     grid-template-rows:3rem 0rem 0rem;
-    grid-template-columns: 1fr 1fr;
+    /* grid-template-columns: 1fr 1fr; */
     grid-template-areas:
       "nameCharacteristics skillsDetail"
       "containerInv containerInv"

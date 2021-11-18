@@ -18,6 +18,7 @@ const NewCharacterForm = (props) => {
   const [description, setDescription] = useState('');
   const {createCharacter} = props;
   const skillsRef = useRef(null);
+  const [isAriaMage, setIsAriaMage] = useState(false);
   const [generationCharacterClassic, setGenerationCharacterClassic] = useState(true)
 
 
@@ -76,7 +77,8 @@ const NewCharacterForm = (props) => {
                 alive: true,
                 characteristics: listCharac,
                 skills: skillsCalculated,
-                inventory: []
+                inventory: [],
+                isAriaMage: isAriaMage
               });
               setName('');
               setDescription('');
@@ -85,6 +87,7 @@ const NewCharacterForm = (props) => {
               setListSkills([...dataCharacter.skills]);
               setAdditionalSkillPoint(50);
               setListBonusSkills([...dataCharacter.skillsBonus]);
+              setIsAriaMage(false);
             } else {
               toast.error(`${i18next.t('error.chara90')}`, {
                 position: "top-right",
@@ -124,6 +127,19 @@ const NewCharacterForm = (props) => {
               />
             </label>
           </p>
+          <div className="switch">
+              <label>
+                <input
+                  type="checkbox"
+                  value={isAriaMage}
+                  onChange={(e) => {
+                    setIsAriaMage(e.target.checked);
+                  }}
+                />
+                <span className="lever"></span>
+                {i18next.t('character is aria mage')}
+              </label>
+            </div>
         </div>
           <div className='characteristics'>
             <p>

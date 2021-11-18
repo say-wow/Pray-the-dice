@@ -18,7 +18,7 @@ const Statistics = (props) => {
           {i18next.t('stats.TotalRoll')} :
         </span>
         <span>
-          {rollList.length}
+          {rollList.filter(roll => roll.diceType !== "Magic").length}
         </span>
       </div>
       <div>
